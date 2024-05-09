@@ -10,7 +10,7 @@ export function LandingHeader(props){
     }
 
     const loginClick = () => {
-        navigate("/login");
+       props.openModal()
     }
     return (
         <div style={{alignItems: "center", justifyContent: "center", width: "100%", height: "480px"}}>
