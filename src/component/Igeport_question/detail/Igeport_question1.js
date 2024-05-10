@@ -1,32 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import {useNavigation} from "react-router-dom";
+import {useNavigate, useNavigation} from "react-router-dom";
 
-export function Igeport_question1(prop){
-    const navigate = useNavigation();
-
-    const handleSubmit = () => {
-        navigate('/igeport/igeport_question2')
-    }
-
+export function Igeport_question1({ nextPage }) {
     return (
-        <div style = {styles.container}>
+        <div style={styles.container}>
             <div style={styles.container1}>
-                <div style={styles.container2}>
+                <div style={styles.container2}></div>
+                <div style={styles.container3}>
+                    <span style={styles.title}>
+                        다음 질문은 당신의 성향을 파악하기 위한 질문입니다.
+                    </span>
                 </div>
-                <div style={styles.container3}><span style={styles.title}>
-                    다음 질문은 당신의 성향을 파악하기 위한 질문입니다.</span></div>
-                <div style={styles.container3}><span style={styles.subtitle}>
-                    다음 질문의 답변과 첨부해주신 블로그의 내용을 바탕으로 iGeport를 작성합니다.<br/> 제시해드리는 선지 중 자신과 가장 가까운 것을 선택해주세요</span></div>
+                <div style={styles.container3}>
+                    <span style={styles.subtitle}>
+                        다음 질문의 답변과 첨부해주신 블로그의 내용을 바탕으로 iGeport를 작성합니다.
+                        <br/> 제시해드리는 선지 중 자신과 가장 가까운 것을 선택해주세요.
+                    </span>
+                </div>
                 <div style={styles.container4}>
-                    <button style={styles.button} onClick={handleSubmit}>
+                    <button style={styles.button} onClick={nextPage}>
                         다음으로
                     </button>
                 </div>
-
             </div>
-
         </div>
-    )
+    );
+
 }
 
 const styles = {
