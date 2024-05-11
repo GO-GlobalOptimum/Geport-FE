@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
 
-const radioButtonHeight = 65; // 라디오 버튼 하나의 높이 (픽셀 단위)
+const radioButtonHeight = 80; // 라디오 버튼 하나의 높이 (픽셀 단위)
 
-export function Igeport_question5({ nextPage }) {
+export function Igeport_question6({ nextPage }) {
 
     const options = [
-        '나는 타인과의 관계에서 양보하는 편이다.',
-        '나는 다른 사람과의 관계에 있어서 타인을 많이 생각하는 편이다.',
-        '나는 아이디어를 떠올리는 일을 즐긴다.'
+        '나는 목표를 달성하기 위해 노력하고, 포기하지 않는다.',
+        '나는 업무나 과제를 미루는 경향이 있다.'
     ];
 
     const [selectedOption, setSelectedOption] = useState('');
@@ -48,8 +47,8 @@ export function Igeport_question5({ nextPage }) {
                             <circle cx="5" cy="5" r="5" transform="rotate(90 5 5)" fill="#C6C6C6"/>
                             <circle cx="5" cy="55" r="5" transform="rotate(90 5 55)" fill="#C6C6C6"/>
                             <circle cx="5" cy="105" r="5" transform="rotate(90 5 105)" fill="#C6C6C6"/>
-                            <circle cx="5" cy="155" r="5" transform="rotate(90 5 155)" fill="#1AE57C"/>
-                            <circle cx="5" cy="205" r="5" transform="rotate(90 5 205)" fill="#C6C6C6"/>
+                            <circle cx="5" cy="155" r="5" transform="rotate(90 5 155)" fill="#C6C6C6"/>
+                            <circle cx="5" cy="205" r="5" transform="rotate(90 5 205)" fill="#1AE57C"/>
                         </svg>
                     </div>
                 </div>

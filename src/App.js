@@ -16,7 +16,6 @@ function App() {
             <Route path="/login" element={<Login />}></Route>
             <Route path="/igeport" element={<IGeport />}></Route>
             <Route path="/igeport/question" element={<Igeport_question/>}></Route>
-            <Route path="/igeport/question1" element ={<Igeport_question1/>}></Route>
         </Routes>
     </BrowserRouter>
   );
