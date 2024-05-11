@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {useNavigate} from "react-router-dom";
-import {LandingHeader} from "./detail/LandingHeader";
-import {HotPage} from "./detail/HotPage";
-import {Modal} from "../../function/modal";
-import {Login} from "../login/Login";
 
 
 export function Landing(props){
