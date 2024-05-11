@@ -6,7 +6,7 @@ import {Landing} from "./component/landing/Landing";
 import {MyPage} from './component/mypage/MyPage';
 import {IGeport} from "./component/Igeport/IGeport";
 import {Igeport_question} from "./component/Igeport_question/Igeport_question";
-import {Igeport_question1} from "./component/Igeport_question/detail/Igeport_question1";
+import {UserInfo} from "./component/UserInfo/UserInfo";
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
             <Route path="/mypage" element={<MyPage />}></Route>
             <Route path="/igeport" element={<IGeport />}></Route>
             <Route path="/igeport/question" element={<Igeport_question/>}></Route>
-
+            <Route path="/userinfo" element={<UserInfo/>}></Route>
         </Routes>
     </BrowserRouter>
   );

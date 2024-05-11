@@ -11,10 +11,10 @@ export function Igeport_question() {
     const navigate = useNavigate();
 
     const nextPage = () => {
-        if (currentPage < 7) {
+        if (currentPage < 6) {
             setCurrentPage(prev => prev + 1);
         } else {
-            navigate('/next-route');
+            navigate('/userinfo');
         }
     };
 
