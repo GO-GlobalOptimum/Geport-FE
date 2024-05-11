@@ -16,7 +16,7 @@ export function HotPage(props){
                     {
                         hotpage.map((i)=>{
                             return (
-                                <div style={{width: "384px", height: "356px", padding: "1%"}}>
+                                <div key={i} style={{width: "384px", height: "356px", padding: "1%"}}>
                                     <img src={`./image/Hotpage${i}.png`}
                                          style={{width: "384px", height: "256px", padding: "1%"}}/>
                                     <div style={{height: "100px", textAlign: "center"}}>
