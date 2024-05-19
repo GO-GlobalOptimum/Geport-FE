@@ -7,6 +7,8 @@ import {MyPage} from './component/mypage/MyPage';
 import {IGeport} from "./component/Igeport/IGeport";
 import {Igeport_question} from "./component/Igeport_question/Igeport_question";
 import {UserInfo} from "./component/UserInfo/UserInfo";
+import {Geport} from "./component/Geport/Geport";
+import {Geport_question} from "./component/Geport_question/Geport_question";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
             <Route path="/igeport" element={<IGeport />}></Route>
             <Route path="/igeport/question" element={<Igeport_question/>}></Route>
             <Route path="/userinfo" element={<UserInfo/>}></Route>
+            <Route path="/geport" element={<Geport/>}></Route>
+            <Route path="/geport/question" element={<Geport_question/>}></Route>
         </Routes>
     </BrowserRouter>
   );
