@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
 
 export function UserInfo6({ nextPage }) {
-    const [name, setName] = useState(''); // 사용자 이름을 저장하는 상태
 
     const options=['남성','여성', '밝히지 않음'];
-    const handleInputChange = (event) => {
-        setName(event.target.value);
-    };
-
     const [selectedOption, setSelectedOption] = useState('');
     const handleRadioChange = (value) => {
         setSelectedOption(value); // 라디오 버튼 선택 시 선택된 값을 상태에 저장
@@ -193,5 +188,4 @@ const styles = {
         marginLeft: '10px'
     },
     inputText:{fontSize: '1.2rem', fontWeight:"500"}
-
 };
