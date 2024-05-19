@@ -4,7 +4,7 @@ import { Link, Route, Routes , BrowserRouter} from 'react-router-dom';
 import {Login} from "./component/login/Login";
 import {Landing} from "./component/landing/Landing";
 import {MyPage} from './component/mypage/MyPage';
-import {Igeport_question} from "./component/Igeport_question/Igeport_question";\
+import {Igeport_question} from "./component/Igeport_question/Igeport_question";
 import {UserInfo} from "./component/UserInfo/UserInfo";
 import {Geport} from "./component/Geport/Geport";
 import {Geport_question} from "./component/Geport_question/Geport_question";
