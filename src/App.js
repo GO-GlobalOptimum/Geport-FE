@@ -9,6 +9,7 @@ import {Igeport_question} from "./component/Igeport_question/Igeport_question";
 import {UserInfo} from "./component/UserInfo/UserInfo";
 import {Geport} from "./component/Geport/Geport";
 import {Geport_question} from "./component/Geport_question/Geport_question";
+import {Hidden_code} from "./component/Hidden_code/Hidden_code";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/userinfo" element={<UserInfo/>}></Route>
             <Route path="/geport" element={<Geport/>}></Route>
             <Route path="/geport/question" element={<Geport_question/>}></Route>
+            <Route path="/hidden-code" element={<Hidden_code/>}></Route>
         </Routes>
     </BrowserRouter>
   );
