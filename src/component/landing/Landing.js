@@ -17,7 +17,7 @@ export function Landing(props){
             <LandingHeader openModal={openModal}/>
             <HotPage/>
             <Modal isOpen={isModalOpen} onClose={closeModal}>
-                <Login/>
+                <Login onClose={closeModal}/>
             </Modal>
         </div>
     )
