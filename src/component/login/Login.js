@@ -21,7 +21,7 @@ export function Login(props){
 
     return(
         <div>
-            {isLogin ? <SignUpPage /> : <LoginPage toggleLogin={toggleLogin}/>}
+            {isLogin ? <SignUpPage onClose={props.onClose}/> : <LoginPage toggleLogin={toggleLogin}/>}
         </div>
     )
 }
