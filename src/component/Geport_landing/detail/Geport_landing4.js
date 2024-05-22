@@ -52,8 +52,8 @@ export function Geport_landing4({ nextPage }) {
                     <div style={styles.container6}>
                         <svg width="10" height="110" viewBox="0 0 10 110" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="5" cy="5" r="5" transform="rotate(90 5 5)" fill="#C6C6C6" />
-                            <circle cx="5" cy="55" r="5" transform="rotate(90 5 55)" fill="#1AE57C" />
-                            <circle cx="5" cy="105" r="5" transform="rotate(90 5 105)" fill="#C6C6C6" />
+                            <circle cx="5" cy="55" r="5" transform="rotate(90 5 55)" fill="#C6C6C6" />
+                            <circle cx="5" cy="105" r="5" transform="rotate(90 5 105)" fill="#1AE57C" />
                         </svg>
                     </div>
                 </div>
