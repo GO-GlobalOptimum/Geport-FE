@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {useNavigate} from "react-router-dom";
 
-export function MyInfo(props){
+export function MyMain(props){
     const navigate = useNavigate();
 
     const logoClick = () => {
@@ -53,23 +53,9 @@ export function MyInfo(props){
     return(
         <div>
             <div>
-                <img src={"./image/Hotpage1.png"} style={{  width: '150px', height: '150px', borderRadius: '50%', padding: "5%", cursor: "pointer" }} />
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <p style={{ paddingLeft: "5%", marginRight: "40%", fontSize: '24px' , fontWeight: 'bold'}}>유현우 님</p>
-                        <button style={{ marginRight: '10px', marginBottom: '10px', borderRadius: '20px', padding: '5px 10px', backgroundColor: '#91F5C3C3', border: 'none' ,display: 'flex', alignItems: 'center' }}>
-                        <img src={"./image/Geport_green.png"} alt="Pen" style={{ width: '20px', height: '20px', marginRight: '5px' }} />
-                        나의 Geport</button>
-                    </div>
-                <text style={{paddingLeft: "5%"}}>바이오 약 한 줄, 당신의 이야기를 빛나게 해줄 Geport</text>
-            </div>
-            <div>
-                <br />
-                <br />
-                <br />
-                <text style={{paddingLeft: "5%", fontSize: '20px' , fontWeight: 'bold'}}>내가 쓴 게시글</text>
-                <hr style={{ borderTop: '1px gray', marginTop: '10px', width: '80%', paddingLeft: "5%"}} />
+                <hr style={{ borderTop: '1px gray', width: '80%', paddingLeft: "5%"}} />
                     {/* 게시글 목록 공간이여 */}
-                    <div style={{paddingLeft: "5%", width: '90%', maxHeight: '350px', overflowY: 'scroll' }}>
+                    <div style={{paddingLeft: "5%", width: '90%' }}>
                         <div>
                         {myposts.map(post => (
                         <div key={post.id} style={{ marginBottom: '20px' }}>

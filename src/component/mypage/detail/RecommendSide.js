@@ -50,16 +50,7 @@ export function RecommendSide(props) {
 
     return (
         <div>
-            <div style={{ width: "40px" }} />
-            <div style={{ display: 'flex', alignItems: 'center', marginLeft: '70%' }}>
-            <button style={{ background: "#ccc", padding: '5px', borderRadius: '50px', border: '1px solid #ccc', display: 'flex', alignItems: 'center' }}>
-                <img src={"./image/pen.png"} alt="Pen" style={{ width: '20px', height: '20px', marginRight: '5px' }} />
-                글쓰기
-            </button>
-                <img src="./image/notification.png" alt="notification" style={{ width: '20px', height: '20px', marginLeft: '10px', marginRight: '5px' }} />
-                <img src="./image/user.png" alt="user" style={{ width: '20px', height: '20px', marginLeft: '10px', marginRight: '5px' }} />
-            </div>
-            <hr style={{ borderTop: '1px gray', width: '90%', paddingLeft: "5%" }} />
+            <hr style={{ borderTop: '1px gray', width: '80%', paddingLeft: "5%"}} />
             <div>
                 <p style={{ paddingLeft: "5%", marginRight: "40%", fontSize: '20px', fontWeight: 'bold' }}>추천 토픽</p>
                 <div style={{ display: 'flex', flexWrap: 'wrap', paddingLeft: '5%', maxWidth: '90%' }}>
