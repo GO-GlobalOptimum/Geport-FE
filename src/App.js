@@ -15,6 +15,7 @@ import {Geport} from "./component/Geport/Geport";
 import {Geport_question} from "./component/Geport_question/Geport_question";
 import {Hidden_code} from "./component/Hidden_code/Hidden_code";
 import {Geport_landing} from "./component/Geport_landing/Geport_landing";
+import {StatisticsPage} from "./component/StatisticsPage/StatisticsPage";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             <Route path="/geport/question" element={<Geport_question/>}></Route>
             <Route path="/hidden-code" element={<Hidden_code/>}></Route>
             <Route path="/geport_landing" element={<Geport_landing/>}></Route>
+            <Route path="/statistics_page" element={<StatisticsPage/>}></Route>
         </Routes>
     </BrowserRouter>
   );
