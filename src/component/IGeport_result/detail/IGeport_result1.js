@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
-export function Geport_result1({ nextPage }) {
+export function IGeport_result1({ nextPage }) {
     useEffect(() => {
         const timer = setTimeout(() => {
             nextPage();
@@ -14,8 +13,8 @@ export function Geport_result1({ nextPage }) {
     return (
         <div style={styles.container}>
             <img src="/image/geport_green_logo.png" alt="Logo" style={styles.logo} />
-            <h1 style={styles.title}>Geport 결과 보고서</h1>
-            <p style={styles.subtitle}>작성하신 블로그를 바탕으로 퍼스널 브랜딩 솔루션을 만들어드립니다.</p>
+            <h1 style={styles.title}>iGeport 결과 보고서</h1>
+            <p style={styles.subtitle}>iGeport는 총 여섯 단계로 블로그에 드러난 당신의 심리를 분석합니다.</p>
         </div>
     );
 }

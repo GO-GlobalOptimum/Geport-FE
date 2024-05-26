@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
-export function Geport_result7({ nextPage }) {
+export function IGeport_result7({ nextPage }) {
 
     return (
         <div style={styles.container}>
             <div style={styles.container1}>
                 <div style={styles.container2}></div>
                 <div style={styles.container3}>
-                    <span style={styles.title}>조태완 님의 <br/>Geport 퍼스널 브랜딩 솔루션은</span>
+                    <span style={styles.title}>조태완 님의 <br/>IGeport 퍼스널 브랜딩 솔루션은</span>
                 </div>
                 <div style={styles.container7}>
                     <div style={styles.inputContainer}>
@@ -20,23 +20,14 @@ export function Geport_result7({ nextPage }) {
                             </span>
                         </div>
                     </div>
-                    <div style={styles.pageCount}>
-                        <svg width="10" height="146" viewBox="0 0 10 146" fill="none"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="5" cy="5" r="5" transform="rotate(90 5 5)" fill="#C6C6C6"/>
-                            <circle cx="5" cy="39" r="5" transform="rotate(90 5 39)" fill="#C6C6C6"/>
-                            <circle cx="5" cy="73" r="5" transform="rotate(90 5 73)" fill="#1AE57C"/>
-                            <circle cx="5" cy="107" r="5" transform="rotate(90 5 107)" fill="#C6C6C6"/>
-                            <circle cx="5" cy="141" r="5" transform="rotate(90 5 141)" fill="#C6C6C6"/>
-                        </svg>
-                    </div>
+                    <div style={styles.pageCount}></div>
                 </div>
                 <div style={styles.container4}>
                     <button
                         style={styles.button}
                         onClick={nextPage} // 버튼 클릭 시 nextPage 호출
                     >
-                        Geport 다운받기
+                        IGeport 다운받기
                     </button>
                 </div>
             </div>

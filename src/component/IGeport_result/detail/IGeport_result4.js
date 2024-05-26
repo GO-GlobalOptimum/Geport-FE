@@ -1,33 +1,49 @@
 import React, { useState } from 'react';
-import {Line} from "react-chartjs-2";
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, BubbleController, Title, Tooltip, Legend } from 'chart.js';
+import { Bar } from "react-chartjs-2";
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, BubbleController, Title, Tooltip, Legend, ChartDataLabels);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartDataLabels);
 
-export function Geport_result6({ nextPage }) {
+export function IGeport_result4({ nextPage }) {
     const [name, setName] = useState(''); // 사용자 이름을 저장하는 상태
 
-    const lineChartOptions = {
+    const barChartOptions = {
+        indexAxis: 'y', // Y축으로 가로 바 그래프를 그립니다.
         responsive: true,
         plugins: {
             legend: {
                 display: false,
+            },
+            datalabels: {
+                color: 'white',
+                anchor: 'end',
+                align: 'end',
             }
         },
         scales: {
             x: {
                 title: {
-                    display: true,
-                    text: 'X',
+                    display: false,
                 },
+                ticks: {
+                    beginAtZero: true,
+                    color: 'white', // X축 레이블 색상
+                },
+                grid: {
+                    color: '#444' // 그리드 라인 색상
+                }
             },
             y: {
                 title: {
-                    display: true,
-                    text: 'Y',
+                    display: false,
                 },
-                beginAtZero: true,
+                ticks: {
+                    color: 'white', // Y축 레이블 색상
+                },
+                grid: {
+                    color: '#444' // 그리드 라인 색상
+                }
             },
         },
     };
@@ -35,50 +51,50 @@ export function Geport_result6({ nextPage }) {
     const handleInputChange = (event) => {
         setName(event.target.value);
     };
-    const lineChartData = {
-        labels: [0, 1, 2, 3, 4, 5, 6, 7],
+
+    const barChartData = {
+        labels: ['스트레스', '불안', '슬픔', '피로'],
         datasets: [
             {
-                label: '전체 클릭수',
-                data: [50, 75, 50, 25, 75, 50, 25, 50],
-                borderColor: 'white',
-             //   backgroundColor: 'rgba(0, 0, 0, 0.1)',
-                fill: false,
+                label: '부정적 감정 상태',
+                data: [80, 60, 40, 100],
+                backgroundColor: 'rgba(26, 229, 124, 0.5)', // 바 색상
+                borderColor: '#1AE57C',
+                borderWidth: 1,
             },
         ],
     };
+
     return (
         <div style={styles.container}>
             <div style={styles.container1}>
                 <div style={styles.container2}></div>
                 <div style={styles.container3}>
-                    <span style={styles.title}>조태완 님의 삶을 그래프로 표현했어요.</span>
+                    <span style={styles.title}>이 기간 동안 {name} 님의 감정 SOS를 알려드려요</span>
                 </div>
                 <div style={styles.container7}>
                     <div style={styles.content}>
                         <div style={styles.graphContainer}>
-                            <h3 style={styles.chartTitle}>전체 클릭수</h3>
-                            <Line data={lineChartData} options={lineChartOptions}/></div>
+                            <Bar data={barChartData} options={barChartOptions} />
+                        </div>
                         <div style={styles.inputContainer}>
                             <div>
                                 <span style={styles.text}>
-                                    Lorem ipsum dolor sit amet consectetur. Amet pharetra consequat diam nunc eget accumsan fermentum enim quam.
-                                    Convallis scelerisque pellentesque mi commodo in.
-                                    Nulla nunc cursus ullamcorper amet aliquam diam turpis tempus nunc. Faucibus venenatis neque morbi amet leo diam.
+                                    이 그래프는 {name} 님의 부정적 감정 상태를 나타냅니다.
+                                    스트레스, 불안, 슬픔, 피로와 같은 감정들이 정상 범위 기준선인 200점 아래이며,
+                                    이는 여행이 {name} 님께 긍정적인 영향을 미쳤음을 시사합니다.
                                 </span>
                             </div>
                         </div>
                     </div>
                     <div style={styles.pageCount}>
-                        <svg width="10" height="146" viewBox="0 0 10 146" fill="none"
+                        <svg width="10" height="180" viewBox="0 0 10 180" fill="none"
                              xmlns="http://www.w3.org/2000/svg">
                             <circle cx="5" cy="5" r="5" transform="rotate(90 5 5)" fill="#C6C6C6"/>
-                            <circle cx="5" cy="39" r="5" transform="rotate(90 5 39)" fill="#C6C6C6"/>
+                            <circle cx="5" cy="39" r="5" transform="rotate(90 5 39)" fill="#1AE57C"/>
                             <circle cx="5" cy="73" r="5" transform="rotate(90 5 73)" fill="#C6C6C6"/>
-                            <circle cx="5" cy="107" r="5" transform="rotate(90 5 107)" fill="#1AE57C"/>
-                            <circle cx="5" cy="141" r="5" transform="rotate(90 5 141)" fill="#C6C6C6"/>
+                            <circle cx="5" cy="107" r="5" transform="rotate(90 5 107)" fill="#C6C6C6"/>
                         </svg>
-
                     </div>
                 </div>
                 <div style={styles.container4}>
@@ -165,7 +181,7 @@ const styles = {
         width: '90%',
         height: '50vh',
         display: 'flex',
-      //  flexDirection: 'column',
+        //  flexDirection: 'column',
         backgroundColor: '#1E1E1E',
     },content:{
         position:'relative',
@@ -182,19 +198,23 @@ const styles = {
         paddingLeft: '60px',
         backgroundColor: '#1E1E1E',
         overflowY: 'auto',
-        marginRight:"20%"
+        marginRight:"20%",
+        marginTop:"5%"
     },graphContainer: {
         width: '50%', // Adjust the width as needed
         height: '30vh', // Adjust the height as needed
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        marginLeft:"35%"
     },
     pageCount: {
         position: 'relative',
-        width: '',
-        height: '28vh',
+        width: '10%', // Adjust the width as needed
+        height: '50vh',
         display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor: '#1E1E1E'
     },
     graphImage: {

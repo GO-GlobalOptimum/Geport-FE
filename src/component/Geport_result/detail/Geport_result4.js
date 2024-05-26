@@ -79,14 +79,14 @@ const styles = {
         flexDirection: 'column',
         overflow: 'hidden',
     },
-    container3: {
-        position: 'relative',
-        width: '100%',
-        height: '7.5vh',
-        display: 'flex',
-        flexDirection: 'column',
-        overflow: 'hidden',
-        margin: '1%'
+    container3 : { // 문구 입력창
+        position:"relative",
+        width: "100%",
+        height:"8.5vh",
+        display:'flex',
+        flexDirection:'column',
+        overflow:"hidden",
+        margin:"1%"
     },
     title: {
         paddingLeft: '50px',

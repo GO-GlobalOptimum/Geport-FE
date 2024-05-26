@@ -1,33 +1,53 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef } from 'react';
+import WordCloud from 'wordcloud';
 
-export function Geport_result7({ nextPage }) {
+export function IGeport_result6({ nextPage }) {
+    const wordCloudRef = useRef(null);
+
+    useEffect(() => {
+        const words = [
+            ['TICKETS', 60],
+            ['EXPERIENCE', 50],
+            ['TRAVEL', 40],
+            ['BEER', 30],
+            ['AMBITIONS', 20],
+            ['COMPUTER', 90],
+            ['SCIENCE', 80],
+            ['RELAX', 10],
+        ];
+
+        WordCloud(wordCloudRef.current, {
+            list: words,
+            gridSize: 8,
+            weightFactor: 3,
+            fontFamily: 'impact',
+            color: () => '#1AE57C',
+            backgroundColor: '#1E1E1E',
+            rotateRatio: 0.5,
+            rotationSteps: 2,
+        });
+    }, []);
 
     return (
         <div style={styles.container}>
             <div style={styles.container1}>
                 <div style={styles.container2}></div>
                 <div style={styles.container3}>
-                    <span style={styles.title}>조태완 님의 <br/>Geport 퍼스널 브랜딩 솔루션은</span>
+                    <span style={styles.title}>이 기간 동안 조태완 님을<br />행복하게 만든 것을 모아봤어요</span>
                 </div>
                 <div style={styles.container7}>
-                    <div style={styles.inputContainer}>
-                        <div>
-                            <span style={styles.text}>
-                                당신은 사용자들에게 최고의 정보를 전달하기 위해 끊임없이 공부하고 발전하는 사업가입니다.
-                                당신은 초기에 겪은 어려움을 극복하며, 끊임없이 문제를 해결하고 서비스를 개선하는 데 최선을 다합니다.
-                                이러한 강점을 블로그에 녹여 변화를 이끄는 도전정신과 성장하고자 하는 열망을 중심으로 기술 블로그를 운영하는 것을 추천합니다.
-                                함께 더 나은 미래를 만들어나가는 것을 선호하는 당신은 리더십과 열정을 보여줄 수 있는 게시글을 적는 것이 적합합니다.
-                            </span>
+                    <div style={styles.content}>
+                        <div style={styles.wordCloudContainer}>
+                            <canvas ref={wordCloudRef} style={styles.canvas}></canvas>
                         </div>
                     </div>
                     <div style={styles.pageCount}>
-                        <svg width="10" height="146" viewBox="0 0 10 146" fill="none"
+                        <svg width="10" height="180" viewBox="0 0 10 180" fill="none"
                              xmlns="http://www.w3.org/2000/svg">
                             <circle cx="5" cy="5" r="5" transform="rotate(90 5 5)" fill="#C6C6C6"/>
                             <circle cx="5" cy="39" r="5" transform="rotate(90 5 39)" fill="#C6C6C6"/>
-                            <circle cx="5" cy="73" r="5" transform="rotate(90 5 73)" fill="#1AE57C"/>
-                            <circle cx="5" cy="107" r="5" transform="rotate(90 5 107)" fill="#C6C6C6"/>
-                            <circle cx="5" cy="141" r="5" transform="rotate(90 5 141)" fill="#C6C6C6"/>
+                            <circle cx="5" cy="73" r="5" transform="rotate(90 5 73)" fill="#C6C6C6"/>
+                            <circle cx="5" cy="107" r="5" transform="rotate(90 5 107)" fill="#1AE57C"/>
                         </svg>
                     </div>
                 </div>
@@ -36,7 +56,7 @@ export function Geport_result7({ nextPage }) {
                         style={styles.button}
                         onClick={nextPage} // 버튼 클릭 시 nextPage 호출
                     >
-                        Geport 다운받기
+                        다음으로
                     </button>
                 </div>
             </div>
@@ -55,6 +75,11 @@ const styles = {
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden'
+    },
+    chartTitle: {
+        marginBottom: '10px',
+        fontSize: '18px',
+        fontWeight: 'bold',
     },
     subtitle: {
         paddingLeft: '50px',
@@ -94,13 +119,6 @@ const styles = {
         color: 'white',
         fontSize: '32px'
     },
-    inputContainer: {
-        width: '100%',
-        paddingLeft: '60px',
-        backgroundColor: '#1E1E1E',
-        overflowY: 'auto',
-        marginRight:"3%"
-    },
     container4: {
         position: 'relative',
         width: '100%',
@@ -113,19 +131,44 @@ const styles = {
         paddingLeft: '60px'
     },
     container7: {
-        marginTop:"3%",
         position: 'relative',
         width: '90%',
-        height: '28vh',
+        height: '50vh',
         display: 'flex',
         backgroundColor: '#1E1E1E',
     },
+    content: {
+        position: 'relative',
+        width: "100%",
+        height: '50vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: "10%"
+    },
+    wordCloudContainer: {
+        width: '50%', // Adjust the width as needed
+        height: '100%', // Adjust the height as needed
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    canvas: {
+        width: '100%',
+        height: '100%',
+    },
     pageCount: {
         position: 'relative',
-        width: '',
-        height: '28vh',
+        width: '10%', // Adjust the width as needed
+        height: '50vh',
         display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor: '#1E1E1E'
+    },
+    graphImage: {
+        width: '100%',
+        height: 'auto',
     },
     button: {
         width: '10vw',
@@ -135,11 +178,11 @@ const styles = {
         border: 'none',
         borderRadius: '10px',
         cursor: 'pointer',
-        fontSize: '22px',
+        fontSize: '24px',
         fontWeight: '600'
     },
     text:{
         color:"white",
-        fontSize:"20px"
+        fontSize:"18px"
     }
 };
