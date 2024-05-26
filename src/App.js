@@ -5,7 +5,6 @@ import {Login} from "./component/login/Login";
 import {Landing} from "./component/landing/Landing";
 import {MyPage} from './component/mypage/MyPage';
 import {Igeport_question} from "./component/Igeport_question/Igeport_question";
-import {Igeport_question1} from "./component/Igeport_question/detail/Igeport_question1";
 import {Create_post} from "./component/create_post/create_post";
 import {Posts}from"./component/posts/Posts";
 import { My_Posts } from "./component/posts/detail/My_Posts";
