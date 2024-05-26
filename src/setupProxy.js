@@ -4,7 +4,7 @@ module.exports = function (app) {
     app.use(
         "/BE",
         createProxyMiddleware({
-            target: "",
+            target: "http://localhost:8000",
             changeOrigin: true,
             // pathRewrite: {
             //     '^/api': '' // URL ^/api -> 공백 변경
