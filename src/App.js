@@ -17,6 +17,8 @@ import {Geport_landing} from "./component/Geport_landing/Geport_landing";
 import { MainPage } from './component/mainPage/MainPage';
 import {MyMain} from './component/mainPage/detail/Mymain';
 import {StatisticsPage} from "./component/StatisticsPage/StatisticsPage";
+import {Geport_result} from "./component/Geport_result/Geport_result";
+import {IGeport_result} from "./component/IGeport_result/IGeport_result";
 
 function App() {
   return (
@@ -38,6 +40,8 @@ function App() {
             <Route path="/mainpage" element={<MainPage/>}></Route>
             <Route path="/mymain" element={<MyMain/>}></Route>
             <Route path="/statistics_page" element={<StatisticsPage/>}></Route>
+            <Route path="/geport/result" element={<Geport_result/>}></Route>
+            <Route path="/igeport/result" element={<IGeport_result/>}></Route>
         </Routes>
     </BrowserRouter>
   );
