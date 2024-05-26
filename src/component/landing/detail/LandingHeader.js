@@ -13,6 +13,18 @@ export function LandingHeader(props){
     const loginClick = () => {
         props.openModal()
     }
+
+    useEffect(()=>{
+        axios.get("/BE/api/geport/list",{
+            withCredentials: true
+        })
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(error => {
+                console.error("There was an error making the request:", error);
+            });
+    },[])
     return (
         <div style={{alignItems: "center", justifyContent: "center", width: "100%", height: "480px"}}>
             <img src={"./image/Logo.png"} style={{position: "absolute", padding: "1%"}} onClick={logoClick}/>
