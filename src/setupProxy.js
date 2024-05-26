@@ -4,7 +4,7 @@ module.exports = function (app) {
     app.use(
         "/BE",
         createProxyMiddleware({
-            target: "https://geport.blog",
+            target: "https://geport.blog/api",
             changeOrigin: true,
             // pathRewrite: {
             //     '^/api': '' // URL ^/api -> 공백 변경

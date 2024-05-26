@@ -2,7 +2,7 @@ import axios from "axios";
 // api 예시 보고 참고 하세요
 
 export const get_api = () => {
-    axios.get("/BE/api/geport/list",{
+    axios.get("/BE/geport/list",{
         withCredentials: true
     })
         .then(res => {
@@ -14,7 +14,7 @@ export const get_api = () => {
 }
 
 export const post_api = () => {
-    axios.post("/BE/api/geport/create", {
+    axios.post("/BE/geport/create", {
         "name": "string",
         "bio": "string",
         "phone": "string",
