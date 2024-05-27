@@ -16,13 +16,11 @@ import {Hidden_code} from "./component/Hidden_code/Hidden_code";
 import {Geport_landing} from "./component/Geport_landing/Geport_landing";
 import { MainPage } from './component/mainPage/MainPage';
 import {MyMain} from './component/mainPage/detail/Mymain';
-<<<<<<< HEAD
 import { Profile } from './component/profile/Profile';
 import { Fix_Profile } from './component/profile/detail/Fix_Profile';
 import {Create_report} from './component/create_report/Create_report';
-=======
 import {StatisticsPage} from "./component/StatisticsPage/StatisticsPage";
->>>>>>> 65ee3e6b008874dda8917d7d3c45d7c5f2c99f17
+
 
 function App() {
   return (
@@ -43,13 +41,10 @@ function App() {
             <Route path="/geport_landing" element={<Geport_landing/>}></Route>
             <Route path="/mainpage" element={<MainPage/>}></Route>
             <Route path="/mymain" element={<MyMain/>}></Route>
-<<<<<<< HEAD
             <Route path="/profile" element={<Profile/>}></Route>
             <Route path="/fix_profile" element={<Fix_Profile/>}></Route>
             <Route path="/create_report" element={<Create_report/>}></Route>
-=======
             <Route path="/statistics_page" element={<StatisticsPage/>}></Route>
->>>>>>> 65ee3e6b008874dda8917d7d3c45d7c5f2c99f17
         </Routes>
     </BrowserRouter>
   );

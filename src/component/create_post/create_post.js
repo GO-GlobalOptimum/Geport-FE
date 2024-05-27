@@ -69,7 +69,7 @@ export function Create_post() {
         } else if (!isContentEntered) {
             setAlert('내용을 입력해 주세요.');
         } else {
-            setShowTagModal(true); // Show tag modal
+            setShowTagModal(true);
         }
     };
 
