@@ -11,7 +11,7 @@ export function Landing(props){
     const [isModalOpen, setModalOpen] = useState(false);
 
     useEffect(()=>{
-        axios.get("/BE/api/geport/list",{
+        axios.get("/BE/",{
             withCredentials: true
         })
             .then(res => {
