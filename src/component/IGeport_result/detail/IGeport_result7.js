@@ -25,7 +25,7 @@ export function IGeport_result7({ nextPage }) {
                 <div style={styles.container4}>
                     <button
                         style={styles.button}
-                        onClick={nextPage} // 버튼 클릭 시 nextPage 호출
+                        onClick={nextPage}
                     >
                         IGeport 다운받기
                     </button>
@@ -130,7 +130,8 @@ const styles = {
         fontWeight: '600'
     },
     text:{
-        color:"white",
-        fontSize:"20px"
+        color: "white",
+        fontSize: "18px",
+        lineHeight: "160%",
     }
 };

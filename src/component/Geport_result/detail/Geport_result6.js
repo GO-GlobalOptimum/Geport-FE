@@ -213,7 +213,8 @@ const styles = {
         fontWeight: '600'
     },
     text:{
-        color:"white",
-        fontSize:"18px"
+        color: "white",
+        fontSize: "18px",
+        lineHeight: "160%",
     }
 };

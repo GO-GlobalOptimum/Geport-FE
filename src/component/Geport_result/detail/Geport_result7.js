@@ -21,14 +21,6 @@ export function Geport_result7({ nextPage }) {
                         </div>
                     </div>
                     <div style={styles.pageCount}>
-                        <svg width="10" height="146" viewBox="0 0 10 146" fill="none"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="5" cy="5" r="5" transform="rotate(90 5 5)" fill="#C6C6C6"/>
-                            <circle cx="5" cy="39" r="5" transform="rotate(90 5 39)" fill="#C6C6C6"/>
-                            <circle cx="5" cy="73" r="5" transform="rotate(90 5 73)" fill="#1AE57C"/>
-                            <circle cx="5" cy="107" r="5" transform="rotate(90 5 107)" fill="#C6C6C6"/>
-                            <circle cx="5" cy="141" r="5" transform="rotate(90 5 141)" fill="#C6C6C6"/>
-                        </svg>
                     </div>
                 </div>
                 <div style={styles.container4}>
@@ -36,7 +28,7 @@ export function Geport_result7({ nextPage }) {
                         style={styles.button}
                         onClick={nextPage} // 버튼 클릭 시 nextPage 호출
                     >
-                        Geport 다운받기
+                        Geport <br/>다운받기
                     </button>
                 </div>
             </div>
@@ -71,22 +63,22 @@ const styles = {
         flexDirection: 'column',
         overflow: 'hidden',
     },
-    container2: {
-        position: 'relative',
-        width: '100%',
-        height: '15vh',
-        display: 'flex',
-        flexDirection: 'column',
-        overflow: 'hidden',
+    container2 : { // 문구 입력 컨테이너
+        position:"relative",
+        width: "100%",
+        height:"20vh",
+        display:'flex',
+        flexDirection:'column',
+        overflow:"hidden",
     },
     container3 : { // 문구 입력창
         position:"relative",
         width: "100%",
-        height:"8.5vh",
+        height:"15vh",
         display:'flex',
         flexDirection:'column',
         overflow:"hidden",
-        margin:"1%"
+        margin:"0.1vh"
     },
     title: {
         paddingLeft: '50px',
@@ -129,17 +121,19 @@ const styles = {
     },
     button: {
         width: '10vw',
-        height: '5vh',
+        height: '7vh',
         backgroundColor: '#1AE57C',
         color: 'black',
         border: 'none',
         borderRadius: '10px',
         cursor: 'pointer',
-        fontSize: '22px',
+        fontSize: '20px',
         fontWeight: '600'
     },
     text:{
-        color:"white",
-        fontSize:"20px"
+        color: "white",
+        fontSize: "18px",
+        lineHeight: "160%",
     }
+
 };

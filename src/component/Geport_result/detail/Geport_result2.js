@@ -50,7 +50,7 @@ const styles = {
     container2 : { // 문구 입력 컨테이너
         position:"relative",
         width: "100%",
-        height:"15vh",
+        height:"25vh",
         display:'flex',
         flexDirection:'column',
         overflow:"hidden",
@@ -58,23 +58,23 @@ const styles = {
     container3 : { // 문구 입력창
         position:"relative",
         width: "100%",
-        height:"8.5vh",
+        height:"12vh",
         display:'flex',
         flexDirection:'column',
         overflow:"hidden",
-        margin:"1%"
+        margin:"0.1vh"
     },
     title: {
         paddingLeft: '50px',
         fontWeight: "600",
         color:"white",
-        fontSize:"32px"
+        fontSize:"30px"
     },
     subtitle: {
         paddingLeft: '50px',
         fontWeight:"600",
         color:"#C6C6C6",
-        fontSize:"20px",
+        fontSize:"22px",
         paddingTop:"2%"
     },
     container4: {

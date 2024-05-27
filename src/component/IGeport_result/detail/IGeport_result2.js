@@ -58,11 +58,11 @@ const styles = {
     container3 : { // 문구 입력창
         position:"relative",
         width: "100%",
-        height:"8.5vh",
+        height:"12vh",
         display:'flex',
         flexDirection:'column',
         overflow:"hidden",
-        margin:"1%"
+        margin:"0.1vh"
     },
     title: {
         paddingLeft: '50px',
