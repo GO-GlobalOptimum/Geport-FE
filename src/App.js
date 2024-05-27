@@ -15,9 +15,11 @@ import {Geport} from "./component/Geport/Geport";
 import {Geport_question} from "./component/Geport_question/Geport_question";
 import {Hidden_code} from "./component/Hidden_code/Hidden_code";
 import {Geport_landing} from "./component/Geport_landing/Geport_landing";
-import {Header} from "./layout/Header";
 import { MainPage } from './component/mainPage/MainPage';
 import {MyMain} from './component/mainPage/detail/Mymain';
+import { Profile } from './component/profile/Profile';
+import { Fix_Profile } from './component/profile/detail/Fix_Profile';
+import {Create_report} from './component/create_report/Create_report';
 
 function App() {
   return (
@@ -36,9 +38,11 @@ function App() {
             <Route path="/geport/question" element={<Geport_question/>}></Route>
             <Route path="/hidden-code" element={<Hidden_code/>}></Route>
             <Route path="/geport_landing" element={<Geport_landing/>}></Route>
-            <Route path="/header" element={<Header/>}></Route>
             <Route path="/mainpage" element={<MainPage/>}></Route>
             <Route path="/mymain" element={<MyMain/>}></Route>
+            <Route path="/profile" element={<Profile/>}></Route>
+            <Route path="/fix_profile" element={<Fix_Profile/>}></Route>
+            <Route path="/create_report" element={<Create_report/>}></Route>
         </Routes>
     </BrowserRouter>
   );

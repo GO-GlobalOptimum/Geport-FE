@@ -50,7 +50,7 @@ export function RecommendSide(props) {
 
     return (
         <div>
-            <hr style={{ borderTop: '1px gray', width: '80%', paddingLeft: "5%"}} />
+            <hr style={{ borderTop: '1px gray', width: '80%', paddingLeft: "5%", marginTop:'70px'}} />
             <div>
                 <p style={{ paddingLeft: "5%", marginRight: "40%", fontSize: '20px', fontWeight: 'bold' }}>추천 토픽</p>
                 <div style={{ display: 'flex', flexWrap: 'wrap', paddingLeft: '5%', maxWidth: '90%' }}>
