@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../geport-fe.iml" filepath="$PROJECT_DIR$/../geport-fe.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Geport-FE.iml" filepath="$PROJECT_DIR$/Geport-FE.iml" />
     </modules>
   </component>
 </project>
