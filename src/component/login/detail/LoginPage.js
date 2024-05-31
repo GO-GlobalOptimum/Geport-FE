@@ -25,7 +25,7 @@ export function LoginPage(props){
     return(
         <div style={{marginLeft: "170px", marginRight: "170px", marginTop: "130px", marginBottom: "130px",
             alignItems: "center", justifyContent: "center"}}>
-            <div style={{textAlign: "center", fontStyle: "bold", fontSize: "22px"}}>
+            <div style={{textAlign: "center", fontStyle: "bold",fontWeight:"600", fontSize: "24px"}}>
                 로그인 하기
             </div>
             <div style={{height: "80px"}}/>
@@ -38,7 +38,7 @@ export function LoginPage(props){
                 </GoogleOAuthProvider>
             </div>
             <div style={{height: "80px"}}/>
-            <div style={{textAlign: "center", fontSize: "14px"}}>
+            <div style={{textAlign: "center",fontWeight:"300", fontSize: "17px"}}>
                 Geport는 퍼스널 브랜딩 중심 블로그 서비스입니다. <br/>
                 원활한 서비스 이용을 위해 구글 로그인을 권장합니다. <br/>
                 로그인 이력이 없을 경우 자동 회원가입됩니다.

@@ -19,6 +19,8 @@ import {MyMain} from './component/mainPage/detail/Mymain';
 import {StatisticsPage} from "./component/StatisticsPage/StatisticsPage";
 import {Geport_result} from "./component/Geport_result/Geport_result";
 import {IGeport_result} from "./component/IGeport_result/IGeport_result";
+import {Search} from "./component/Search/Search";
+import {IGeport} from "./component/Igeport/IGeport";
 
 function App() {
   return (
@@ -28,6 +30,7 @@ function App() {
             <Route path="/login" element={<Login />}></Route>
             <Route path="/mypage" element={<MyPage />}></Route>
             <Route path="/igeport/question" element={<Igeport_question/>}></Route>
+            <Route path ="/igeport" element={<IGeport/>}></Route>
             <Route path="/create_post" element={<Create_post/>}></Route>
             <Route path="/posts" element={<Posts/>}></Route>
             <Route path="/my_posts" element={<My_Posts/>}></Route>
@@ -42,6 +45,7 @@ function App() {
             <Route path="/statistics_page" element={<StatisticsPage/>}></Route>
             <Route path="/geport/result" element={<Geport_result/>}></Route>
             <Route path="/igeport/result" element={<IGeport_result/>}></Route>
+            <Route path="/search" element={<Search/>}></Route>
         </Routes>
     </BrowserRouter>
   );

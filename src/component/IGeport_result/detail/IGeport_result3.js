@@ -197,8 +197,9 @@ const styles = {
         fontSize: '24px',
         fontWeight: '600'
     },
-    text: {
+    text:{
         color: "white",
-        fontSize: "18px"
+        fontSize: "18px",
+        lineHeight: "160%",
     }
 };

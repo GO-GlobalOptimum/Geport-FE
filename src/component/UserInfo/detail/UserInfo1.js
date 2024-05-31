@@ -51,19 +51,19 @@ const styles = {
     container2 : { // 문구 입력 컨테이너
         position:"relative",
         width: "100%",
-        height:"15vh",
+        height:"25vh",
         display:'flex',
         flexDirection:'column',
         overflow:"hidden",
     },
-    container3 : { // 문구 입력창
+    container3: {
         position:"relative",
         width: "100%",
-        height:"7.5vh",
+        height:"9vh",
         display:'flex',
         flexDirection:'column',
         overflow:"hidden",
-        margin:"1%"
+        margin:"0.5%"
     },
     title: {
         paddingLeft: '50px',
