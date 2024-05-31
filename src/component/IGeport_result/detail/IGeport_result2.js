@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import {useNavigate, useNavigation} from "react-router-dom";
 
-export function UserInfo1({ nextPage }) {
+export function IGeport_result2({ nextPage }) {
     return (
         <div style={styles.container}>
             <div style={styles.container1}>
                 <div style={styles.container2}></div>
                 <div style={styles.container3}>
                     <span style={styles.title}>
-                        마지막 단계입니다.<br/> 당신의 기본 정보를 알려주세요.
+                        (소개글 한 문장), <br/>Username 님의 iGeport
                     </span>
                 </div>
                 <div style={styles.container3}>
                     <span style={styles.subtitle}>
-                        이름, 성격, 나이 ,이름, 성격, 나이, 성별, 전화번호 등 Geport에 들어갈 5가지 기본 정보를 입력해주세요.<br/>
-                        모두 작성하신 후 Geport가 완성되면 Geport를 열람할 수 있는 히든코드를 기재해주신 전화번호로 전달드립니다.
+                        Username 님의 블로그와 답변을 바탕으로 퍼스널 브랜딩에 필요한 심리 보고서를 준비했어요.
                     </span>
                 </div>
                 <div style={styles.container4}>
@@ -51,19 +50,19 @@ const styles = {
     container2 : { // 문구 입력 컨테이너
         position:"relative",
         width: "100%",
-        height:"25vh",
+        height:"15vh",
         display:'flex',
         flexDirection:'column',
         overflow:"hidden",
     },
-    container3: {
+    container3 : { // 문구 입력창
         position:"relative",
         width: "100%",
-        height:"9vh",
+        height:"12vh",
         display:'flex',
         flexDirection:'column',
         overflow:"hidden",
-        margin:"0.5%"
+        margin:"0.1vh"
     },
     title: {
         paddingLeft: '50px',
