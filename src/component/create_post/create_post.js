@@ -14,7 +14,7 @@ export function Create_post() {
     const [toggleImage, setToggleImage] = useState("./image/type=plus.png");
     const [showTagModal, setShowTagModal] = useState(false);
     const [showOptions, setShowOptions] = useState(false);
-
+//teste
     const logoClick = () => {
         navigate("/");
     }
