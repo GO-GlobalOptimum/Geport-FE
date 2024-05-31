@@ -1,10 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { getCookie, setCookie } from "../../../function/cookies";
 
 export function Geport_question4({ nextPage }) {
     const [name, setName] = useState(''); // 사용자 이름을 저장하는 상태
 
+    // Load saved answer from the cookie when the component mounts
+    useEffect(() => {
+        const savedName = getCookie('geport_answer3');
+        if (savedName) {
+            setName(savedName);
+        }
+    }, []);
+
     const handleInputChange = (event) => {
         setName(event.target.value);
+    };
+
+    const handleNext = () => {
+        setCookie('geport_answer3', name, { path: '/' });
+        nextPage();
     };
 
     return (
@@ -45,7 +59,7 @@ export function Geport_question4({ nextPage }) {
                             ...styles.button,
                             backgroundColor: name.trim() ? '#1AE57C' : '#525252' // 이름이 있을 때만 버튼 색상 변경
                         }}
-                        onClick={() => name.trim() && nextPage()} // 버튼 클릭 시 입력된 이름이 있으면 nextPage 호출
+                        onClick={handleNext} // 버튼 클릭 시 입력된 이름이 있으면 nextPage 호출
                         disabled={!name.trim()} // 이름이 없을 때 버튼 비활성화
                     >
                         다음으로
@@ -115,17 +129,17 @@ const styles = {
     input: {
         width: '92%',
         paddingTop:"1.5%",
-        height: '220px', // Increased height
+        height: '220px',
         paddingLeft: '25px',
-        fontSize: '1.2rem', // Increased font size
+        fontSize: '1.2rem',
         color: '#C6C6C6',
         backgroundColor: '#333',
         border: 'none',
         borderRadius: '24px',
-        padding: '20px', // Added padding
-        overflowY: 'auto', // Enable vertical scrolling
-        whiteSpace: 'pre-wrap', // Ensure text wraps within the input box
-        resize: 'none' // Prevent manual resizing
+        padding: '20px',
+        overflowY: 'auto',
+        whiteSpace: 'pre-wrap',
+        resize: 'none'
     },
     container4: {
         position: 'relative',

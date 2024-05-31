@@ -1,10 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { getCookie, setCookie } from "../../../function/cookies";
 
 export function Geport_question3({ nextPage }) {
-    const [name, setName] = useState(''); // 사용자 이름을 저장하는 상태
+    const [answer, setAnswer] = useState('');
+
+    // Load saved answer from the cookie when the component mounts
+    useEffect(() => {
+        const savedAnswer = getCookie('geport_answer2');
+        if (savedAnswer) {
+            setAnswer(savedAnswer);
+        }
+    }, []);
 
     const handleInputChange = (event) => {
-        setName(event.target.value);
+        setAnswer(event.target.value);
+    };
+
+    const handleNext = () => {
+        setCookie('geport_answer2', answer, { path: '/' });
+        nextPage();
     };
 
     return (
@@ -22,15 +36,14 @@ export function Geport_question3({ nextPage }) {
                 <div style={styles.container7}>
                     <div style={styles.inputContainer}>
                         <textarea
-                            value={name}
+                            value={answer}
                             onChange={handleInputChange}
-                            placeholder={"제 좌우명은 '도전으로 변화를 이끈다'입니다. \n소프트콘 뷰어십 프로젝트를 진행하며 스트리밍 서비스에 대한 새로운 해결책을 제시할 수 있었던 경험은 제게 어떤 상황에서도 포기하지 않고 도전하는 가치를 깊이 깨닫게 해주었습니다. \n이러한 신념을 바탕으로, 앞으로도 더 나은 서비스를 제공하기 위해 노력하고자 합니다."}
+                            placeholder={`제 좌우명은 '도전으로 변화를 이끈다'입니다. \n소프트콘 뷰어십 프로젝트를 진행하며 스트리밍 서비스에 대한 새로운 해결책을 제시할 수 있었던 경험은 제게 어떤 상황에서도 포기하지 않고 도전하는 가치를 깊이 깨닫게 해주었습니다. \n이러한 신념을 바탕으로, 앞으로도 더 나은 서비스를 제공하기 위해 노력하고자 합니다.`}
                             style={styles.input}
                         />
                     </div>
                     <div style={styles.pageCount}>
-                        <svg width="10" height="210" viewBox="0 0 10 210" fill="none"
-                             xmlns="http://www.w3.org/2000/svg">
+                        <svg width="10" height="210" viewBox="0 0 10 210" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="5" cy="5" r="5" transform="rotate(90 5 5)" fill="#C6C6C6"/>
                             <circle cx="5" cy="55" r="5" transform="rotate(90 5 55)" fill="#1AE57C"/>
                             <circle cx="5" cy="105" r="5" transform="rotate(90 5 105)" fill="#C6C6C6"/>
@@ -43,10 +56,10 @@ export function Geport_question3({ nextPage }) {
                     <button
                         style={{
                             ...styles.button,
-                            backgroundColor: name.trim() ? '#1AE57C' : '#525252' // 이름이 있을 때만 버튼 색상 변경
+                            backgroundColor: answer.trim() ? '#1AE57C' : '#525252'
                         }}
-                        onClick={() => name.trim() && nextPage()} // 버튼 클릭 시 입력된 이름이 있으면 nextPage 호출
-                        disabled={!name.trim()} // 이름이 없을 때 버튼 비활성화
+                        onClick={handleNext}
+                        disabled={!answer.trim()}
                     >
                         다음으로
                     </button>
@@ -114,18 +127,18 @@ const styles = {
     },
     input: {
         width: '92%',
-        paddingTop:"1.5%",
-        height: '220px', // Increased height
+        paddingTop: '1.5%',
+        height: '220px',
         paddingLeft: '25px',
-        fontSize: '1.2rem', // Increased font size
+        fontSize: '1.2rem',
         color: '#C6C6C6',
         backgroundColor: '#333',
         border: 'none',
         borderRadius: '24px',
-        padding: '20px', // Added padding
-        overflowY: 'auto', // Enable vertical scrolling
-        whiteSpace: 'pre-wrap', // Ensure text wraps within the input box
-        resize: 'none' // Prevent manual resizing
+        padding: '20px',
+        overflowY: 'auto',
+        whiteSpace: 'pre-wrap',
+        resize: 'none'
     },
     container4: {
         position: 'relative',

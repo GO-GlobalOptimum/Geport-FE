@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useNavigate } from "react-router-dom";
+import {getCookie, setCookie} from "../../function/cookies";
 
 export function Geport() {
     const navigate = useNavigate();
     const [links, setLinks] = useState(Array(5).fill("")); // Start with 5 input boxes
+
+    useEffect(() => {
+        if(getCookie("geport").link){
+            setLinks(getCookie("geport").link)
+        }
+    }, []);
 
     const updateLink = (index, value) => {
         const newLinks = [...links];
@@ -20,6 +27,7 @@ export function Geport() {
     const allFilled = links.every(link => link.trim() !== ""); // Check if all links are filled and not just whitespace
     const handleSubmit = () => {
         console.log(links);
+        setCookie("geport", {link: links}, { path : "/"})
         navigate('/geport/question');
     };
 
