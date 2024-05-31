@@ -53,7 +53,7 @@ export function MyMain(props){
     return(
         <div>
             <div>
-                <hr style={{ borderTop: '1px gray', width: '80%', paddingLeft: "5%"}} />
+                <hr style={{ borderTop: '1px gray', width: '80%', paddingLeft: "5%", marginTop:'70px'}} />
                     {/* 게시글 목록 공간이여 */}
                     <div style={{paddingLeft: "5%", width: '90%' }}>
                         <div>

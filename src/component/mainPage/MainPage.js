@@ -5,10 +5,11 @@ import { Header } from '../../layout/Header';
 import { MyMain } from './detail/Mymain';
 
 export function MainPage(props){
-
     return (
       <div>
-        <Header/>
+        <div>
+          <Header/>
+        </div>
           <div style={{ display: 'flex' }}>
             <div style={{ flex: 3 }}>
         <MyMain />
@@ -18,6 +19,5 @@ export function MainPage(props){
       </div>
         </div>
       </div>
-        
     )
 }
