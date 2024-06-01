@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import {useNavigate} from "react-router-dom";
-import {LandingHeader} from "./detail/LandingHeader";
-import {HotPage} from "./detail/HotPage";
+import {LandingHeader} from "../landing/detail/LandingHeader";
+import {HotPage} from "../landing/detail/HotPage";
 import {Modal} from "../../function/modal";
-import {Login} from "../login/Login";
 import axios from "axios";
+import {SignUpPage} from "./detail/SignUpPage";
 
 
-export function Landing(props){
-    const [isModalOpen, setModalOpen] = useState(false);
+export function SignUp(props){
+    const [isModalOpen, setModalOpen] = useState(true);
 
     const openModal = () => setModalOpen(true);
     const closeModal = () => setModalOpen(false);
@@ -18,7 +18,7 @@ export function Landing(props){
             <LandingHeader openModal={openModal}/>
             <HotPage/>
             <Modal isOpen={isModalOpen} onClose={closeModal}>
-                <Login onClose={closeModal}/>
+                <SignUpPage onClose={closeModal}/>
             </Modal>
         </div>
     )

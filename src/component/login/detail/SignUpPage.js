@@ -25,7 +25,8 @@ export function SignUpPage(props){
         if (allChecked) {
             console.log('All checkboxes are checked. Moving to the next step.');
             // 다음 단계로 이동하는 로직 추가
-            props.onClose()
+            // props.onClose()
+            navigate("/mainpage")
         }
     };
 
