@@ -19,6 +19,7 @@ import {MyMain} from './component/mainPage/detail/Mymain';
 import {StatisticsPage} from "./component/StatisticsPage/StatisticsPage";
 import {Geport_result} from "./component/Geport_result/Geport_result";
 import {IGeport_result} from "./component/IGeport_result/IGeport_result";
+import {SignUp} from "./component/login/SignUp";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Routes>
             <Route path="/" element={<Landing />}></Route>
             <Route path="/login" element={<Login />}></Route>
+            <Route path="/SignUp" element={<SignUp />}></Route>
             <Route path="/mypage" element={<MyPage />}></Route>
             <Route path="/igeport/question" element={<Igeport_question/>}></Route>
             <Route path="/create_post" element={<Create_post/>}></Route>
