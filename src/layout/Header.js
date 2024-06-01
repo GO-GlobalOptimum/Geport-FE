@@ -11,6 +11,10 @@ export function Header(props) {
         navigate("/");
     }
 
+    const createPost = () => {
+        navigate("/create_post");
+    }
+
     const toggleNotificationMenu = () => {
         setShowNotificationMenu(prev => !prev);
         setShowUserMenu(false); // 유저 메뉴가 열려 있을 때는 닫는다.
@@ -32,8 +36,8 @@ export function Header(props) {
                     </div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', marginRight: '20px'}}>
-                    <button style={{ background: "#ccc", padding: '5px', borderRadius: '50px', border: '1px solid #ccc', display: 'flex', alignItems: 'center' }}>
-                        <img src={"./image/pen.png"} alt="Pen" style={{ width: '20px', height: '20px', marginRight: '5px' }} />
+                    <button style={{ background: "#ccc", padding: '5px', borderRadius: '50px', border: '1px solid #ccc', display: 'flex', alignItems: 'center' }} onClick={createPost}>
+                        <img src={"./image/pen.png"} alt="Pen" style={{ width: '20px', height: '20px', marginRight: '5px' }}/>
                         글쓰기
                     </button>
                     <div style={{ position: 'relative' }}>

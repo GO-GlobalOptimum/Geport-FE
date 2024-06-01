@@ -7,8 +7,6 @@ import {MyPage} from './component/mypage/MyPage';
 import {Igeport_question} from "./component/Igeport_question/Igeport_question";
 import {Create_post} from "./component/create_post/create_post";
 import {Posts}from"./component/posts/Posts";
-import { My_Posts } from "./component/posts/detail/My_Posts";
-import { Other_Posts } from "./component/posts/detail/Other_Posts";
 import {UserInfo} from "./component/UserInfo/UserInfo";
 import {Geport} from "./component/Geport/Geport";
 import {Geport_question} from "./component/Geport_question/Geport_question";
@@ -36,9 +34,7 @@ function App() {
             <Route path="/igeport/question" element={<Igeport_question/>}></Route>
             <Route path ="/igeport" element={<IGeport/>}></Route>
             <Route path="/create_post" element={<Create_post/>}></Route>
-            <Route path="/posts" element={<Posts/>}></Route>
-            <Route path="/my_posts" element={<My_Posts/>}></Route>
-            <Route path="/other_posts" element={<Other_Posts/>}></Route>
+            <Route path="/posts/:postId" element={<Posts/>}></Route>
             <Route path="/userinfo" element={<UserInfo/>}></Route>
             <Route path="/geport" element={<Geport/>}></Route>
             <Route path="/geport/question" element={<Geport_question/>}></Route>
