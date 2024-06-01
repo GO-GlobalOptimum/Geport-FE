@@ -1,24 +1,43 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
+import {get_api} from "./Geport_result1";
+import {getCookie} from "../../../function/cookies";
 
 export function Geport_result7({ nextPage }) {
+    const [userData, setUserData] = useState(null);
+    const name = getCookie('username');
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await get_api();
+                if (response && response.data && response.data.length > 0) {
+                    setUserData(response.data[0]);  // 첫 번째 데이터만 저장
+                } else {
+                    console.error('No data received');
+                }
+            } catch (error) {
+                console.error("There was an error fetching user data:", error);
+            }
+        };
+
+        fetchUserData();
+    }, []);
 
     return (
         <div style={styles.container}>
             <div style={styles.container1}>
                 <div style={styles.container2}></div>
                 <div style={styles.container3}>
-                    <span style={styles.title}>조태완 님의 <br/>Geport 퍼스널 브랜딩 솔루션은</span>
+                    <span style={styles.title}>{name} 님의 <br/>Geport 퍼스널 브랜딩 솔루션은</span>
                 </div>
                 <div style={styles.container7}>
                     <div style={styles.inputContainer}>
-                        <div>
-                            <span style={styles.text}>
-                                당신은 사용자들에게 최고의 정보를 전달하기 위해 끊임없이 공부하고 발전하는 사업가입니다.
-                                당신은 초기에 겪은 어려움을 극복하며, 끊임없이 문제를 해결하고 서비스를 개선하는 데 최선을 다합니다.
-                                이러한 강점을 블로그에 녹여 변화를 이끄는 도전정신과 성장하고자 하는 열망을 중심으로 기술 블로그를 운영하는 것을 추천합니다.
-                                함께 더 나은 미래를 만들어나가는 것을 선호하는 당신은 리더십과 열정을 보여줄 수 있는 게시글을 적는 것이 적합합니다.
-                            </span>
-                        </div>
+                        {userData && userData.result && userData.result.answer_5 && (
+                            <div>
+                                <span style={styles.text}>
+                                    {JSON.parse(userData.result.answer_5).answer}
+                                </span>
+                            </div>
+                        )}
                     </div>
                     <div style={styles.pageCount}>
                     </div>
