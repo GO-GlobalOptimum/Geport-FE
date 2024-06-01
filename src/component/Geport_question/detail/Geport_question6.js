@@ -1,10 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { getCookie, setCookie } from "../../../function/cookies";
 
 export function Geport_question6({ nextPage }) {
-    const [name, setName] = useState(''); // 사용자 이름을 저장하는 상태
+    const [answer, setAnswer] = useState('');
+
+    // Load saved answer from the cookie when the component mounts
+    useEffect(() => {
+        const savedAnswer = getCookie('geport_answer5');
+        if (savedAnswer) {
+            setAnswer(savedAnswer);
+        }
+    }, []);
 
     const handleInputChange = (event) => {
-        setName(event.target.value);
+        setAnswer(event.target.value);
+    };
+
+    const handleNext = () => {
+        setCookie('geport_answer5', answer, { path: '/' });
+        nextPage();
     };
 
     return (
@@ -22,7 +36,7 @@ export function Geport_question6({ nextPage }) {
                 <div style={styles.container7}>
                     <div style={styles.inputContainer}>
                         <textarea
-                            value={name}
+                            value={answer}
                             onChange={handleInputChange}
                             placeholder={'대학교 2학년 때, 학교 생활에 흥미를 느끼지 못하고 많이 방황했던 경험이 있습니다. \n 하지만 서비스를 제작하는 과제를 진행하면서 몇날 며칠 밤을 세워가며 프로젝트를 완성했고, 그 결과로 성공적으로 프로젝트를 마무리했습니다.\n 이 과정 덕분에 학교 생활에 대한 흥미를 되찾았습니다.'}
                             style={styles.input}
@@ -43,10 +57,10 @@ export function Geport_question6({ nextPage }) {
                     <button
                         style={{
                             ...styles.button,
-                            backgroundColor: name.trim() ? '#1AE57C' : '#525252' // 이름이 있을 때만 버튼 색상 변경
+                            backgroundColor: answer.trim() ? '#1AE57C' : '#525252' // 이름이 있을 때만 버튼 색상 변경
                         }}
-                        onClick={() => name.trim() && nextPage()} // 버튼 클릭 시 입력된 이름이 있으면 nextPage 호출
-                        disabled={!name.trim()} // 이름이 없을 때 버튼 비활성화
+                        onClick={handleNext} // 버튼 클릭 시 입력된 이름이 있으면 nextPage 호출
+                        disabled={!answer.trim()} // 이름이 없을 때 버튼 비활성화
                     >
                         다음으로
                     </button>
@@ -114,18 +128,18 @@ const styles = {
     },
     input: {
         width: '92%',
-        paddingTop:"1.5%",
-        height: '220px', // Increased height
+        paddingTop: '1.5%',
+        height: '220px',
         paddingLeft: '25px',
-        fontSize: '1.2rem', // Increased font size
+        fontSize: '1.2rem',
         color: '#C6C6C6',
         backgroundColor: '#333',
         border: 'none',
         borderRadius: '24px',
-        padding: '20px', // Added padding
-        overflowY: 'auto', // Enable vertical scrolling
-        whiteSpace: 'pre-wrap', // Ensure text wraps within the input box
-        resize: 'none' // Prevent manual resizing
+        padding: '20px',
+        overflowY: 'auto',
+        whiteSpace: 'pre-wrap',
+        resize: 'none'
     },
     container4: {
         position: 'relative',
