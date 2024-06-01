@@ -4,6 +4,10 @@ import { useNavigate } from 'react-router-dom';
 export function Fix_Profile(props) {
     const [nickname, setNickname] = useState('');
     const [bio, setBio] = useState('');
+    const [mbti, setMbti] = useState('');
+    const [age, setAge] = useState('');
+    const [gender, setGender] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
 
     const handleSave = () => {
         // 프로필 수정 로직
@@ -31,16 +35,44 @@ export function Fix_Profile(props) {
             </div>
             <div style={{ marginTop: '20px', textAlign: 'left', display: 'inline-block' }}>
                 <p style={{fontWeight:"bold"}}>기본 정보 편집</p>
-                <div style={{ marginBottom: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                <div style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                     <label style={{ marginRight: '30px' }}>닉네임</label>
-                    <div style={{ position: 'relative', display: 'flex', width:'70%', alignItems: 'center', background: "#ccc", borderRadius: '50px', border: '1px solid #ccc', padding: '5px', height: '20px' }}>
-                        <input type="text" placeholder="닉네임" style={{ background: "transparent", border: 'none', outline: 'none', flex: 1, height: '100%' }} />
+                    <div style={{ position: 'relative', display: 'flex', width:'70%', alignItems: 'center', background: "#ccc", borderRadius: '50px', border: '1px solid #ccc', padding: '5px', height: '30px' }}>
+                        <input type="text" placeholder="닉네임" value={nickname} onChange={(e) => setNickname(e.target.value)} style={{ background: "transparent", border: 'none', outline: 'none', flex: 1, height: '100%' }} />
                     </div>
                 </div>
                 <div style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <label style={{ marginRight: '50px' }}>바이오</label>
-                    <div style={{ position: 'relative', display: 'flex', width:'70%', alignItems: 'center', background: "#ccc", borderRadius: '50px', border: '1px solid #ccc', padding: '5px', height: '20px' }}>
-                        <input type="text" placeholder="바이오" style={{ background: "transparent", border: 'none', outline: 'none', flex: 1, height: '100%' }} />
+                    <div style={{ position: 'relative', display: 'flex', width:'70%', alignItems: 'center', background: "#ccc", borderRadius: '50px', border: '1px solid #ccc', padding: '5px', height: '30px' }}>
+                        <input type="text" placeholder="바이오" value={bio} onChange={(e) => setBio(e.target.value)} style={{ background: "transparent", border: 'none', outline: 'none', flex: 1, height: '100%' }} />
+                    </div>
+                </div>
+                <div style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <label style={{ marginRight: '30px' }}>MBTI</label>
+                    <div style={{ position: 'relative', display: 'flex', width:'70%', alignItems: 'center', background: "#ccc", borderRadius: '50px', border: '1px solid #ccc', padding: '5px', height: '30px' }}>
+                        <input type="text" placeholder="MBTI" value={mbti} onChange={(e) => setMbti(e.target.value)} style={{ background: "transparent", border: 'none', outline: 'none', flex: 1, height: '100%' }} />
+                    </div>
+                </div>
+                <div style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <label style={{ marginRight: '50px' }}>나이</label>
+                    <div style={{ position: 'relative', display: 'flex', width:'70%', alignItems: 'center', background: "#ccc", borderRadius: '50px', border: '1px solid #ccc', padding: '5px', height: '30px' }}>
+                        <input type="text" placeholder="나이" value={age} onChange={(e) => setAge(e.target.value)} style={{ background: "transparent", border: 'none', outline: 'none', flex: 1, height: '100%' }} />
+                    </div>
+                </div>
+                <div style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <label style={{ marginRight: '30px' }}>성별</label>
+                    <div style={{ position: 'relative', display: 'flex', width:'70%', alignItems: 'center', background: "#ccc", borderRadius: '50px', border: '1px solid #ccc', padding: '5px', height: '30px' }}>
+                        <select value={gender} onChange={(e) => setGender(e.target.value)} style={{ background: "transparent", border: 'none', outline: 'none', flex: 1, height: '100%' }}>
+                            <option value="">성별 선택</option>
+                            <option value="남">남</option>
+                            <option value="여">여</option>
+                        </select>
+                    </div>
+                </div>
+                <div style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <label style={{ marginRight: '30px' }}>전화번호</label>
+                    <div style={{ position: 'relative', display: 'flex', width:'70%', alignItems: 'center', background: "#ccc", borderRadius: '50px', border: '1px solid #ccc', padding: '5px', height: '30px' }}>
+                        <input type="text" placeholder="전화번호" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} style={{ background: "transparent", border: 'none', outline: 'none', flex: 1, height: '100%' }} />
                     </div>
                 </div>
                 <div style={{ padding: '10px', borderRadius: '5px', marginBottom: '20px' }}>
@@ -51,11 +83,11 @@ export function Fix_Profile(props) {
                 </div>
             </div>
             <div>
-                    <button onClick={handleSave} style={{ marginRight: '30px', marginBottom: '10px', borderRadius: '20px', padding: '5px 10px', backgroundColor: '#10901FC3',
-                    color:'white', border: '1px solid #10901FC3', width:'150px' }}>프로필 수정</button>
-                    <button onClick={handleCancel} style={{marginBottom: '10px', borderRadius: '20px', padding: '5px 10px', backgroundColor: 'white',
-                    color:'#10901FC3', border: '1px solid #10901FC3', width:'150px' }}>취소</button>
-                </div>
+                <button onClick={handleSave} style={{ marginRight: '30px', marginBottom: '10px', borderRadius: '20px', padding: '5px 10px', backgroundColor: '#10901FC3',
+                color:'white', border: '1px solid #10901FC3', width:'150px' }}>프로필 수정</button>
+                <button onClick={handleCancel} style={{marginBottom: '10px', borderRadius: '20px', padding: '5px 10px', backgroundColor: 'white',
+                color:'#10901FC3', border: '1px solid #10901FC3', width:'150px' }}>취소</button>
+            </div>
         </div>
     )
 }
