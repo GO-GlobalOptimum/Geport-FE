@@ -1,26 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import {GoogleOAuthProvider, GoogleLogin} from "@react-oauth/google";
+import axios from "axios";
 
 
 export function LoginPage(props){
 
     const navigate = useNavigate();
 
-    // 응답 성공시 호출되는 콜백 함수
-    const responseGoogle = (response) => {
-        props.toggleLogin()
-        console.log(response);
+    const googleLogin = () => {
+        console.log("Google Login");
+        window.location.href = process.env.REACT_APP_GOOGLE_LOGIN_URL
     }
-
-// 응답 실패시 호출되는 콜백 함수
-    const handleFailure = (error) => {
-        console.log(error);
-    }
-
-    useEffect(() => {
-        console.log("Google Client ID:", process.env.REACT_APP_GOOGLE_OAUTH_ID);
-    }, []);
 
     return(
         <div style={{marginLeft: "170px", marginRight: "170px", marginTop: "130px", marginBottom: "130px",
@@ -30,12 +21,11 @@ export function LoginPage(props){
             </div>
             <div style={{height: "80px"}}/>
             <div style={{alignItems: "center", justifyContent: "center", display:"flex"}}>
-                <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_OAUTH_ID}>
-                    <GoogleLogin
-                        onSuccess={responseGoogle}
-                        onFailure={handleFailure}
-                    />
-                </GoogleOAuthProvider>
+                <button style={{width: "100%", height: "50px", backgroundColor: "#3B5998", color: "white",
+                    borderRadius: "5px", border: "none", fontSize: "16px"}}
+                    onClick={googleLogin}>
+                    구글으로 로그인
+                </button>
             </div>
             <div style={{height: "80px"}}/>
             <div style={{textAlign: "center",fontWeight:"300", fontSize: "17px"}}>
