@@ -179,6 +179,62 @@ export function Posts(props) {
                             </div>
                         </div>
                         <hr style={{ borderTop: '1px gray', width: '90%', paddingLeft: "5%" }} />
+                        <div>
+                            <h2>댓글창</h2>
+                            <div>
+                                <div style={{
+                                    display: 'flex',
+                                    alignItems: 'flex-start',
+                                    marginTop: '20px',
+                                    padding: '10px',
+                                    backgroundColor: '#f9f9f9',
+                                    borderRadius: '10px'
+                                }}>
+                                    <img src={"./image/user.png"} alt="Profile" style={{
+                                        width: '50px',
+                                        height: '50px',
+                                        borderRadius: '50%',
+                                        marginRight: '10px'
+                                    }} />
+                                    <div style={{ flex: 1 }}>
+                                        <div style={{
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            marginBottom: '10px'
+                                        }}>
+                                            <div>
+                                                <p style={{ fontWeight: 'bold', margin: 0 }}>{post.name}</p>
+                                                <p style={{ fontSize: '12px', margin: 0, color: '#777' }}>{formattedDate}</p>
+                                            </div>
+                                            <div>
+                                                <button style={{
+                                                    marginRight: '10px',
+                                                    padding: '5px 10px',
+                                                    borderRadius: '20px',
+                                                    backgroundColor: '#DDDDDD',
+                                                    border: 'none',
+                                                    cursor: 'pointer'
+                                                }}>추가</button>
+                                                <button style={{
+                                                    padding: '5px 10px',
+                                                    borderRadius: '20px',
+                                                    backgroundColor: '#DDDDDD',
+                                                    border: 'none',
+                                                    cursor: 'pointer'
+                                                }}>삭제</button>
+                                            </div>
+                                        </div>
+                                        <input type="text" placeholder="댓글을 입력하세요" style={{
+                                            width: '100%',
+                                            padding: '10px',
+                                            borderRadius: '10px',
+                                            border: '1px solid #ddd',
+                                            outline: 'none'
+                                        }} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
