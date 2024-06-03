@@ -1,15 +1,55 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { Bar } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { get_api } from "./IGeport_result1";
+import {getCookie} from "../../../function/cookies";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartDataLabels);
 
 export function IGeport_result4({ nextPage }) {
-    const [name, setName] = useState(''); // 사용자 이름을 저장하는 상태
+    const name = getCookie('username');
+    const [userData, setUserData] = useState(null);
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await get_api();
+                if (response && response.data && response.data.length > 0) {
+                    setUserData(response.data[0].result.blogs_emotionSos.emotion_sos);
+                } else {
+                    console.error('데이터를 받지 못했습니다');
+                }
+            } catch (error) {
+                console.error("사용자 데이터를 가져오는 중 오류가 발생했습니다:", error);
+            }
+        };
+
+        fetchUserData();
+    }, []);
+
+    // 데이터가 유효한지 확인 후 변수에 할당
+    const anger = userData ? userData.sentiments.anger : 0;
+    const anxious = userData ? userData.sentiments.anxious : 0;
+    const sadness = userData ? userData.sentiments.sadness : 0;
+    const depressed = userData ? userData.sentiments.depressed : 0;
+    const summary = userData ? userData.contents : "";
+
+    const barChartData = {
+        labels: ['ANGER', 'ANXIOUS', 'SADNESS', 'DEPRESSED'],
+        datasets: [
+            {
+                label: 'Negative Emotion Levels',
+                data: [anger, anxious, sadness, depressed],
+                backgroundColor: 'rgba(26, 229, 124, 0.5)',
+                borderColor: '#1AE57C',
+                borderWidth: 1,
+            },
+        ],
+    };
 
     const barChartOptions = {
-        indexAxis: 'y', // Y축으로 가로 바 그래프를 그립니다.
+        indexAxis: 'y',
         responsive: true,
         plugins: {
             legend: {
@@ -28,10 +68,10 @@ export function IGeport_result4({ nextPage }) {
                 },
                 ticks: {
                     beginAtZero: true,
-                    color: 'white', // X축 레이블 색상
+                    color: 'white',
                 },
                 grid: {
-                    color: '#444' // 그리드 라인 색상
+                    color: '#444',
                 }
             },
             y: {
@@ -39,30 +79,13 @@ export function IGeport_result4({ nextPage }) {
                     display: false,
                 },
                 ticks: {
-                    color: 'white', // Y축 레이블 색상
+                    color: 'white',
                 },
                 grid: {
-                    color: '#444' // 그리드 라인 색상
+                    color: '#444',
                 }
             },
         },
-    };
-
-    const handleInputChange = (event) => {
-        setName(event.target.value);
-    };
-
-    const barChartData = {
-        labels: ['스트레스', '불안', '슬픔', '피로'],
-        datasets: [
-            {
-                label: '부정적 감정 상태',
-                data: [80, 60, 40, 100],
-                backgroundColor: 'rgba(26, 229, 124, 0.5)', // 바 색상
-                borderColor: '#1AE57C',
-                borderWidth: 1,
-            },
-        ],
     };
 
     return (
@@ -79,11 +102,7 @@ export function IGeport_result4({ nextPage }) {
                         </div>
                         <div style={styles.inputContainer}>
                             <div>
-                                <span style={styles.text}>
-                                    이 그래프는 {name} 님의 부정적 감정 상태를 나타냅니다.
-                                    스트레스, 불안, 슬픔, 피로와 같은 감정들이 정상 범위 기준선인 200점 아래이며,
-                                    이는 여행이 {name} 님께 긍정적인 영향을 미쳤음을 시사합니다.
-                                </span>
+                                <span style={styles.text}>{summary}</span>
                             </div>
                         </div>
                     </div>
@@ -100,7 +119,7 @@ export function IGeport_result4({ nextPage }) {
                 <div style={styles.container4}>
                     <button
                         style={styles.button}
-                        onClick={nextPage} // 버튼 클릭 시 nextPage 호출
+                        onClick={nextPage}
                     >
                         다음으로
                     </button>
@@ -109,6 +128,7 @@ export function IGeport_result4({ nextPage }) {
         </div>
     );
 }
+
 
 const styles = {
     container: {
