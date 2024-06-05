@@ -1,34 +1,45 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
+import {get_api} from "./Geport_result1";
+import {getCookie} from "../../../function/cookies";
 
 export function Geport_result7({ nextPage }) {
+    const [userData, setUserData] = useState(null);
+    const name = getCookie('username');
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await get_api();
+                if (response && response.data && response.data.length > 0) {
+                    setUserData(response.data[0]);  // 첫 번째 데이터만 저장
+                } else {
+                    console.error('No data received');
+                }
+            } catch (error) {
+                console.error("There was an error fetching user data:", error);
+            }
+        };
+
+        fetchUserData();
+    }, []);
 
     return (
         <div style={styles.container}>
             <div style={styles.container1}>
                 <div style={styles.container2}></div>
                 <div style={styles.container3}>
-                    <span style={styles.title}>조태완 님의 <br/>Geport 퍼스널 브랜딩 솔루션은</span>
+                    <span style={styles.title}>{name} 님의 <br/>Geport 퍼스널 브랜딩 솔루션은</span>
                 </div>
                 <div style={styles.container7}>
                     <div style={styles.inputContainer}>
-                        <div>
-                            <span style={styles.text}>
-                                당신은 사용자들에게 최고의 정보를 전달하기 위해 끊임없이 공부하고 발전하는 사업가입니다.
-                                당신은 초기에 겪은 어려움을 극복하며, 끊임없이 문제를 해결하고 서비스를 개선하는 데 최선을 다합니다.
-                                이러한 강점을 블로그에 녹여 변화를 이끄는 도전정신과 성장하고자 하는 열망을 중심으로 기술 블로그를 운영하는 것을 추천합니다.
-                                함께 더 나은 미래를 만들어나가는 것을 선호하는 당신은 리더십과 열정을 보여줄 수 있는 게시글을 적는 것이 적합합니다.
-                            </span>
-                        </div>
+                        {userData && userData.result && userData.result.answer_5 && (
+                            <div>
+                                <span style={styles.text}>
+                                    {JSON.parse(userData.result.answer_5).answer}
+                                </span>
+                            </div>
+                        )}
                     </div>
                     <div style={styles.pageCount}>
-                        <svg width="10" height="146" viewBox="0 0 10 146" fill="none"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="5" cy="5" r="5" transform="rotate(90 5 5)" fill="#C6C6C6"/>
-                            <circle cx="5" cy="39" r="5" transform="rotate(90 5 39)" fill="#C6C6C6"/>
-                            <circle cx="5" cy="73" r="5" transform="rotate(90 5 73)" fill="#1AE57C"/>
-                            <circle cx="5" cy="107" r="5" transform="rotate(90 5 107)" fill="#C6C6C6"/>
-                            <circle cx="5" cy="141" r="5" transform="rotate(90 5 141)" fill="#C6C6C6"/>
-                        </svg>
                     </div>
                 </div>
                 <div style={styles.container4}>
@@ -36,7 +47,7 @@ export function Geport_result7({ nextPage }) {
                         style={styles.button}
                         onClick={nextPage} // 버튼 클릭 시 nextPage 호출
                     >
-                        Geport 다운받기
+                        Geport <br/>다운받기
                     </button>
                 </div>
             </div>
@@ -71,22 +82,22 @@ const styles = {
         flexDirection: 'column',
         overflow: 'hidden',
     },
-    container2: {
-        position: 'relative',
-        width: '100%',
-        height: '15vh',
-        display: 'flex',
-        flexDirection: 'column',
-        overflow: 'hidden',
+    container2 : { // 문구 입력 컨테이너
+        position:"relative",
+        width: "100%",
+        height:"20vh",
+        display:'flex',
+        flexDirection:'column',
+        overflow:"hidden",
     },
     container3 : { // 문구 입력창
         position:"relative",
         width: "100%",
-        height:"8.5vh",
+        height:"15vh",
         display:'flex',
         flexDirection:'column',
         overflow:"hidden",
-        margin:"1%"
+        margin:"0.1vh"
     },
     title: {
         paddingLeft: '50px',
@@ -129,17 +140,19 @@ const styles = {
     },
     button: {
         width: '10vw',
-        height: '5vh',
+        height: '7vh',
         backgroundColor: '#1AE57C',
         color: 'black',
         border: 'none',
         borderRadius: '10px',
         cursor: 'pointer',
-        fontSize: '22px',
+        fontSize: '20px',
         fontWeight: '600'
     },
     text:{
-        color:"white",
-        fontSize:"20px"
+        color: "white",
+        fontSize: "18px",
+        lineHeight: "160%",
     }
+
 };

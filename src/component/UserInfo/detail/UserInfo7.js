@@ -68,13 +68,6 @@ const styles = {
         justifyContent: 'center',
         overflow: "hidden"
     },
-    subtitle: {
-        paddingLeft: '50px',
-        fontWeight:"600",
-        color:"#C6C6C6",
-        fontSize:"20px",
-        paddingTop:"2%"
-    },
     container1: {
         position: "relative",
         width: "75%",
@@ -86,7 +79,7 @@ const styles = {
     container2: {
         position:"relative",
         width: "100%",
-        height:"15vh",
+        height:"14vh",
         display:'flex',
         flexDirection:'column',
         overflow:"hidden",
@@ -94,11 +87,11 @@ const styles = {
     container3: {
         position:"relative",
         width: "100%",
-        height:"7.5vh",
+        height:"9vh",
         display:'flex',
         flexDirection:'column',
         overflow:"hidden",
-        margin:"1%"
+        margin:"0.5%"
     },
     title: {
         paddingLeft: '50px',
@@ -116,11 +109,20 @@ const styles = {
         width: '90%',
         height: '70px',
         paddingLeft:"15px",
-        fontSize: '1.2rem',
+        fontSize: '1.3rem',
         color: '#C6C6C6',
         backgroundColor: '#333',
         border: 'none',
-        borderRadius:"24px"
+        borderRadius:"24px",
+        lineHeight: "160%"
+
+    },subtitle: {
+        paddingLeft: '50px',
+        fontWeight:"600",
+        color:"#C6C6C6",
+        fontSize:"22px",
+        marginBottom:"2%",
+        marginTop:"2%"
     },
     container4: {
         position:"relative",

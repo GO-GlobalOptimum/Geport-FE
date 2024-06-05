@@ -35,12 +35,12 @@ export function SignUpPage(props){
             marginLeft: "170px", marginRight: "170px", marginTop: "130px", marginBottom: "130px",
             alignItems: "center", justifyContent: "center", display: "flex", flexDirection: "column"
         }}>
-            <div style={{textAlign: "center", fontStyle: "bold", fontSize: "22px"}}>
+            <div style={{textAlign: "center", fontStyle: "bold",fontWeight:"600", fontSize: "24px"}}>
                 회원가입 하기
             </div>
             <div style={{height: "40px"}}/>
             <div style={{alignItems: "center", justifyContent: "center", display: "flex", flexDirection: "column"}}>
-                <label style={{width: "250px", height: "60px", fontSize: "14px"}}>
+                <label style={{width: "300px", height: "60px", fontSize: "17px"}}>
                     <input
                         type="checkbox"
                         name="option1"
@@ -50,7 +50,7 @@ export function SignUpPage(props){
                     />
                     이용약관에 동의합니다.
                 </label>
-                <label style={{width: "250px", height: "60px", fontSize: "14px"}}>
+                <label style={{width: "300px", height: "60px", fontSize: "17px"}}>
                     <input
                         type="checkbox"
                         name="option2"
@@ -62,15 +62,15 @@ export function SignUpPage(props){
                 </label>
             </div>
             <div style={{height: "20px"}}/>
-            <div style={{textAlign: "center", fontSize: "14px", marginBottom: "20px"}}>
+            <div style={{textAlign: "center", fontSize: "16px", marginBottom: "20px"}}>
                 원활한 Geport 이용을 위해 <br/>
                 이용약관과 개인정보 처리방침을 확인해주세요.
             </div>
             <div onClick={handleNextClick}
                     style={{backgroundColor : !allChecked ? "#EBEBEB" : "#1AE57C",
-                            width: "130px", height: "40px", borderRadius: "20px",
+                            width: "150px", height: "40px", borderRadius: "20px",
                             alignItems: "center", justifyContent: "center", display:"flex"}}>
-                <div style={{fontSize: "14px"}}>Geport 시작하기</div>
+                <div style={{fontSize: "17px", fontWeight:"600"}}>Geport 시작하기</div>
             </div>
         </div>
     )

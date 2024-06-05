@@ -1,7 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-
-export function Create_post() {
+import TitleInput from './detail/TitleInput';
+import ContentEditor from './detail/ContentEditor';
+import UploadButtons from './detail/UploadButtons';
+import FormatOptions from './detail/FormatOptions';
+import TagModal from './detail/TagModal';
+//teset
+export function Create_post(props) {
     const navigate = useNavigate();
     const contentRef = useRef(null);
     const [title, setTitle] = useState('');
@@ -69,7 +74,7 @@ export function Create_post() {
         } else if (!isContentEntered) {
             setAlert('내용을 입력해 주세요.');
         } else {
-            setShowTagModal(true); // Show tag modal
+            setShowTagModal(true);
         }
     };
 
@@ -97,7 +102,7 @@ export function Create_post() {
 
     const handleToggleClick = () => {
         setShowUploadButtons(prevState => !prevState);
-        setToggleImage(prevState => (prevState === "./image/type=plus.png" ? "./image/type=quit.png" : "./image/type=plus.png")); // Toggle between images
+        setToggleImage(prevState => (prevState === "./image/type=plus.png" ? "./image/type=quit.png" : "./image/type=plus.png"));
     };
 
     const handleMouseUp = () => {
@@ -141,7 +146,6 @@ export function Create_post() {
     }, []);
 
     useEffect(() => {
-        // 초기 togglePosition 설정
         const contentElement = contentRef.current;
         if (contentElement) {
             const contentRect = contentElement.getBoundingClientRect();
@@ -151,7 +155,7 @@ export function Create_post() {
 
     return (
         <div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' , marginTop:'20px'}}>
                 <div>
                     <img src={"./image/Logo.png"} style={{ marginRight: '10px', width: '150px', height: '30px', padding: "1%", cursor: "pointer", borderRadius: "5px" }} onClick={logoClick} />
                 </div>
@@ -164,73 +168,24 @@ export function Create_post() {
                 </div>
             </div>
 
-            {alert && <div style={{ textAlign: 'center', color: 'red', marginTop: '10px' }}>{alert}</div>} {/* 알림 메시지 표시 */}
+            {alert && <div style={{ textAlign: 'center', color: 'red', marginTop: '10px' }}>{alert}</div>}
 
             <div style={{ marginRight: '20px', textAlign: 'center' }}>
-                {/* 제목 입력란 */}
-                <input type="text" placeholder="제목을 입력하세요" value={title} onChange={handleTitleChange} style={{ border: 'none', width: '60%', padding: '10px', fontSize: '46px', fontWeight: 'bold', marginTop: '20px' }} />
-
-                {/* 내용 입력란 */}
-                <div
-                    contentEditable
-                    onInput={handleContentChange}
-                    ref={contentRef}
-                    style={{ textAlign: 'left', width: '60%', minHeight: '200px', padding: '10px', fontSize: '14px', letterSpacing: '0.8px', lineHeight: '30px', marginTop: '20px', outline: 'none', margin: '0 auto', position: 'relative' }}
-                ></div>
-
-                {showOptions && (
-                    <div style={{ position: 'absolute', top: togglePosition.top, left: togglePosition.left, display: 'flex', alignItems: 'center', background: '#A3F0CBC3'}}>
-                        <label style={{ cursor: 'pointer', borderRadius: '5px', color: '#fff', marginRight: '5px' }} onClick={() => applyCommand('bold')}>
-                            <img src="./image/type=format-bold.png" alt="두껍게" style={{ width: '20px', height: '20px' }} />
-                        </label>
-                        <label style={{ cursor: 'pointer', borderRadius: '5px', color: '#fff', marginRight: '5px' }} onClick={() => applyCommand('italic')}>
-                            <img src="./image/type=format-italic.png" alt="기울기" style={{ width: '20px', height: '20px' }} />
-                        </label>
-                        <label style={{ cursor: 'pointer', borderRadius: '5px', color: '#fff', marginRight: '5px' }} onClick={() => applyCommand('underline')}>
-                            <img src="./image/type=format-underline.png" alt="밑줄" style={{ width: '20px', height: '20px' }} />
-                        </label>
-                        <label style={{ cursor: 'pointer', borderRadius: '5px', color: '#fff', marginRight: '5px' }} onClick={applyLink}>
-                            <img src="./image/type=link.png" alt="링크" style={{ width: '20px', height: '20px' }} />
-                        </label>
-                    </div>
-                )}
+                <TitleInput title={title} handleTitleChange={handleTitleChange} />
+                <ContentEditor contentRef={contentRef} handleContentChange={handleContentChange} updateTogglePosition={updateTogglePosition} />
                 
-                {showUploadButtons && (
-                    <div style={{ position: 'absolute', top: togglePosition.top - 20, left: togglePosition.left, display: 'flex', alignItems: 'center', background: '#A3F0CBC3' }}>
-                        <label htmlFor="image-upload" style={{ cursor: 'pointer', borderRadius: '5px', color: '#fff', marginRight: '5px' }}>
-                            <img src="./image/type=image.png" alt="이미지 첨부" style={{ width: '20px', height: '20px' }} />
-                        </label>
-                        <input id="image-upload" type="file" accept="image/*" multiple onChange={handleImageChange} style={{ display: 'none' }} />
-                        
-                        <label htmlFor="video-upload" style={{ cursor: 'pointer', borderRadius: '5px', color: '#fff' }}>
-                            <img src="./image/type=video.png" alt="영상 첨부" style={{ width: '20px', height: '20px' }} />
-                        </label>
-                        <input id="video-upload" type="file" accept="video/*" multiple onChange={handleVideoChange} style={{ display: 'none' }} />
-                    </div>
-                )}
-
+                {showOptions && <FormatOptions togglePosition={togglePosition} applyCommand={applyCommand} applyLink={applyLink} />}
+                {showUploadButtons && <UploadButtons handleImageChange={handleImageChange} handleVideoChange={handleVideoChange} togglePosition={togglePosition} />}
+                
                 <div
-                    style={{
-                        position: 'absolute',
-                        top: togglePosition.top - 20,
-                        left: togglePosition.left - 30,
-                        cursor: 'pointer'
-                    }}
+                    style={{ position: 'absolute', top: togglePosition.top - 20, left: togglePosition.left - 30, cursor: 'pointer' }}
                     onClick={handleToggleClick}
                 >
                     <img src={toggleImage} alt="plus" style={{ width: '20px', height: '20px', borderRadius: '50%' }} />
                 </div>
             </div>
-            {/* Tag modal */}
-            {showTagModal && (
-                <div style={{ position: 'absolute', top: 'calc(5% + 10px)', left: '90%', transform: 'translateX(-50%)', width: '15%', background: '#A3F0CBC3', padding: '20px', boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', borderRadius: '15px', zIndex: 999 }}>
-                    <h3>태그를 추가하시겠습니까?</h3>
-                    <input type="text" placeholder="태그를 추가해주세요(ex #운동 #취미)" style={{ width: '90%', border: 'none', background: '#A3F0CBC3', padding: '8px', borderRadius: '8px' }} />
-                    <div style={{ marginTop: '20px', textAlign: 'center' }}>
-                        <button onClick={handleTagModalClose} style={{ background: '#00CC81', color: 'black', padding: '10px 20px', borderRadius: '15px', border: 'none', cursor: 'pointer' }}>또는 AI에게 태그 추천받기</button>
-                    </div>
-                </div>
-            )}
+            
+            {showTagModal && <TagModal handleTagModalClose={handleTagModalClose} />}
         </div>
     );
 }

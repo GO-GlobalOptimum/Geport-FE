@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
-export  function IGeport() {
+export function IGeport() {
     const navigate = useNavigate();
     const [links, setLinks] = useState(Array(4).fill(""));
 
@@ -10,47 +10,51 @@ export  function IGeport() {
         newLinks[index] = value;
         setLinks(newLinks);
     };
-    const allFilled = links.every(link => link.trim() !== ""); // Check if all links are filled and not just whitespace
+
+    const allFilled = links.every(link => link.trim() !== "");
     const handleSubmit = () => {
         console.log(links);
         navigate('/igeport/question');
     };
+
+    const leftLinks = links.filter((_, index) => index % 2 === 0);
+    const rightLinks = links.filter((_, index) => index % 2 !== 0);
 
     return (
         <div style={styles.container}>
             <div style={styles.container1}>
                 <div style={styles.container2}></div>
                 <div style={styles.container3}><span style={styles.title}>나의 블로그 게시물 링크 4개를 첨부해주세요.</span></div>
-                <div style={styles.container3}><span style={styles.subtitle}>게시물 링크를 4개 첨부해주세요<br/> 첨부한 게시물을 바탕으로 iGeport를 만들어드립니다.</span>
+                <div style={styles.container3}><span style={styles.subtitle}>게시물 링크를 4개 첨부해주세요<br /> 첨부한 게시물을 바탕으로 iGeport를 만들어드립니다.</span>
                 </div>
                 <div style={styles.container4}>
                     <div style={styles.gap}>
-                        {links.slice(0, 2).map((link, index) => (
+                        {leftLinks.map((link, index) => (
                             <input
-                                key={index} // 0, 1
+                                key={index}
                                 type="text"
                                 placeholder="이곳에 블로그 링크를 첨부하세요"
                                 style={styles.link_input}
                                 value={link}
-                                onChange={(e) => updateLink(index, e.target.value)}
+                                onChange={(e) => updateLink(index * 2, e.target.value)}
                             />
                         ))}
                     </div>
                     <div style={styles.gap}>
-                        {links.slice(2, 4).map((link, index) => (
+                        {rightLinks.map((link, index) => (
                             <input
-                                key={index + 2} // 2, 3 - 이제 고유합니다.
+                                key={index + leftLinks.length}
                                 type="text"
                                 placeholder="이곳에 블로그 링크를 첨부하세요"
                                 style={styles.link_input}
                                 value={link}
-                                onChange={(e) => updateLink(index + 2, e.target.value)}
+                                onChange={(e) => updateLink(index * 2 + 1, e.target.value)}
                             />
                         ))}
                     </div>
                 </div>
                 <div style={styles.container5}>
-                    <button style={{...styles.button, backgroundColor: allFilled ? '#1AE57C' : '#525252', color: allFilled ? "8D8D8D" : "black"}}
+                    <button style={{ ...styles.button, backgroundColor: allFilled ? '#1AE57C' : '#525252', color: allFilled ? "8D8D8D" : "black" }}
                             onClick={handleSubmit} disabled={!allFilled}>
                         다음으로
                     </button>
@@ -62,7 +66,7 @@ export  function IGeport() {
 
 const styles = {
     container: {
-        position: 'relative',  // Needed for absolute positioning of children
+        position: 'relative',
         width: '100%',
         height: '100vh',
         backgroundColor: '#1E1E1E',
@@ -78,77 +82,85 @@ const styles = {
         height: "100vh",
         display: 'flex',
         flexDirection: 'column',
-        overflow:"hidden",
+        overflow: "hidden",
     },
-    container2 : { // 문구 입력 컨테이너
-        position:"relative",
+    container2: {
+        position: "relative",
         width: "100%",
-        height:"15vh",
-        display:'flex',
-        flexDirection:'column',
-        overflow:"hidden",
+        height: "15vh",
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: "hidden",
     },
-    container3 : { // 문구 입력창
-        position:"relative",
+    container3: {
+        position: "relative",
         width: "100%",
-        height:"7.5vh",
-        display:'flex',
-        flexDirection:'column',
-        overflow:"hidden",
-        margin:"1%"
+        height: "7.5vh",
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: "hidden",
+        margin: "1%"
     },
     container4: {
         position: "relative",
-        width: "100%", // Adjust width to match the container width
-        height: "30vh",
+        width: "100%",
+        height: "50vh",
         display: 'flex',
         overflow: "hidden",
         alignItems: 'center',
         justifyContent: 'center',
     },
-    link_input : {
-        position : "relative",
-        width:"32vw",
-        height : "5vh",
+    gap: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    link_input: {
+        position: "relative",
+        width: "32vw",
+        height: "5vh",
         display: "flex",
-        overflow:"hidden",
+        overflow: "hidden",
         backgroundColor: "#363636",
         borderRadius: "10px",
-        margin:"1vw",
-        paddingLeft:"10px",
+        margin: "1vw",
+        paddingLeft: "10px",
         color: "#C6C6C6",
-        fontSize:"16px"
+        fontSize: "16px"
     },
     container5: {
-        position:"relative",
-        width:"100%",
-        height:"15vh", display:"flex",
-        color:"black", fontSize:"23px",
-        fontWeight:"300",
-        paddingLeft:"60px"
+        position: "relative",
+        width: "100%",
+        height: "15vh",
+        display: "flex",
+        color: "black",
+        fontSize: "23px",
+        fontWeight: "300",
+        paddingLeft: "60px"
     },
     button: {
         width: '10vw',
-        height :'5vh',
+        height: '5vh',
         backgroundColor: '#1AE57C',
         color: 'white',
         border: 'none',
         borderRadius: '10px',
         cursor: 'pointer',
         fontSize: '24px',
-        fontWeight:"600"
+        fontWeight: "600"
     },
     title: {
         paddingLeft: '50px',
         fontWeight: "600",
-        color:"white",
-        fontSize:"32px"
+        color: "white",
+        fontSize: "32px"
     },
     subtitle: {
         paddingLeft: '50px',
-        fontWeight:"600",
-        color:"#C6C6C6",
-        fontSize:"20px",
-        paddingTop:"2%"
+        fontWeight: "600",
+        color: "#C6C6C6",
+        fontSize: "20px",
+        paddingTop: "2%"
     }
 };

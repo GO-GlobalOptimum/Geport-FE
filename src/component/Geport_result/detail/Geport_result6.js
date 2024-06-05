@@ -1,12 +1,43 @@
-import React, { useState } from 'react';
-import {Line} from "react-chartjs-2";
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, BubbleController, Title, Tooltip, Legend } from 'chart.js';
+import React, { useEffect, useState } from 'react';
+import { Line } from "react-chartjs-2";
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import { evaluate } from 'mathjs';
+import { getCookie } from "../../../function/cookies";
+import { get_api } from "./Geport_result1";
+import { useNavigate } from "react-router-dom";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, BubbleController, Title, Tooltip, Legend, ChartDataLabels);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ChartDataLabels);
 
 export function Geport_result6({ nextPage }) {
-    const [name, setName] = useState(''); // 사용자 이름을 저장하는 상태
+    const [userData, setUserData] = useState(null);
+    const navigate = useNavigate();
+    const name = getCookie('username');
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await get_api();
+                if (response && response.data && response.data.length > 0) {
+                    setUserData(response.data[0]);
+                    console.log("Data fetched:", response.data[0]);
+                } else {
+                    console.error('No data received');
+                }
+            } catch (error) {
+                console.error("There was an error fetching user data:", error);
+            }
+        };
+
+        fetchUserData();
+    }, []);
+
+    // Dynamic data generation based on the equation
+    const generateChartData = (equation) => {
+        const xValues = Array.from({ length: 10 }, (_, i) => i); // Generate X values from 0 to 9
+        const yValues = xValues.map(x => evaluate(equation.replace(/x/g, `(${x})`))); // Evaluate Y values from the equation
+        return yValues;
+    };
 
     const lineChartOptions = {
         responsive: true,
@@ -19,73 +50,57 @@ export function Geport_result6({ nextPage }) {
             x: {
                 title: {
                     display: true,
-                    text: 'X',
+                    text: 'X Axis',
                 },
             },
             y: {
                 title: {
                     display: true,
-                    text: 'Y',
+                    text: 'Y Axis',
                 },
                 beginAtZero: true,
             },
         },
     };
 
-    const handleInputChange = (event) => {
-        setName(event.target.value);
-    };
     const lineChartData = {
-        labels: [0, 1, 2, 3, 4, 5, 6, 7],
+        labels: Array.from({ length: 10 }, (_, i) => i),
         datasets: [
             {
-                label: '전체 클릭수',
-                data: [50, 75, 50, 25, 75, 50, 25, 50],
-                borderColor: 'white',
-             //   backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                label: 'Model Output',
+                data: userData ? generateChartData(JSON.parse(userData.result.answer_4).equation) : [],
+                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
                 fill: false,
             },
         ],
     };
+
     return (
         <div style={styles.container}>
             <div style={styles.container1}>
                 <div style={styles.container2}></div>
                 <div style={styles.container3}>
-                    <span style={styles.title}>조태완 님의 삶을 그래프로 표현했어요.</span>
+                    <span style={styles.title}>{name} 님의 삶을 그래프로 표현했어요.</span>
                 </div>
                 <div style={styles.container7}>
                     <div style={styles.content}>
                         <div style={styles.graphContainer}>
-                            <h3 style={styles.chartTitle}>전체 클릭수</h3>
-                            <Line data={lineChartData} options={lineChartOptions}/></div>
-                        <div style={styles.inputContainer}>
-                            <div>
-                                <span style={styles.text}>
-                                    Lorem ipsum dolor sit amet consectetur. Amet pharetra consequat diam nunc eget accumsan fermentum enim quam.
-                                    Convallis scelerisque pellentesque mi commodo in.
-                                    Nulla nunc cursus ullamcorper amet aliquam diam turpis tempus nunc. Faucibus venenatis neque morbi amet leo diam.
-                                </span>
-                            </div>
+                            <Line data={lineChartData} options={lineChartOptions} />
                         </div>
-                    </div>
-                    <div style={styles.pageCount}>
-                        <svg width="10" height="146" viewBox="0 0 10 146" fill="none"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="5" cy="5" r="5" transform="rotate(90 5 5)" fill="#C6C6C6"/>
-                            <circle cx="5" cy="39" r="5" transform="rotate(90 5 39)" fill="#C6C6C6"/>
-                            <circle cx="5" cy="73" r="5" transform="rotate(90 5 73)" fill="#C6C6C6"/>
-                            <circle cx="5" cy="107" r="5" transform="rotate(90 5 107)" fill="#1AE57C"/>
-                            <circle cx="5" cy="141" r="5" transform="rotate(90 5 141)" fill="#C6C6C6"/>
-                        </svg>
-
+                        <div style={styles.inputContainer}>
+                            {userData && userData.result && userData.result.answer_4 && (
+                                <div>
+                                    <span style={styles.text}>
+                                        {JSON.parse(userData.result.answer_4).explanation}
+                                    </span>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
                 <div style={styles.container4}>
-                    <button
-                        style={styles.button}
-                        onClick={nextPage} // 버튼 클릭 시 nextPage 호출
-                    >
+                    <button style={styles.button} onClick={nextPage}>
                         다음으로
                     </button>
                 </div>
@@ -93,6 +108,7 @@ export function Geport_result6({ nextPage }) {
         </div>
     );
 }
+
 
 const styles = {
     container: {
@@ -213,7 +229,8 @@ const styles = {
         fontWeight: '600'
     },
     text:{
-        color:"white",
-        fontSize:"18px"
+        color: "white",
+        fontSize: "18px",
+        lineHeight: "160%",
     }
 };

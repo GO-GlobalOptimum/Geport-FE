@@ -1,22 +1,44 @@
-import React, { useState } from 'react';
-
+import React, {useEffect, useState} from 'react';
+import {getCookie} from "../../../function/cookies";
+import { get_api } from "./IGeport_result1";
 export function IGeport_result7({ nextPage }) {
+    const name = getCookie('username');
+    const [userData, setUserData] = useState(null);
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await get_api();
+                if (response && response.data && response.data.length > 0) {
+                    // 데이터베이스에서 받아온 데이터의 첫 번째 인덱스 사용
+                    setUserData(response.data[0].result.blogs_finalReport);
+                } else {
+                    console.error('데이터를 받지 못했습니다');
+                }
+            } catch (error) {
+                console.error("사용자 데이터를 가져오는 중 오류가 발생했습니다:", error);
+            }
+        };
+
+        fetchUserData();
+    }, []);
 
     return (
         <div style={styles.container}>
             <div style={styles.container1}>
                 <div style={styles.container2}></div>
                 <div style={styles.container3}>
-                    <span style={styles.title}>조태완 님의 <br/>IGeport 퍼스널 브랜딩 솔루션은</span>
+                    <span style={styles.title}>{name} 님의 <br/>IGeport 퍼스널 브랜딩 솔루션은</span>
                 </div>
                 <div style={styles.container7}>
                     <div style={styles.inputContainer}>
                         <div>
                             <span style={styles.text}>
-                                당신은 사용자들에게 최고의 정보를 전달하기 위해 끊임없이 공부하고 발전하는 사업가입니다.
-                                당신은 초기에 겪은 어려움을 극복하며, 끊임없이 문제를 해결하고 서비스를 개선하는 데 최선을 다합니다.
-                                이러한 강점을 블로그에 녹여 변화를 이끄는 도전정신과 성장하고자 하는 열망을 중심으로 기술 블로그를 운영하는 것을 추천합니다.
-                                함께 더 나은 미래를 만들어나가는 것을 선호하는 당신은 리더십과 열정을 보여줄 수 있는 게시글을 적는 것이 적합합니다.
+                                <span style ={styles.innerTitle}> {name} 의 IGeport Summary </span> <br/><br/>
+                                {userData.summary};
+                                <br/><br/>
+                                <span style = {styles.innerTitle}>{name} 의 IGeport Solution </span><br/> <br/>
+                                {userData.advice};
                             </span>
                         </div>
                     </div>
@@ -25,7 +47,7 @@ export function IGeport_result7({ nextPage }) {
                 <div style={styles.container4}>
                     <button
                         style={styles.button}
-                        onClick={nextPage} // 버튼 클릭 시 nextPage 호출
+                        onClick={nextPage}
                     >
                         IGeport 다운받기
                     </button>
@@ -34,7 +56,6 @@ export function IGeport_result7({ nextPage }) {
         </div>
     );
 }
-
 const styles = {
     container: {
         position: 'relative',
@@ -70,27 +91,32 @@ const styles = {
         flexDirection: 'column',
         overflow: 'hidden',
     },
-    container3 : { // 문구 입력창
-        position:"relative",
+    container3: { // 문구 입력창
+        position: "relative",
         width: "100%",
-        height:"8.5vh",
-        display:'flex',
-        flexDirection:'column',
-        overflow:"hidden",
-        margin:"1%"
+        height: "11.5vh", // 높이 증가
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: "hidden",
+        margin: "1%",
+        justifyContent: "center", // 내용물 중앙 정렬
     },
     title: {
         paddingLeft: '50px',
         fontWeight: '600',
         color: 'white',
-        fontSize: '32px'
+        fontSize: '28px', // 글자 크기를 조금 줄여 공간 확보
+        paddingTop: '10px', // 제목 상단에 약간의 패딩 추가
     },
     inputContainer: {
         width: '100%',
         paddingLeft: '60px',
-        backgroundColor: '#1E1E1E',
+        backgroundColor: '#1E1E1H',
         overflowY: 'auto',
-        marginRight:"3%"
+        marginRight:"3%",
+        maxHeight: '60vh', // 최대 높이 설정
+        scrollbarWidth: 'thin', // 스크롤바 너비 설정 (thin, none, auto)
+        scrollbarColor: '#1AE57C #1E1E1E' // 스크롤바 색상 설정 (스크롤바 색상 및 배경)
     },
     container4: {
         position: 'relative',
@@ -119,7 +145,7 @@ const styles = {
         backgroundColor: '#1E1E1E'
     },
     button: {
-        width: '10vw',
+        width: '15vw',
         height: '5vh',
         backgroundColor: '#1AE57C',
         color: 'black',
@@ -130,7 +156,13 @@ const styles = {
         fontWeight: '600'
     },
     text:{
-        color:"white",
-        fontSize:"20px"
+        color: "white",
+        fontSize: "18px",
+        lineHeight: "160%",
+    },
+    innerTitle : {
+        color : "#1AE57C",
+        fontSize : "22px",
+        fontWeight:"500"
     }
 };

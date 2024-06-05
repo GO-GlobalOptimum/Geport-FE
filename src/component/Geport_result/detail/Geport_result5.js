@@ -1,23 +1,44 @@
-import React, { useState } from 'react';
-
+import React, {useEffect, useState} from 'react';
+import {getCookie} from "../../../function/cookies";
+import { get_api } from "./Geport_result1";
+import {useNavigate} from "react-router-dom";
 export function Geport_result5({ nextPage }) {
+    const [userData, setUserData] = useState(null);
+    const navigate = useNavigate();
+    const name = getCookie('username');
 
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await get_api();
+                if (response && response.data && response.data.length > 0) {
+                    setUserData(response.data[0]);  // 첫 번째 데이터만 저장
+                } else {
+                    console.error('No data received');
+                }
+            } catch (error) {
+                console.error("There was an error fetching user data:", error);
+            }
+        };
+
+        fetchUserData();
+    }, []);
     return (
         <div style={styles.container}>
             <div style={styles.container1}>
                 <div style={styles.container2}></div>
                 <div style={styles.container3}>
-                    <span style={styles.title}>조태완 님의 인생의 터닝포인트는 이때였어요.</span>
+                    <span style={styles.title}>{name} 님의 인생의 터닝포인트는 이때였어요.</span>
                 </div>
                 <div style={styles.container7}>
                     <div style={styles.inputContainer}>
-                        <div>
-                            <span style={styles.text}>
-                                Lorem ipsum dolor sit amet consectetur. Amet pharetra consequat diam nunc eget accumsan fermentum enim quam.
-                                Convallis scelerisque pellentesque mi commodo in.
-                                Nulla nunc cursus ullamcorper amet aliquam diam turpis tempus nunc. Faucibus venenatis neque morbi amet leo diam.
-                            </span>
-                        </div>
+                        {userData && userData.result && userData.result.answer_3 && (
+                            <div>
+                                <span style={styles.text}>
+                                    {JSON.parse(userData.result.answer_3).answer}
+                                </span>
+                            </div>
+                        )}
                     </div>
                     <div style={styles.pageCount}>
                         <svg width="10" height="146" viewBox="0 0 10 146" fill="none"
@@ -152,7 +173,8 @@ const styles = {
         fontWeight: '600'
     },
     text:{
-        color:"white",
-        fontSize:"18px"
+        color: "white",
+        fontSize: "18px",
+        lineHeight: "160%",
     }
 };

@@ -1,39 +1,70 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import WordCloud from 'wordcloud';
+import axios from 'axios';
+import { getCookie } from "../../../function/cookies";
+import { get_api } from "./IGeport_result1";
 
 export function IGeport_result6({ nextPage }) {
     const wordCloudRef = useRef(null);
+    const name = getCookie('username');
+    const [userData, setUserData] = useState(null);
 
     useEffect(() => {
-        const words = [
-            ['TICKETS', 60],
-            ['EXPERIENCE', 50],
-            ['TRAVEL', 40],
-            ['BEER', 30],
-            ['AMBITIONS', 20],
-            ['COMPUTER', 90],
-            ['SCIENCE', 80],
-            ['RELAX', 10],
-        ];
-
-        WordCloud(wordCloudRef.current, {
-            list: words,
-            gridSize: 8,
-            weightFactor: 3,
-            fontFamily: 'impact',
-            color: () => '#1AE57C',
-            backgroundColor: '#1E1E1E',
-            rotateRatio: 0.5,
-            rotationSteps: 2,
-        });
+        axios.get('/BE/fastapi/igeport/database/list')
+            .then(response => {
+                if (response && response.data && response.data.length > 0) {
+                    // Set the entire object containing happy keywords and scores
+                    setUserData(response.data[0].result.blogs_happyKeyword.happy_keyword);
+                } else {
+                    console.error('No data received');
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching user data:", error);
+            });
     }, []);
 
-    return (
+    useEffect(() => {
+        if (userData) {
+            const colors = ['#1AE57C', '#1BD48C', '#1CC39C', '#1DB2AC', '#1EA1BC'];  // Define a list of colors
+            let colorIndex = 0;
+
+
+            // Create an array of [word, score] pairs
+            const words = Object.entries(userData).map(([key, value]) => [key.toUpperCase(), Math.round(value)]);
+
+            // Ensure that canvas is big enough or properly sized
+            wordCloudRef.current.width = 500;
+            wordCloudRef.current.height = 500;
+
+            // Generate the word cloud
+            WordCloud(wordCloudRef.current, {
+                list: words,
+                gridSize: 8,
+                weightFactor: (size) => Math.round(size * 1.5),
+                color: () => {
+                    const color = colors[colorIndex % colors.length];  // Cycle through colors array
+                    colorIndex++;  // Move to the next color
+                    return color;
+                },
+                backgroundColor: '#1E1E1E',
+                rotateRatio: 0,
+                rotationSteps: 2,
+            });
+        }
+    }, [userData]);
+
+    if (!userData) {
+        return <div>Loading...</div>;
+    }
+
+
+return (
         <div style={styles.container}>
             <div style={styles.container1}>
                 <div style={styles.container2}></div>
                 <div style={styles.container3}>
-                    <span style={styles.title}>이 기간 동안 조태완 님을<br />행복하게 만든 것을 모아봤어요</span>
+                    <span style={styles.title}>이 기간 동안 {name} 님을<br />행복하게 만든 것을 모아봤어요</span>
                 </div>
                 <div style={styles.container7}>
                     <div style={styles.content}>
@@ -107,7 +138,7 @@ const styles = {
     container3 : { // 문구 입력창
         position:"relative",
         width: "100%",
-        height:"8.5vh",
+        height:"10vh",
         display:'flex',
         flexDirection:'column',
         overflow:"hidden",
@@ -182,7 +213,8 @@ const styles = {
         fontWeight: '600'
     },
     text:{
-        color:"white",
-        fontSize:"18px"
+        color: "white",
+        fontSize: "18px",
+        lineHeight: "160%",
     }
 };

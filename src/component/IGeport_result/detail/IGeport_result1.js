@@ -1,6 +1,43 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
+
+
+export const get_api = () => {
+    return axios.get("/BE/fastapi/igeport/database/list", {
+        withCredentials: true
+    });
+};
 
 export function IGeport_result1({ nextPage }) {
+
+    const [userData, setUserData] = useState(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await get_api();
+                if (response.data.length > 0) {
+                    setUserData(response.data[0]);  // 첫 번째 데이터만 저장
+                } else {
+                    console.error('No data received');
+                }
+            } catch (error) {
+                console.error("There was an error fetching user data:", error);
+            }
+        };
+
+        fetchUserData();
+    }, []);
+
+    useEffect(() => {
+        if (userData) {
+            console.log("Using user data:", userData);
+        }
+    }, [userData]);
+
+
     useEffect(() => {
         const timer = setTimeout(() => {
             nextPage();

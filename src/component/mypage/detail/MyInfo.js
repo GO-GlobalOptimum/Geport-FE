@@ -53,7 +53,7 @@ export function MyInfo(props){
     return(
         <div>
             <div>
-                <img src={"./image/Hotpage1.png"} style={{  width: '150px', height: '150px', borderRadius: '50%', padding: "5%", cursor: "pointer" }} />
+                <img src={"./image/Hotpage1.png"} style={{  width: '150px', height: '150px', borderRadius: '50%', padding: "5%", cursor: "pointer", marginTop:'70px' }} />
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         <p style={{ paddingLeft: "5%", marginRight: "40%", fontSize: '24px' , fontWeight: 'bold'}}>유현우 님</p>
                         <button style={{ marginRight: '10px', marginBottom: '10px', borderRadius: '20px', padding: '5px 10px', backgroundColor: '#91F5C3C3', border: 'none' ,display: 'flex', alignItems: 'center' }}>

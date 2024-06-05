@@ -1,59 +1,43 @@
-import React from 'react';
-import { Line } from "react-chartjs-2";
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
-
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ChartDataLabels);
-
+import React, {useState, useEffect} from 'react';
+import {getCookie} from "../../../function/cookies";
+import { get_api } from "./IGeport_result1";
 export function IGeport_result3({ nextPage }) {
+    const name = getCookie('username');
+    const [userData, setUserData] = useState(null);
 
-    const inputContent = [
-        "사건은 다가와 Ah Oh Ay",
-        "거세게 커져가 Ah Oh Ay",
-        "That tick that tick tick bomb",
-        "That tick that tick tick bomb",
-        "감히 건드리지 못할 걸",
-        "(누구도 말이야)",
-        "지금 내 안에선",
-        "Su su su Supernova",
-        "Nova",
-        "Can't stop hyperstellar",
-        "원초 그걸 찾아",
-        "Bring the light of a dying star",
-        "불러낸 내 우주를 봐 봐",
-        "Supernova",
-        "Ah Body bang"
-    ];
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await get_api();
+                if (response && response.data && response.data.length > 0) {
+                    // 데이터베이스에서 받아온 데이터의 첫 번째 인덱스 사용
+                    setUserData(response.data[0].result.blogs_summary);
+                } else {
+                    console.error('데이터를 받지 못했습니다');
+                }
+            } catch (error) {
+                console.error("사용자 데이터를 가져오는 중 오류가 발생했습니다:", error);
+            }
+        };
+
+        fetchUserData();
+    }, []);
 
     return (
         <div style={styles.container}>
             <div style={styles.container1}>
                 <div style={styles.container2}></div>
                 <div style={styles.container3}>
-                    <span style={styles.title}>Username 님의 블로그를 분석했어요</span>
+                    <span style={styles.title}>{name} 님의 블로그를 요약했어요.</span>
                 </div>
                 <div style={styles.container7}>
                     <div style={styles.content}>
-                        <div style={styles.summaryContainer}>
-                            {inputContent.map((line, index) => (
-                                <span key={index} style={styles.text}>{line}</span>
-                            ))}
-                        </div>
-                        <div style={styles.summaryContainer}>
-                            {inputContent.map((line, index) => (
-                                <span key={index} style={styles.text}>{line}</span>
-                            ))}
-                        </div>
-                        <div style={styles.summaryContainer}>
-                            {inputContent.map((line, index) => (
-                                <span key={index} style={styles.text}>{line}</span>
-                            ))}
-                        </div>
-                        <div style={styles.summaryContainer}>
-                            {inputContent.map((line, index) => (
-                                <span key={index} style={styles.text}>{line}</span>
-                            ))}
-                        </div>
+                        {/* 데이터를 동적으로 표시 */}
+                        {userData && Object.values(userData).map((blog, index) => (
+                            <div key={index} style={styles.summaryContainer}>
+                                <span style={styles.text}>{blog.summary}</span>
+                            </div>
+                        ))}
                     </div>
                     <div style={styles.pageCount}>
                         <svg width="10" height="180" viewBox="0 0 10 180" fill="none"
@@ -197,8 +181,9 @@ const styles = {
         fontSize: '24px',
         fontWeight: '600'
     },
-    text: {
+    text:{
         color: "white",
-        fontSize: "18px"
+        fontSize: "18px",
+        lineHeight: "160%",
     }
 };
