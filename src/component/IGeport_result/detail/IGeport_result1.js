@@ -5,8 +5,7 @@ import {useNavigate} from "react-router-dom";
 
 export const get_api = () => {
     return axios.get("/BE/fastapi/igeport/database/list", {
-        withCredentials: true,
-        headers: {"Content-Type": 'application/json'}
+        withCredentials: true
     });
 };
 
