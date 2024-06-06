@@ -4,6 +4,7 @@ import { Fix_Profile } from './detail/Fix_Profile';
 import { Header } from '../../layout/Header';
 
 export function Profile(props){
+    const token = '';
 
     return (
         <div>
@@ -12,7 +13,7 @@ export function Profile(props){
             </div>
             <div style={{display:'flex'}}>
                 <div style={{flex:1}}>
-                    <Fix_Profile/>
+                    <Fix_Profile token={token}/>
                 </div>
             </div>
         </div> 

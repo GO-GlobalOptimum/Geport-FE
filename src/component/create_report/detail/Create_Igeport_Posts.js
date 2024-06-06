@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-
+import Cookies from 'js-cookie';
 
 export function Create_Igeport_Posts(props) {
 
@@ -78,17 +78,23 @@ export function Create_Igeport_Posts(props) {
     const handlePostSelection = (post) => {
         if (selectedPosts.includes(post.id)) {
             setSelectedPosts(selectedPosts.filter(p => p !== post.id));
-        } else if (selectedPosts.length < 5) {
+        } else if (selectedPosts.length < 4) {
             setSelectedPosts([...selectedPosts, post.id]);
         }
+    };
+
+    const handleRegister = () => {
+        // 선택된 포스트 ID를 쿠키에 저장
+        Cookies.set('selected_posts', selectedPosts.join(','), { expires: 1 });
+        navigate('/igeport/question'); // Igeport_question.js로 이동
     };
 
     return (
         <div style={{ marginTop: '70px' }}>
             <div>
                 <div style={{ textAlign: 'center' }}>
-                    <h2>Geport를 만들 포스트를 알려주세요</h2>
-                    <p>포스트 5개를 선택해주세요</p>
+                    <h2>iGeport를 만들 포스트를 알려주세요</h2>
+                    <p>포스트 4개를 선택해주세요</p>
                 </div>
                 <div style={{ textAlign: 'center' }}>
                     {selectedPosts.map(postId => {
@@ -100,16 +106,17 @@ export function Create_Igeport_Posts(props) {
                         );
                     })}
                     <button 
+                        onClick={handleRegister}
                         style={{ 
                             marginLeft: '10px', 
                             borderRadius: '20px', 
                             padding: '5px 10px', 
-                            backgroundColor: selectedPosts.length === 5 ? '#10901FC3' : '#d3d3d3', 
+                            backgroundColor: selectedPosts.length === 4 ? '#10901FC3' : '#d3d3d3', 
                             color: 'white',
                             border: 'none',
-                            cursor: selectedPosts.length === 5 ? 'pointer' : 'not-allowed'
+                            cursor: selectedPosts.length === 4 ? 'pointer' : 'not-allowed'
                         }}
-                        disabled={selectedPosts.length !== 5}
+                        disabled={selectedPosts.length !== 4}
                     >
                         등록하기
                     </button>
