@@ -29,9 +29,6 @@ export function Fix_Profile(props) {
     const postApi = (profileData) => {
         console.log("Sending profile data to backend:", profileData); // 로그 추가
         axios.post("BE/spring/user/myInfo", profileData, {
-            headers: {
-                Authorization: `Bearer ${props.token}`
-            },
             withCredentials: true
         })
             .then(res => {
@@ -81,7 +78,7 @@ export function Fix_Profile(props) {
     }
 
     const handleDeleteAccount = () => {
-        axios.delete("https://geport.blog/spring/user/myInfo", {
+        axios.delete("/BE/spring/user/myInfo", {
             withCredentials: true
         })
         .then(res => {

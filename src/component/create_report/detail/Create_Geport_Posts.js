@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
+import axios from 'axios';
 
 export function Create_Geport_Posts(props) {
     const navigate = useNavigate();
@@ -8,9 +9,8 @@ export function Create_Geport_Posts(props) {
     const [selectedPosts, setSelectedPosts] = useState([]);
 
     useEffect(() => {
-        fetch('https://geport.blog/spring/posts/list/my-list')
-            .then(response => response.json())
-            .then(data => setMyposts(data))
+        axios.get('https://geport.blog/spring/posts/list/my-list')
+            .then(response => setMyposts(response.data))
             .catch(error => console.error('Error fetching posts:', error));
     }, []);
 

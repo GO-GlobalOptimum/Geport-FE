@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 export function Header(props) {
     const navigate = useNavigate();
-    const token = '';
 
     const [showNotificationMenu, setShowNotificationMenu] = useState(false);
     const [showUserMenu, setShowUserMenu] = useState(false);
@@ -13,7 +12,7 @@ export function Header(props) {
     }
 
     const createPost = () => {
-        navigate("/create_post", { state: { token } });
+        navigate("/create_post");
     }
 
     const toggleNotificationMenu = () => {

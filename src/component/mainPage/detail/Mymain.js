@@ -13,9 +13,6 @@ export function MyMain(props){
         const fetchPostsData = async () => {
         try {
             const response = await axios.get('BE/spring/posts/list', {
-                headers: {
-                    Authorization: `Bearer ${props.token}`
-                },
                 withCredentials: true
             });
             setMyposts(response.data.content);
@@ -24,7 +21,7 @@ export function MyMain(props){
         }
     };
     fetchPostsData();
-}, [props.token]);
+}, []);
 
 
     return(

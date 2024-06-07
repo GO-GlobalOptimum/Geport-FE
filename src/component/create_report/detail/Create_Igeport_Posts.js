@@ -1,79 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
+import axios from 'axios';
 
 export function Create_Igeport_Posts(props) {
-
     const navigate = useNavigate();
+    const [myposts, setMyposts] = useState([]);
     const [selectedPosts, setSelectedPosts] = useState([]);
 
-    const myposts = [
-        {
-            id: 1,
-            title: "집에 가고싶다.",
-            content: "언제까지 이곳에 머물 것인가...? 이제는 집을 갈 때가 되었다....(두둥..ㅇ.ㅇ)",
-            imageUrl: "./image/Hotpage1.png",
-            user: {
-                name: "유현우",
-                image: "./image/Hotpage1.png"
-            },
-            date: "23-01-20",
-            likes: 10,
-            comments: 5
-        },
-        {
-            id: 2,
-            title: "고효율 작업을 위한 생산성 도구 추천1",
-            content: "여행은 새로운 경험과 추억을 선서하지만, 올바른 준비가 필수입니다. 이번 블로그 포스트에서는 여행자가 가져가야 할 10가지 필수 아이템을 상세히 소개합니다. 첫째, 편안한 여행을 위한 양질의 여행 가방. 두번째는 다양한...",
-            imageUrl: "./image/Hotpage1.png",
-            user: {
-                name: "김영희",
-                image: "./image/Hotpage1.png"
-            },
-            date: "24-05-11",
-            likes: 15,
-            comments: 8
-        },
-        {
-            id: 3,
-            title: "고효율 작업을 위한 생산성 도구 추천2",
-            content: "여행은 새로운 경험과 추억을 선서하지만, 올바른 준비가 필수입니다. 이번 블로그 포스트에서는 여행자가 가져가야 할 10가지 필수 아이템을 상세히 소개합니다. 첫째, 편안한 여행을 위한 양질의 여행 가방. 두번째는 다양한...",
-            imageUrl: "./image/Hotpage1.png",
-            user: {
-                name: "고영희",
-                image: "./image/Hotpage1.png"
-            },
-            date: "24-11-25",
-            likes: 15,
-            comments: 8
-        },
-        {
-            id: 4,
-            title: "고효율 작업을 위한 생산성 도구 추천3",
-            content: "여행은 새로운 경험과 추억을 선서하지만, 올바른 준비가 필수입니다. 이번 블로그 포스트에서는 여행자가 가져가야 할 10가지 필수 아이템을 상세히 소개합니다. 첫째, 편안한 여행을 위한 양질의 여행 가방. 두번째는 다양한...",
-            imageUrl: "./image/Hotpage1.png",
-            user: {
-                name: "고영희",
-                image: "./image/Hotpage1.png"
-            },
-            date: "24-11-25",
-            likes: 15,
-            comments: 8
-        },
-        {
-            id: 5,
-            title: "고효율 작업을 위한 생산성 도구 추천4",
-            content: "여행은 새로운 경험과 추억을 선서하지만, 올바른 준비가 필수입니다. 이번 블로그 포스트에서는 여행자가 가져가야 할 10가지 필수 아이템을 상세히 소개합니다. 첫째, 편안한 여행을 위한 양질의 여행 가방. 두번째는 다양한...",
-            imageUrl: "./image/Hotpage1.png",
-            user: {
-                name: "고영희",
-                image: "./image/Hotpage1.png"
-            },
-            date: "24-11-25",
-            likes: 15,
-            comments: 8
-        }
-    ];
+    useEffect(() => {
+        axios.get('https://your-api-endpoint/posts/list')
+            .then(response => setMyposts(response.data))
+            .catch(error => console.error('Error fetching posts:', error));
+    }, []);
 
     const handlePostSelection = (post) => {
         if (selectedPosts.includes(post.id)) {
