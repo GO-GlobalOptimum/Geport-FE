@@ -12,7 +12,7 @@ export function Create_post() {
     const navigate = useNavigate();
     const contentRef = useRef(null);
     const [title, setTitle] = useState('');
-    const [categories, setCategories] = useState(['normal']);
+    const [category, setCategory] = useState('normal');
     const [postContent, setPostContent] = useState('');
     const [thumbnailImage, setThumbnailImage] = useState([]);
     const [isContentEntered, setIsContentEntered] = useState(false);
@@ -87,7 +87,7 @@ export function Create_post() {
         updateTogglePosition();
     };
 
-    const token = '';
+    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcxODQzNjk5MiwidHlwZSI6ImFjY2VzcyIsImVtYWlsIjoicGljaDc3NTVAbmF2ZXIuY29tIn0.P-vrcBUpcMKTfLiL9ZrW0JqWRT9mOwWyLdA27wijvg5ASdqUcxqXsKt7mEzxmjT2-Uq46dy-9Xo7oVR_6xdU1w';
 
     const handleSubmit = (tags) => {
         if (!title && !postContent) {
@@ -111,11 +111,11 @@ export function Create_post() {
                 bookMark: false,
                 commentCount: 0,
                 bookMarkCount: 0,
-                categories,
+                category,
                 tags: tags ? tags.split(' ').map(tag => tag.replace('#', '')) : []
             };
 
-            axios.post('http://localhost:8080/spring/posts/post', postData, {
+            axios.post('BE/spring/posts/post', postData, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
@@ -124,7 +124,7 @@ export function Create_post() {
             })
             .then(response => {
                 console.log(response.data);
-                navigate('/');
+                navigate('/mainpage');
             })
             .catch(error => {
                 console.error('Error submitting post:', error);
@@ -194,26 +194,40 @@ export function Create_post() {
         const contentElement = contentRef.current;
         if (contentElement) {
             contentElement.addEventListener('input', updateTogglePosition);
-            contentElement.addEventListener('mouseup', updateTogglePosition);
-            contentElement.addEventListener('keyup', updateTogglePosition);
-            document.addEventListener('mouseup', handleMouseUp);
+            contentElement.addEventListener('mouseup', handleMouseUp);
+            document.addEventListener('keyup', updateTogglePosition);
         }
-
         return () => {
             if (contentElement) {
                 contentElement.removeEventListener('input', updateTogglePosition);
-                contentElement.removeEventListener('mouseup', updateTogglePosition);
-                contentElement.removeEventListener('keyup', updateTogglePosition);
-                document.removeEventListener('mouseup', handleMouseUp);
+                contentElement.removeEventListener('mouseup', handleMouseUp);
+                document.removeEventListener('keyup', updateTogglePosition);
             }
+            document.removeEventListener('mouseup', handleMouseUp);
         };
     }, []);
 
     useEffect(() => {
         const contentElement = contentRef.current;
         if (contentElement) {
-            const contentRect = contentElement.getBoundingClientRect();
-            setTogglePosition({ top: contentRect.top + window.scrollY, left: contentRect.left - 40 });
+            contentElement.addEventListener('paste', (event) => {
+                const items = (event.clipboardData || window.clipboardData).items;
+                for (const item of items) {
+                    if (item.type.startsWith('image/')) {
+                        const file = item.getAsFile();
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            const img = document.createElement('img');
+                            img.src = event.target.result;
+                            img.style.maxWidth = '70%';
+                            img.style.height = 'auto';
+                            img.style.margin = '5px 0';
+                            contentElement.appendChild(img);
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                }
+            });
         }
     }, []);
 
@@ -237,10 +251,10 @@ export function Create_post() {
             <div style={{ marginRight: '20px', textAlign: 'center' }}>
                 <TitleInput title={title} handleTitleChange={handleTitleChange} />
                 <ContentEditor contentRef={contentRef} handleContentChange={handleContentChange} />
-                
+
                 {showOptions && <FormatOptions togglePosition={togglePosition} applyCommand={applyCommand} applyLink={applyLink} />}
                 {showUploadButtons && <UploadButtons handleImageChange={handleImageChange} handleVideoChange={handleVideoChange} togglePosition={togglePosition} />}
-                
+
                 <div
                     style={{ position: 'absolute', top: togglePosition.top - 20, left: togglePosition.left - 30, cursor: 'pointer' }}
                     onClick={handleToggleClick}
@@ -248,9 +262,9 @@ export function Create_post() {
                     <img src={toggleImage} alt="plus" style={{ width: '20px', height: '20px', borderRadius: '50%' }} />
                 </div>
             </div>
-            
+
             {showTagModal && <TagModal handleTagModalClose={handleTagModalClose} handleSubmit={handleSubmit} />}
-            {showCategoryModal && <CategoryModal handleCategoryModalClose={handleCategoryModalClose} handleNext={handleNext} setCategories={setCategories} />}
+            {showCategoryModal && <CategoryModal handleCategoryModalClose={handleCategoryModalClose} handleNext={handleNext} setCategory={setCategory} />}
         </div>
     );
 }

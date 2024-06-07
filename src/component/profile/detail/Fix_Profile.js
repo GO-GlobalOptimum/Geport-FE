@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { uploadToS3 } from './s3Utils'; // 위에서 작성한 S3 업로드 함수
 
 export function Fix_Profile(props) {
     const [nickname, setNickname] = useState('');
@@ -9,8 +10,8 @@ export function Fix_Profile(props) {
     const [age, setAge] = useState('');
     const [gender, setGender] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
-    const [profilePhoto, setProfilePhoto] = useState(null);
-    const [photoPreview, setPhotoPreview] = useState('./image/type=profile_green.png');
+    const [imageUrl, setProfilePhoto] = useState(null);
+    const [photoPreview, setPhotoPreview] = useState('./image/user.png');
     const navigate = useNavigate();
 
     const handlePhotoChange = (e) => {
@@ -26,14 +27,14 @@ export function Fix_Profile(props) {
     }
 
     const postApi = (profileData) => {
-        axios.post("http://localhost:8080/spring/user/myInfo", profileData, {
+        console.log("Sending profile data to backend:", profileData); // 로그 추가
+        axios.post("BE/spring/user/myInfo", profileData, {
             headers: {
                 Authorization: `Bearer ${props.token}`
             },
             withCredentials: true
         })
             .then(res => {
-                console.log(res.data);
                 navigate("/mypage"); // 프로필 수정이 성공하면 메인 페이지로 이동
             })
             .catch(error => {
@@ -42,24 +43,24 @@ export function Fix_Profile(props) {
     };
 
     const handleSave = () => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            const profileData = {
-                id: 5,
-                name: nickname,
-                bio: bio,
-                phone: phoneNumber,
-                mbti: mbti,
-                age: parseInt(age, 10),
-                gender: gender,
-                profilePhoto: reader.result
-            };
-
-            postApi(profileData);
-        };
-
-        if (profilePhoto) {
-            reader.readAsDataURL(profilePhoto);
+        if (imageUrl) {
+            uploadToS3(imageUrl).then((s3Url) => {
+                const profileData = {
+                    id: 5,
+                    name: nickname,
+                    bio: bio,
+                    phone: phoneNumber,
+                    mbti: mbti,
+                    age: parseInt(age, 10),
+                    gender: gender,
+                    imageUrl: s3Url // Use S3 URL
+                };
+    
+                postApi(profileData);
+            }).catch((error) => {
+                console.error("There was an error uploading the image to S3:", error);
+                // 사용자에게 오류 메시지를 표시하거나 다른 처리
+            });
         } else {
             const profileData = {
                 id: 5,
@@ -69,7 +70,7 @@ export function Fix_Profile(props) {
                 mbti: mbti,
                 age: parseInt(age, 10),
                 gender: gender,
-                profilePhoto: null
+                imageUrl: './image/user.png'
             };
             postApi(profileData);
         }
@@ -84,7 +85,7 @@ export function Fix_Profile(props) {
             withCredentials: true
         })
         .then(res => {
-            console.log(res.data);
+            console.log("Account deleted:", res.data);
         })
         .catch(error => {
             console.error("There was an error deleting the account:", error);

@@ -14,7 +14,7 @@ export function Post(props) {
 
         const fetchPost = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/spring/posts/post/${postId}`, {
+                const response = await axios.get(`BE/spring/posts/post/${postId}`, {
                     headers: {
                         Authorization: `Bearer ${props.token}`
                     },
@@ -29,7 +29,7 @@ export function Post(props) {
         };
 
         fetchPost();
-    }, [postId]);
+    }, [postId, props.token]);
 
     const logoClick = () => {
         navigate("/");
@@ -97,7 +97,9 @@ export function Post(props) {
                                     letterSpacing: '0.8px',
                                     lineHeight: '30px'
                                 }}>{post.postContent}</p>
-                                <img src={post.imageUrl || `${process.env.PUBLIC_URL}/image/Hotpage1.png`} alt="Post" style={{ width: '100%' }} />
+                                {post.imageUrl && (
+                                    <img src={post.imageUrl} alt="Post" style={{ width: '100%' }} />
+                                )}
                             </div>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -133,7 +135,7 @@ export function Post(props) {
                         </div>
                         <hr style={{ borderTop: '1px gray', width: '90%', paddingLeft: "5%" }} />
                         <div>
-                            <h2>댓글창</h2>
+                            <h2>댓글이 없습니다.</h2>
                             {/* 댓글창 구현 */}
                         </div>
                     </div>

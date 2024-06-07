@@ -9,7 +9,7 @@ import axios from "axios";
 export function Landing(props) {
     const [isModalOpen, setModalOpen] = useState(false);
     const [posts, setPosts] = useState([]);
-    const token = '';
+    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcxODQzNjk5MiwidHlwZSI6ImFjY2VzcyIsImVtYWlsIjoicGljaDc3NTVAbmF2ZXIuY29tIn0.P-vrcBUpcMKTfLiL9ZrW0JqWRT9mOwWyLdA27wijvg5ASdqUcxqXsKt7mEzxmjT2-Uq46dy-9Xo7oVR_6xdU1w';
 
     useEffect(() => {
 
@@ -31,7 +31,7 @@ export function Landing(props) {
     // };
     const fetchData = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/spring/posts/list', {
+            const response = await axios.get('/BE/spring/posts/list/popular', {
                 headers: {
                     Authorization: `Bearer ${token}`
                 },

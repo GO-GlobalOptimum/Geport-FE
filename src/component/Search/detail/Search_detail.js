@@ -10,7 +10,7 @@ export function Search_detail() {
     useEffect(() => {
         const fetchPostsData = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/spring/posts/list', {
+                const response = await axios.get('BE/spring/posts/list', {
                     withCredentials: true
                 });
                 const filteredPosts = response.data.content.filter(post =>
@@ -67,12 +67,12 @@ export function Search_detail() {
                                                     </button>
                                                 </div>
                                                 <div>
-                                                    <img src={post.thumbnailImage} alt="Post" style={{ maxHeight: '150px', maxWidth: '150px' }} />
+                                                    <img src={"./image/Hotpage1.png"} alt="Post" style={{ maxHeight: '150px', maxWidth: '150px' }} />
                                                 </div>
                                             </div>
                                             <div style={{display:'flex', alignItems: 'center'}}>
                                                 <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
-                                                    <img src={"./image/Hotpage1.png"} alt="User" style={{ width: '30px', height: '30px', borderRadius: '50%', marginRight: '10px' }} />
+                                                    <img src={"./image/user.png"} alt="User" style={{ width: '30px', height: '30px', borderRadius: '50%', marginRight: '10px' }} />
                                                     <p>{post.name}</p>
                                                     <p style={{ marginLeft: '20px' }}>{post.createdDate}</p>
                                                 </div>

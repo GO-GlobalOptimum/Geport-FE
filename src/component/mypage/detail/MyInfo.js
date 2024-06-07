@@ -16,10 +16,10 @@ export function MyInfo(props) {
     useEffect(() => {
         // 이건 로그인 했을 때 쿠키를 저장해줘야 해서 로그인에서 쿠키를 생성해 줘야한다.
         Cookies.set('memberId', 1, { expires: 7 });
-
+    
         const fetchUserData = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/spring/user/myInfo', {
+                const response = await axios.get('BE/spring/user/myInfo', {
                     headers: {
                         Authorization: `Bearer ${props.token}`
                     },
@@ -27,7 +27,7 @@ export function MyInfo(props) {
                 });
                 const data = response.data;
                 setUserInfo({
-                    profilePhoto: data.profilePhoto || './image/type=profile_green.png',
+                    profilePhoto: data.image_url || './image/user.png',
                     name: data.name,
                     bio: data.bio
                 });
@@ -37,10 +37,10 @@ export function MyInfo(props) {
                 setLoading(false);
             }
         };
-
+    
         const fetchPostsData = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/spring/posts/list/my-list', {
+                const response = await axios.get('/BE/spring/posts/list/my-list', {
                     headers: {
                         Authorization: `Bearer ${props.token}`
                     },
@@ -51,10 +51,52 @@ export function MyInfo(props) {
                 console.error('Error fetching posts:', error);
             }
         };
-
+    
         fetchUserData();
         fetchPostsData();
     }, [props.token]);
+    // useEffect(() => {
+    //     // 이건 로그인 했을 때 쿠키를 저장해줘야 해서 로그인에서 쿠키를 생성해 줘야한다.
+    //     Cookies.set('memberId', 1, { expires: 7 });
+
+    //     const fetchUserData = async () => {
+    //         try {
+    //             const response = await axios.get('http://localhost:8080/spring/user/myInfo', {
+    //                 headers: {
+    //                     Authorization: `Bearer ${props.token}`
+    //                 },
+    //                 withCredentials: true
+    //             });
+    //             const data = response.data;
+    //             setUserInfo({
+    //                 profilePhoto: data.profilePhoto || './image/user.png',
+    //                 name: data.name,
+    //                 bio: data.bio
+    //             });
+    //         } catch (error) {
+    //             console.error('Error fetching user info:', error);
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     };
+
+    //     const fetchPostsData = async () => {
+    //         try {
+    //             const response = await axios.get('http://localhost:8080/spring/posts/list/my-list', {
+    //                 headers: {
+    //                     Authorization: `Bearer ${props.token}`
+    //                 },
+    //                 withCredentials: true
+    //             });
+    //             setMyposts(response.data.content);
+    //         } catch (error) {
+    //             console.error('Error fetching posts:', error);
+    //         }
+    //     };
+
+    //     fetchUserData();
+    //     fetchPostsData();
+    // }, [props.token]);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -101,7 +143,7 @@ export function MyInfo(props) {
                                 </div>
                                 <div style={{ display: 'flex', alignItems: 'center' }}>
                                     <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
-                                        <img src={userInfo.profilePhoto} alt="User" style={{ width: '30px', height: '30px', borderRadius: '50%', marginRight: '10px' }} />
+                                        <img src={"./image/user.png"} alt="User" style={{ width: '30px', height: '30px', borderRadius: '50%', marginRight: '10px' }} />
                                         <p>{userInfo.name}</p>
                                         <p style={{ marginLeft: '20px' }}>{post.createdDate}</p>
                                     </div>

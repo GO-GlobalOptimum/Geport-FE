@@ -30,6 +30,10 @@ export function Header(props) {
         navigate("/search");
     }
 
+    const goToProfile = () => {
+        navigate("/profile");
+    }
+
     return (
         <div>
             <div style={{
@@ -99,8 +103,8 @@ export function Header(props) {
                                     <img src={`${process.env.PUBLIC_URL}/image/type=chart.png`} alt="User" style={{ width: '30px', height: '30px', marginRight: '10px' }} />
                                     <p>통계</p>
                                 </div>
-                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                    <img src={`${process.env.PUBLIC_URL}/image/type=setting.png`} alt="User" style={{ width: '30px', height: '30px', marginRight: '10px' }} />
+                                <div style={{ display: 'flex', alignItems: 'center' }} onClick={goToProfile}>
+                                    <img src={`${process.env.PUBLIC_URL}/image/type=setting.png`} alt="User" style={{ width: '30px', height: '30px', marginRight: '10px', cursor: 'pointer' }} />
                                     <p>설정</p>
                                 </div>
                                 <div style={{ display: 'flex', alignItems: 'center'}}>
