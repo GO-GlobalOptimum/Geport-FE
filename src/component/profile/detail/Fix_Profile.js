@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { uploadToS3 } from './s3Utils'; // 위에서 작성한 S3 업로드 함수
+import { uploadToS3 } from '../../../function/s3Utils'; // 위에서 작성한 S3 업로드 함수
 
 export function Fix_Profile(props) {
     const [nickname, setNickname] = useState('');

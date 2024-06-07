@@ -15,9 +15,7 @@ export function Post(props) {
         const fetchPost = async () => {
             try {
                 const response = await axios.get(`BE/spring/posts/post/${postId}`, {
-                    headers: {
-                        Authorization: `Bearer ${props.token}`
-                    },
+                    
                     withCredentials: true
                 });
                 setPost(response.data);
@@ -29,7 +27,7 @@ export function Post(props) {
         };
 
         fetchPost();
-    }, [postId, props.token]);
+    }, [postId]);
 
     const logoClick = () => {
         navigate("/");

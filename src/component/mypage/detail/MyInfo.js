@@ -21,7 +21,6 @@ export function MyInfo(props) {
             try {
                 const response = await axios.get('BE/spring/user/myInfo', {
                     headers: {
-                        Authorization: `Bearer ${props.token}`
                     },
                     withCredentials: true
                 });
@@ -42,7 +41,6 @@ export function MyInfo(props) {
             try {
                 const response = await axios.get('/BE/spring/posts/list/my-list', {
                     headers: {
-                        Authorization: `Bearer ${props.token}`
                     },
                     withCredentials: true
                 });
@@ -54,7 +52,7 @@ export function MyInfo(props) {
     
         fetchUserData();
         fetchPostsData();
-    }, [props.token]);
+    }, []);
     // useEffect(() => {
     //     // 이건 로그인 했을 때 쿠키를 저장해줘야 해서 로그인에서 쿠키를 생성해 줘야한다.
     //     Cookies.set('memberId', 1, { expires: 7 });

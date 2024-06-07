@@ -87,8 +87,6 @@ export function Create_post() {
         updateTogglePosition();
     };
 
-    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcxODQzNjk5MiwidHlwZSI6ImFjY2VzcyIsImVtYWlsIjoicGljaDc3NTVAbmF2ZXIuY29tIn0.P-vrcBUpcMKTfLiL9ZrW0JqWRT9mOwWyLdA27wijvg5ASdqUcxqXsKt7mEzxmjT2-Uq46dy-9Xo7oVR_6xdU1w';
-
     const handleSubmit = (tags) => {
         if (!title && !postContent) {
             setAlert('제목과 내용을 입력해 주세요.');
@@ -118,7 +116,6 @@ export function Create_post() {
             axios.post('BE/spring/posts/post', postData, {
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`
                 },
                 withCredentials: true
             })

@@ -7,7 +7,7 @@ export function LoginPage(props) {
     const googleLogin = (event) => {
         event.preventDefault();
         console.log("Google Login");
-        window.location.href = "http://default-spring-service-fc26e-24362057-fe271d0cca5a.kr.lb.naverncp.com";
+        window.location.href = process.env.REACT_APP_GOOGLE_LOGIN_URL
     };
 
     return (
