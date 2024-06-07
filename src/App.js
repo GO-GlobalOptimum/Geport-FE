@@ -42,7 +42,6 @@ function App() {
             <Route path="/hidden-code" element={<Hidden_code/>}></Route>
             <Route path="/geport_landing" element={<Geport_landing/>}></Route>
             <Route path="/mainpage" element={<MainPage/>}></Route>
-            <Route path="/mymain" element={<MyMain/>}></Route>
             <Route path="/profile" element={<Profile/>}></Route>
             <Route path="/fix_profile" element={<Fix_Profile/>}></Route>
             <Route path="/create_report" element={<Create_report/>}></Route>

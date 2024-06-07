@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { setCookie } from '../../../function/cookies';
 
 export function Create_Igeport_Posts(props) {
     const navigate = useNavigate();
@@ -9,8 +10,15 @@ export function Create_Igeport_Posts(props) {
     const [selectedPosts, setSelectedPosts] = useState([]);
 
     useEffect(() => {
-        axios.get('/BE/spring/posts/list/my-list')
-            .then(response => setMyposts(response.data))
+        console.log("useEffect in");
+        axios.get('/BE/spring/posts/list/popular')
+            .then(response => {
+                if (Array.isArray(response.data.content)) {
+                    setMyposts(response.data.content);
+                } else {
+                    console.error('Received data content is not an array:', response.data.content);
+                }
+            })
             .catch(error => console.error('Error fetching posts:', error));
     }, []);
 
@@ -24,7 +32,8 @@ export function Create_Igeport_Posts(props) {
 
     const handleRegister = () => {
         // 선택된 포스트 ID를 쿠키에 저장
-        Cookies.set('selected_posts', selectedPosts.join(','), { expires: 1 });
+        //Cookies.set('selected_posts', selectedPosts.join(','), { expires: 1 });
+        setCookie("selected_posts", selectedPosts, { path: '/' })
         navigate('/igeport/question'); // Igeport_question.js로 이동
     };
 
@@ -39,12 +48,30 @@ export function Create_Igeport_Posts(props) {
                     {selectedPosts.map(postId => {
                         const post = myposts.find(p => p.id === postId);
                         return (
-                            <button key={post.id} onClick={() => handlePostSelection(post)} style={{ marginRight: '10px', borderRadius: '20px', padding: '5px 10px', backgroundColor: 'white', color: '#10901FC3', border: '1px solid #10901FC3' }}>
-                                {post.title}
-                            </button>
+                            post && (
+                                <button key={post.id} onClick={() => handlePostSelection(post)} style={{ marginRight: '10px', borderRadius: '20px', padding: '5px 10px', backgroundColor: 'white', color: '#10901FC3', border: '1px solid #10901FC3' }}>
+                                    {post.title}
+                                </button>
+                            )
                         );
                     })}
                     <button 
+                            onClick={handleRegister}
+                            style={{ 
+                                marginLeft: '10px', 
+                                borderRadius: '20px', 
+                                padding: '5px 10px', 
+                                backgroundColor: selectedPosts.length === 4 ? '#10901FC3' : '#d3d3d3', 
+                                color: 'white',
+                                border: 'none',
+                                cursor: selectedPosts.length === 4 ? 'pointer' : 'not-allowed'
+                            }}
+                            disabled={selectedPosts.length !== 4}
+                            active={selectedPosts.length === 4 ? 'true' : 'false'} // 이 부분 수정
+                        >
+                            등록하기
+                        </button>
+                    {/* <button 
                         onClick={handleRegister}
                         style={{ 
                             marginLeft: '10px', 
@@ -58,7 +85,7 @@ export function Create_Igeport_Posts(props) {
                         disabled={selectedPosts.length !== 4}
                     >
                         등록하기
-                    </button>
+                    </button> */}
                 </div>
                 <div>
                     <hr style={{ borderTop: '1px gray', marginTop: '10px', width: '80%', paddingLeft: "5%" }} />
@@ -69,7 +96,7 @@ export function Create_Igeport_Posts(props) {
                                     <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                                         <div style={{ marginRight: '10px', flex: '1' }}>
                                             <h3>{post.title}</h3>
-                                            <p>{post.content.substring(0, 255)}</p>
+                                            <p>{post.postContent ? post.postContent.substring(0, 255) : '내용 없음'}</p>
                                         </div>
                                         <div style={{ marginRight: '10px' }}>
                                             <button
@@ -90,13 +117,17 @@ export function Create_Igeport_Posts(props) {
                                             </button>
                                         </div>
                                         <div>
-                                            <img src={post.imageUrl} alt="Post" style={{ maxHeight: '150px', maxWidth: '150px' }} />
+                                            <img src={post.imageUrl ? post.imageUrl :'https://lh3.googleusercontent.com/a/ACg8ocJB4FovhYQHo2lcpzWPMgCXV5hUhfEffnY5EskOdZAZN_fYisrG'} alt="Post" style={{ maxHeight: '150px', maxWidth: '150px' }} />
                                         </div>
                                     </div>
                                     <div style={{ display: 'flex', alignItems: 'center' }}>
                                         <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
-                                            <img src={post.user.image} alt="User" style={{ width: '30px', height: '30px', borderRadius: '50%', marginRight: '10px' }} />
-                                            <p>{post.user.name}</p>
+                                            {post.user && (
+                                                <>
+                                                    <img src={post.user.image} alt="User" style={{ width: '30px', height: '30px', borderRadius: '50%', marginRight: '10px' }} />
+                                                    <p>{post.user.name}</p>
+                                                </>
+                                            )}
                                             <p style={{ marginLeft: '20px' }}>{post.date}</p>
                                         </div>
                                         <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px', marginLeft: 'auto' }}>
