@@ -35,7 +35,7 @@ function App() {
             <Route path="/igeport/question" element={<Igeport_question/>}></Route>
             <Route path ="/igeport" element={<IGeport/>}></Route>
             <Route path="/create_post" element={<Create_post/>}></Route>
-            <Route path="/posts/:postId" element={<Posts/>}></Route>
+            <Route path="/posts/:postId" element={<Posts/>}></Route>  {/*연결완료*/}
             <Route path="/userinfo" element={<UserInfo/>}></Route>
             <Route path="/geport" element={<Geport/>}></Route>
             <Route path="/geport/question" element={<Geport_question/>}></Route>

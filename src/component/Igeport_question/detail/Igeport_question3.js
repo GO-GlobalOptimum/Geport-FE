@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import { getCookie, setCookie } from "../../../function/cookies";
 
 const radioButtonHeight = 80; // 라디오 버튼 하나의 높이 (픽셀 단위)
 
@@ -10,9 +11,20 @@ export function Igeport_question3({ nextPage }) {
     ];
 
     const [selectedOption, setSelectedOption] = useState('');
+
+    // Load saved selected option from the cookie when the component mounts
+    useEffect(() => {
+        const savedOption = getCookie('Igeport_selectedOption3');
+        if (savedOption) {
+            setSelectedOption(savedOption);
+        }
+    }, []);
+
     const handleRadioChange = (value) => {
-        setSelectedOption(value); // 라디오 버튼 선택 시 선택된 값을 상태에 저장
+        setSelectedOption(value);
+        setCookie('Igeport_selectedOption3', value, { path: '/' }); // 저장 위치와 경로
     };
+
     return (
         <div style={styles.container}>
             <div style={styles.container1}>
@@ -55,7 +67,7 @@ export function Igeport_question3({ nextPage }) {
                 <div style={styles.container4}>
                     <button style={{
                         ...styles.button,
-                        backgroundColor: selectedOption ? '#1AE57C' : '#525252' // 선택된 옵션이 있으면 버튼을 검은색으로 변경
+                        backgroundColor: selectedOption ? '#1AE57C' : '#525252' // 선택된 옵션이 있으면 버튼을 활성화
                     }} onClick={() => {
                         if (selectedOption) {
                             nextPage();
@@ -67,6 +79,7 @@ export function Igeport_question3({ nextPage }) {
         </div>
     );
 }
+
 
 const styles = {
     container: {

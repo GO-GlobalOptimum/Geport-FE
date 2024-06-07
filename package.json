@@ -8,10 +8,13 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "aws-sdk": "^2.1635.0",
     "axios": "^1.6.8",
     "chart.js": "^4.4.3",
     "chartjs-plugin-datalabels": "^2.2.0",
+    "express": "^4.19.2",
     "http-proxy-middleware": "^3.0.0",
+    "js-cookie": "^3.0.5",
     "mathjs": "^13.0.0",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.2.0",
@@ -46,5 +49,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5"
   }
 }

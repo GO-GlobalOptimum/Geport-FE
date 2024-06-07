@@ -4,7 +4,6 @@ import { Fix_Profile } from './detail/Fix_Profile';
 import { Header } from '../../layout/Header';
 
 export function Profile(props){
-
     return (
         <div>
             <div>

@@ -2,35 +2,27 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export function MyMain(props){
     const [myposts, setMyposts] = useState([]);
+    //const [loading, setLoading] = useState(true);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
-
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get('/BE/spring/posts/list', {
-                    headers: {
-                        Authorization: `Bearer ${props.token}`
-                    },
-                    withCredentials: true
-                });
-                setMyposts(response.data.content);
-            } catch (error) {
-                console.error('Error fetching posts:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
+        const fetchPostsData = async () => {
+        try {
+            const response = await axios.get('/BE/spring/posts/list', {
+                withCredentials: true
+            });
+            setMyposts(response.data.content);
+        } catch (error) {
+            console.error('Error fetching posts:', error);
+        }
+    };
+    fetchPostsData();
+}, []);
 
-        fetchData();
-    }, [props.token]);
-
-    if (loading) {
-        return <div>Loading...</div>;
-    }
 
     return(
         <div>
@@ -52,12 +44,13 @@ export function MyMain(props){
                                         </button>
                                     </div>
                                     <div>
-                                        <img src={post.thumbnailImage} alt="Post" style={{ maxHeight: '150px', maxWidth: '150px' }} />
+                                        {/* <img src={post.thumbnailImage} alt="Post" style={{ maxHeight: '150px', maxWidth: '150px' }} /> */}
+                                        <img src={`${process.env.PUBLIC_URL}/image/Hotpage1.png`}alt="Post" style={{ maxHeight: '150px', maxWidth: '150px' }} />
                                     </div>
                                 </div>
                                 <div style={{display:'flex', alignItems: 'center'}}>
                                     <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
-                                        <img src={"./image/Hotpage1.png"} alt="User" style={{ width: '30px', height: '30px', borderRadius: '50%', marginRight: '10px' }} />
+                                        <img src={"./image/user.png"} alt="User" style={{ width: '30px', height: '30px', borderRadius: '50%', marginRight: '10px' }} />
                                         <p>{post.name}</p>
                                         <p style={{ marginLeft: '20px' }}>{post.createdDate}</p>
                                     </div>
