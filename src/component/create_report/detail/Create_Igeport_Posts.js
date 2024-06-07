@@ -9,7 +9,7 @@ export function Create_Igeport_Posts(props) {
     const [selectedPosts, setSelectedPosts] = useState([]);
 
     useEffect(() => {
-        axios.get('https://your-api-endpoint/posts/list')
+        axios.get('/BE/spring/posts/list/my-list')
             .then(response => setMyposts(response.data))
             .catch(error => console.error('Error fetching posts:', error));
     }, []);

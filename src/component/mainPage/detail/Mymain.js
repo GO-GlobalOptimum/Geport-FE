@@ -12,7 +12,7 @@ export function MyMain(props){
     useEffect(() => {
         const fetchPostsData = async () => {
         try {
-            const response = await axios.get('BE/spring/posts/list', {
+            const response = await axios.get('/BE/spring/posts/list', {
                 withCredentials: true
             });
             setMyposts(response.data.content);

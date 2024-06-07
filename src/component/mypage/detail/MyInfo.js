@@ -19,7 +19,7 @@ export function MyInfo(props) {
     
         const fetchUserData = async () => {
             try {
-                const response = await axios.get('BE/spring/user/myInfo', {
+                const response = await axios.get('/BE/spring/user/myInfo', {
                     headers: {
                     },
                     withCredentials: true
