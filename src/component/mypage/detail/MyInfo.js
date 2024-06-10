@@ -5,55 +5,48 @@ import Cookies from 'js-cookie';
 
 export function MyInfo(props) {
     const [userInfo, setUserInfo] = useState({
-        profilePhoto: './image/type=profile_green.png',
+        profilePhoto: './image/user.png',
         name: '',
-        bio: ''
+        bio: '',
+        mbti: '',
+        age: '',
+        gender: '',
+        phoneNumber: ''
     });
     const [myposts, setMyposts] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
-        // 이건 로그인 했을 때 쿠키를 저장해줘야 해서 로그인에서 쿠키를 생성해 줘야한다.
-        Cookies.set('memberId', 1, { expires: 7 });
-    
-        const fetchUserData = async () => {
-            try {
-                const response = await axios.get('/BE/spring/user/myInfo', {
-                    headers: {
-                    },
-                    withCredentials: true
-                });
-                const data = response.data;
+        // 컴포넌트가 마운트될 때 사용자 정보를 불러옵니다.
+        axios.get("http://localhost:8080/spring/user/myInfo", { withCredentials: true })
+            .then(response => {
+                const userData = response.data;
                 setUserInfo({
-                    profilePhoto: data.image_url || './image/user.png',
-                    name: data.name,
-                    bio: data.bio
+                    profilePhoto: userData.imageUrl || './image/user.png',
+                    name: userData.nickName,
+                    bio: userData.bio,
+                    mbti: userData.mbti,
+                    age: userData.age.toString(),
+                    gender: userData.gender,
+                    phoneNumber: userData.phoneNumber
                 });
-            } catch (error) {
-                console.error('Error fetching user info:', error);
-            } finally {
                 setLoading(false);
-            }
-        };
-    
-        const fetchPostsData = async () => {
-            try {
-                const response = await axios.get('/BE/spring/posts/list/my-list', {
-                    headers: {
-                    },
-                    withCredentials: true
-                });
+            })
+            .catch(error => {
+                console.error("There was an error fetching user data:", error);
+                setLoading(false);
+            });
+
+        // 게시글 정보를 불러옵니다.
+        axios.get("http://localhost:8080/spring/posts/list/my-list", { withCredentials: true })
+            .then(response => {
                 setMyposts(response.data.content);
-            } catch (error) {
-                console.error('Error fetching posts:', error);
-            }
-        };
-    
-        fetchUserData();
-        fetchPostsData();
+            })
+            .catch(error => {
+                console.error("There was an error fetching posts:", error);
+            });
     }, []);
-    
 
     if (loading) {
         return <div>Loading...</div>;
@@ -94,7 +87,6 @@ export function MyInfo(props) {
                                         </button>
                                     </div>
                                     <div>
-                                        {/* <img src={post.thumbnailImage} alt="Post" style={{ maxHeight: '150px', maxWidth: '150px' }} /> */}
                                         <img src={`${process.env.PUBLIC_URL}/image/Hotpage1.png`} alt="Post" style={{ maxHeight: '150px', maxWidth: '150px' }} />
                                     </div>
                                 </div>

@@ -9,10 +9,16 @@ export function MyMain(props){
     //const [loading, setLoading] = useState(true);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    
+    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcxODQzNjk5MiwidHlwZSI6ImFjY2VzcyIsImVtYWlsIjoicGljaDc3NTVAbmF2ZXIuY29tIn0.P-vrcBUpcMKTfLiL9ZrW0JqWRT9mOwWyLdA27wijvg5ASdqUcxqXsKt7mEzxmjT2-Uq46dy-9Xo7oVR_6xdU1w'
+
     useEffect(() => {
         const fetchPostsData = async () => {
         try {
-            const response = await axios.get('/BE/spring/posts/list', {
+            const response = await axios.get('http://localhost:8080/spring/posts/list', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
                 withCredentials: true
             });
             setMyposts(response.data.content);

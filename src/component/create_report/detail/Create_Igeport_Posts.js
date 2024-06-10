@@ -2,16 +2,33 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { setCookie } from '../../../function/cookies';
 
 export function Create_Igeport_Posts(props) {
     const navigate = useNavigate();
     const [myposts, setMyposts] = useState([]);
     const [selectedPosts, setSelectedPosts] = useState([]);
 
+    // 이 부분은 실제 로그인 후 설정해야 할 것 같습니다.
+    // Cookies.set('memberId', 1, { expires: 7 });
+
     useEffect(() => {
-        axios.get('/BE/spring/posts/list/my-list')
-            .then(response => setMyposts(response.data))
-            .catch(error => console.error('Error fetching posts:', error));
+        console.log("useEffect in");
+        const memberId = Cookies.get('memberId'); // 쿠키에서 memberId 가져오기
+        axios.get('http://localhost:8080/spring/posts/list/my-list', {
+            headers: {
+                'memberId': memberId // 요청 헤더에 memberId 추가
+            },
+            withCredentials: true // 쿠키를 포함하여 요청을 보냄
+        })
+        .then(response => {
+            if (Array.isArray(response.data.content)) {
+                setMyposts(response.data.content);
+            } else {
+                console.error('Received data content is not an array:', response.data.content);
+            }
+        })
+        .catch(error => console.error('Error fetching posts:', error));
     }, []);
 
     const handlePostSelection = (post) => {
@@ -23,8 +40,7 @@ export function Create_Igeport_Posts(props) {
     };
 
     const handleRegister = () => {
-        // 선택된 포스트 ID를 쿠키에 저장
-        Cookies.set('selected_posts', selectedPosts.join(','), { expires: 1 });
+        setCookie("selected_posts", selectedPosts.join(','), { path: '/' });
         navigate('/igeport/question'); // Igeport_question.js로 이동
     };
 
@@ -39,9 +55,11 @@ export function Create_Igeport_Posts(props) {
                     {selectedPosts.map(postId => {
                         const post = myposts.find(p => p.id === postId);
                         return (
-                            <button key={post.id} onClick={() => handlePostSelection(post)} style={{ marginRight: '10px', borderRadius: '20px', padding: '5px 10px', backgroundColor: 'white', color: '#10901FC3', border: '1px solid #10901FC3' }}>
-                                {post.title}
-                            </button>
+                            post && (
+                                <button key={post.id} onClick={() => handlePostSelection(post)} style={{ marginRight: '10px', borderRadius: '20px', padding: '5px 10px', backgroundColor: 'white', color: '#10901FC3', border: '1px solid #10901FC3' }}>
+                                    {post.title}
+                                </button>
+                            )
                         );
                     })}
                     <button 
@@ -56,6 +74,7 @@ export function Create_Igeport_Posts(props) {
                             cursor: selectedPosts.length === 4 ? 'pointer' : 'not-allowed'
                         }}
                         disabled={selectedPosts.length !== 4}
+                        active={selectedPosts.length === 4 ? 'true' : 'false'} // 이 부분 수정
                     >
                         등록하기
                     </button>
@@ -69,7 +88,7 @@ export function Create_Igeport_Posts(props) {
                                     <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                                         <div style={{ marginRight: '10px', flex: '1' }}>
                                             <h3>{post.title}</h3>
-                                            <p>{post.content.substring(0, 255)}</p>
+                                            <p>{post.postContent ? post.postContent.substring(0, 255) : '내용 없음'}</p>
                                         </div>
                                         <div style={{ marginRight: '10px' }}>
                                             <button
@@ -90,13 +109,17 @@ export function Create_Igeport_Posts(props) {
                                             </button>
                                         </div>
                                         <div>
-                                            <img src={post.imageUrl} alt="Post" style={{ maxHeight: '150px', maxWidth: '150px' }} />
+                                            <img src={post.imageUrl ? post.imageUrl :'https://lh3.googleusercontent.com/a/ACg8ocJB4FovhYQHo2lcpzWPMgCXV5hUhfEffnY5EskOdZAZN_fYisrG'} alt="Post" style={{ maxHeight: '150px', maxWidth: '150px' }} />
                                         </div>
                                     </div>
                                     <div style={{ display: 'flex', alignItems: 'center' }}>
                                         <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
-                                            <img src={post.user.image} alt="User" style={{ width: '30px', height: '30px', borderRadius: '50%', marginRight: '10px' }} />
-                                            <p>{post.user.name}</p>
+                                            {post.user && (
+                                                <>
+                                                    <img src={post.user.image} alt="User" style={{ width: '30px', height: '30px', borderRadius: '50%', marginRight: '10px' }} />
+                                                    <p>{post.user.name}</p>
+                                                </>
+                                            )}
                                             <p style={{ marginLeft: '20px' }}>{post.date}</p>
                                         </div>
                                         <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px', marginLeft: 'auto' }}>

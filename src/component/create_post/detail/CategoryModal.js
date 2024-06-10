@@ -1,8 +1,8 @@
 import React from 'react';
 
 const CategoryModal = ({ handleCategoryModalClose, handleNext, setCategory }) => {
-    const handleCategoryChange = (e) => {
-        setCategory(e.target.value);
+    const handleCategoryChange = (value) => {
+        setCategory(value);
     };
 
     return (

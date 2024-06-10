@@ -1,18 +1,23 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import TitleInput from './detail/TitleInput';
 import ContentEditor from './detail/ContentEditor';
 import UploadButtons from './detail/UploadButtons';
 import FormatOptions from './detail/FormatOptions';
 import TagModal from './detail/TagModal';
 import CategoryModal from './detail/CategoryModal';
+import TagModal_update from './detail/TagModal_update';
 
-export function Create_post() {
+export function UpdatePost(props) {
     const navigate = useNavigate();
+    const { postId } = useParams();
     const contentRef = useRef(null);
+    const [post, setPost] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [title, setTitle] = useState('');
-    const [categories, setCategories] = useState(['nomal']);
+    const [categories, setCategories] = useState(['normal']);
     const [postContent, setPostContent] = useState('');
     const [thumbnailImage, setThumbnailImage] = useState([]);
     const [isContentEntered, setIsContentEntered] = useState(false);
@@ -24,9 +29,37 @@ export function Create_post() {
     const [showCategoryModal, setShowCategoryModal] = useState(false);
     const [showOptions, setShowOptions] = useState(false);
 
+    const handleNext = () => {
+        setShowCategoryModal(false);
+        setShowTagModal(true);
+    };
+
+    useEffect(() => {
+        Cookies.set('memberId', 1, { expires: 7 });
+
+        const fetchPost = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/spring/posts/post/${postId}`, {
+                    withCredentials: true
+                });
+                setPost(response.data);
+                setTitle(response.data.title);
+                setPostContent(response.data.postContent);
+                setThumbnailImage([response.data.imageUrl]);
+                setIsContentEntered(!!response.data.postContent.trim());
+            } catch (error) {
+                console.error('Error fetching post:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchPost();
+    }, [postId]);
+
     const logoClick = () => {
         navigate("/");
-    }
+    };
 
     const handleTitleChange = (e) => {
         setTitle(e.target.value);
@@ -96,24 +129,14 @@ export function Create_post() {
             setAlert('내용을 입력해 주세요.');
         } else {
             const postData = {
-                id: null,
                 title,
-                viewsCount: "0",
                 postContent,
-                isPublic: true,
-                likeCount: 0,
                 thumbnailImage: thumbnailImage.length > 0 ? thumbnailImage[0] : '',
-                isComment: true,
-                isDelete: false,
-                member: { id: 1, name: "user" },
-                bookMark: false,
-                commentCount: 0,
-                bookMarkCount: 0,
                 categories,
-                tags: tags ? tags.split(' ').map(tag => tag.replace('#', '')) : []
+                tags: Array.isArray(tags) ? tags.map(tag => tag.replace('#', '')) : []
             };
-
-            axios.post('http://localhost:8080/spring/posts/post', postData, {
+    
+            axios.post(`http://localhost:8080/spring/posts/post-id=${postId}/update`, postData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -125,7 +148,7 @@ export function Create_post() {
             })
             .catch(error => {
                 console.error('Error submitting post:', error);
-                setAlert('게시글 등록 중 오류가 발생했습니다.');
+                setAlert('게시글 수정 중 오류가 발생했습니다.');
             });
         }
     };
@@ -139,6 +162,7 @@ export function Create_post() {
         console.log("제목:", title);
         console.log("내용:", postContent);
         console.log("이미지들:", thumbnailImage);
+        console.log("카테고리:", categories);
     };
 
     const updateTogglePosition = () => {
@@ -182,11 +206,6 @@ export function Create_post() {
         }
     };
 
-    const handleNext = () => {
-        setShowCategoryModal(false);
-        setShowTagModal(true);
-    };
-
     useEffect(() => {
         const contentElement = contentRef.current;
         if (contentElement) {
@@ -228,6 +247,14 @@ export function Create_post() {
         }
     }, []);
 
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (!post) {
+        return <div>No post found</div>;
+    }
+
     return (
         <div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '20px' }}>
@@ -236,7 +263,7 @@ export function Create_post() {
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     <button onClick={() => setShowCategoryModal(true)} style={{ background: (isContentEntered ? "#00CC81" : "#ccc"), padding: '5px', borderRadius: '50px', border: isContentEntered ? "none" : '1px solid #ccc', display: 'flex', alignItems: 'center', marginRight: '20px' }}>
-                        등록하기
+                        수정 완료
                     </button>
                     <img src="./image/notification.png" alt="notification" style={{ width: '20px', height: '20px', marginRight: '20px' }} />
                     <img src="./image/user.png" alt="user" style={{ width: '20px', height: '20px', marginRight: '20px' }} />
@@ -260,7 +287,7 @@ export function Create_post() {
                 </div>
             </div>
 
-            {showTagModal && <TagModal handleTagModalClose={handleTagModalClose} handleSubmit={handleSubmit} />}
+            {showTagModal && <TagModal_update handleTagModalClose={handleTagModalClose} handleSubmit={handleSubmit} />}
             {showCategoryModal && <CategoryModal handleCategoryModalClose={handleCategoryModalClose} handleNext={handleNext} setCategory={setCategories} />}
         </div>
     );

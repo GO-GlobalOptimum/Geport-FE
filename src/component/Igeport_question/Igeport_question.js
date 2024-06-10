@@ -9,6 +9,7 @@ import { Igeport_question4 } from './detail/Igeport_question4';
 import { Igeport_question5 } from "./detail/Igeport_question5";
 import { Igeport_question6 } from "./detail/Igeport_question6";
 import { getCookie, removeCookie } from '../../function/cookies';
+import { setCookie } from '../../function/cookies';
 
 export function Igeport_question() {
     const [currentPage, setCurrentPage] = useState(1);
@@ -16,7 +17,8 @@ export function Igeport_question() {
 
     const nextPage = useCallback((data) => {
         // 현재 페이지의 데이터를 쿠키에 저장
-        Cookies.set(`igeport_answer${currentPage}`, data, { expires: 1 });
+        console.log(data)
+        setCookie(`igeport_answer${currentPage}`, data, { path : '/' });
 
         if (currentPage < 6) {
             setCurrentPage(prev => prev + 1);
@@ -26,28 +28,27 @@ export function Igeport_question() {
     }, [currentPage]);
 
     useEffect(() => {
-        if (currentPage === 7) {
+        if (currentPage == 7) {
             const sendResultsToBackend = async () => {
-                const answers = {
-                    answer1: getCookie('igeport_answer1'),
-                    answer2: getCookie('igeport_answer2'),
-                    answer3: getCookie('igeport_answer3'),
-                    answer4: getCookie('igeport_answer4'),
-                    answer5: getCookie('igeport_answer5'),
-                    answer6: getCookie('igeport_answer6')
-                };
-
+                const data = {
+                    post_ids: getCookie('selected_posts'),
+                    questions: [getCookie('igeport_answer2'), getCookie('igeport_answer3'), getCookie('igeport_answer4'), getCookie('igeport_answer5'), getCookie('igeport_answer6')]
+                }
+                console.log(data.questions)
+                console.log("check")
+                navigate('/igeport/result');
                 try {
-                    const response = await axios.post('/BE/fastapi/igeport/generate', answers, {
+                    const response = await axios.post('/BE/fastapi/igeport/generate/', JSON.stringify(data), {
                         withCredentials: true,
                         headers: { "Content-Type": 'application/json' }
                     });
                     console.log('Response data:', response.data);
+                    setCookie('igeport-result', response.data, { path : '/' })
 
                     ['igeport_answer1', 'igeport_answer2', 'igeport_answer3', 'igeport_answer4', 'igeport_answer5', 'igeport_answer6']
                         .forEach(cookieName => removeCookie(cookieName));
 
-                    navigate('/igeport/result');
+                    
                 } catch (error) {
                     console.error('Error sending data to backend:', error);
                 }

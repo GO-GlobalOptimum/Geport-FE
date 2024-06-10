@@ -23,6 +23,7 @@ import {IGeport_result} from "./component/IGeport_result/IGeport_result";
 import {Search} from "./component/Search/Search";
 import {IGeport} from "./component/Igeport/IGeport";
 import {SignUp} from "./component/login/SignUp";
+import {UpdatePost} from "./component/create_post/UpdatePost";
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
             <Route path="/geport/result" element={<Geport_result/>}></Route>
             <Route path="/igeport/result" element={<IGeport_result/>}></Route>
             <Route path="/search" element={<Search/>}></Route>
+            <Route path="/posts/:postId/update/:postId" element={<UpdatePost/>}></Route>
         </Routes>
     </BrowserRouter>
   );

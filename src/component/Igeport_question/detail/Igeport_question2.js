@@ -22,7 +22,7 @@ export function Igeport_question2({ nextPage }) {
 
     const handleNext = () => {
         if (selectedOption) {
-            nextPage();
+            nextPage(selectedOption);
         }
     };
 

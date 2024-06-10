@@ -9,12 +9,27 @@ export function Post(props) {
     const navigate = useNavigate();
     const { postId } = useParams();
 
+    const deletehandler = async () => {
+        try {
+            await axios.post(`http://localhost:8080/spring/posts/${postId}/delete`, {
+                withCredentials: true
+            });
+            navigate("/mainpage");
+        } catch (error) {
+            console.error('Error deleting post:', error);
+        }
+    };  
+
+    const updatehandler = () => {
+        navigate(`./update/${postId}`);
+    };
+
     useEffect(() => {
         Cookies.set('memberId', 1, { expires: 7 });
 
         const fetchPost = async () => {
             try {
-                const response = await axios.get(`/BE/spring/posts/post/${postId}`, {
+                const response = await axios.get(`http://localhost:8080/spring/posts/post/${postId}`, {
                     
                     withCredentials: true
                 });
@@ -75,14 +90,14 @@ export function Post(props) {
                                             backgroundColor: '#DDDDDD',
                                             border: 'none'
                                         }}>통계</button>
-                                        <button style={{
+                                        <button onClick={updatehandler} style={{
                                             marginRight: '10px',
                                             padding: '5px 10px',
                                             borderRadius: '20px',
                                             backgroundColor: '#DDDDDD',
                                             border: 'none'
                                         }}>수정</button>
-                                        <button style={{
+                                        <button onClick={deletehandler} style={{
                                             padding: '5px 10px',
                                             borderRadius: '20px',
                                             backgroundColor: '#DDDDDD',

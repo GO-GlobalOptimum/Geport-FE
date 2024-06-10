@@ -70,7 +70,7 @@ export function Igeport_question3({ nextPage }) {
                         backgroundColor: selectedOption ? '#1AE57C' : '#525252' // 선택된 옵션이 있으면 버튼을 활성화
                     }} onClick={() => {
                         if (selectedOption) {
-                            nextPage();
+                            nextPage(selectedOption);
                         }
                     }}> 다음으로
                     </button>
