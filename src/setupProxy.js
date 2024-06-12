@@ -11,4 +11,14 @@ module.exports = function (app) {
             // }
         })
     );
+    app.use(
+        "/API",
+        createProxyMiddleware({
+            target: process.env.REACT_APP_ANOTHER_BACKEND_URL,
+            changeOrigin: true,
+            // pathRewrite: {
+            //     '^/API': '' // URL ^/API -> 공백 변경
+            // }
+        })
+    );
 };

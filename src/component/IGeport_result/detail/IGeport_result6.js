@@ -1,18 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
 import WordCloud from 'wordcloud';
-import axios from 'axios';
 import { getCookie } from "../../../function/cookies";
+import styled, { createGlobalStyle } from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+  body {
+    font-family: 'Roboto', sans-serif;
+  }
+`;
 
 export function IGeport_result6({ nextPage }) {
     const wordCloudRef = useRef(null);
-    const name = getCookie('username');
-    const [userData, setUserData] = useState(null);
+    const name = "유현우";
+    const [userData, setUserData] = useState(JSON.parse(localStorage.getItem('result')).result.blogs_happyKeyword.happy_keyword);
 
     useEffect(() => {
         if (userData) {
             const colors = ['#1AE57C', '#1BD48C', '#1CC39C', '#1DB2AC', '#1EA1BC'];  // Define a list of colors
             let colorIndex = 0;
-
 
             // Create an array of [word, score] pairs
             const words = Object.entries(userData).map(([key, value]) => [key.toUpperCase(), Math.round(value)]);
@@ -25,7 +32,7 @@ export function IGeport_result6({ nextPage }) {
             WordCloud(wordCloudRef.current, {
                 list: words,
                 gridSize: 8,
-                weightFactor: (size) => Math.round(size * 1.5),
+                weightFactor: (size) => Math.round(size * 0.7),
                 color: () => {
                     const color = colors[colorIndex % colors.length];  // Cycle through colors array
                     colorIndex++;  // Move to the next color
@@ -34,6 +41,7 @@ export function IGeport_result6({ nextPage }) {
                 backgroundColor: '#1E1E1E',
                 rotateRatio: 0,
                 rotationSteps: 2,
+                fontFamily: 'Roboto, sans-serif', // Set the font family
             });
         }
     }, [userData]);
@@ -41,39 +49,43 @@ export function IGeport_result6({ nextPage }) {
     if (!userData) {
         return <div>Loading...</div>;
     }
-return (
-        <div style={styles.container}>
-            <div style={styles.container1}>
-                <div style={styles.container2}></div>
-                <div style={styles.container3}>
-                    <span style={styles.title}>이 기간 동안 {name} 님을<br />행복하게 만든 것을 모아봤어요</span>
-                </div>
-                <div style={styles.container7}>
-                    <div style={styles.content}>
-                        <div style={styles.wordCloudContainer}>
-                            <canvas ref={wordCloudRef} style={styles.canvas}></canvas>
+
+    return (
+        <>
+            <GlobalStyle />
+            <div style={styles.container}>
+                <div style={styles.container1}>
+                    <div style={styles.container2}></div>
+                    <div style={styles.container3}>
+                        <span style={styles.title}>이 기간 동안 {name} 님을<br />행복하게 만든 것을 모아봤어요</span>
+                    </div>
+                    <div style={styles.container7}>
+                        <div style={styles.content}>
+                            <div style={styles.wordCloudContainer}>
+                                <canvas ref={wordCloudRef} style={styles.canvas}></canvas>
+                            </div>
+                        </div>
+                        <div style={styles.pageCount}>
+                            <svg width="10" height="180" viewBox="0 0 10 180" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="5" cy="5" r="5" transform="rotate(90 5 5)" fill="#C6C6C6"/>
+                                <circle cx="5" cy="39" r="5" transform="rotate(90 5 39)" fill="#C6C6C6"/>
+                                <circle cx="5" cy="73" r="5" transform="rotate(90 5 73)" fill="#C6C6C6"/>
+                                <circle cx="5" cy="107" r="5" transform="rotate(90 5 107)" fill="#1AE57C"/>
+                            </svg>
                         </div>
                     </div>
-                    <div style={styles.pageCount}>
-                        <svg width="10" height="180" viewBox="0 0 10 180" fill="none"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="5" cy="5" r="5" transform="rotate(90 5 5)" fill="#C6C6C6"/>
-                            <circle cx="5" cy="39" r="5" transform="rotate(90 5 39)" fill="#C6C6C6"/>
-                            <circle cx="5" cy="73" r="5" transform="rotate(90 5 73)" fill="#C6C6C6"/>
-                            <circle cx="5" cy="107" r="5" transform="rotate(90 5 107)" fill="#1AE57C"/>
-                        </svg>
+                    <div style={styles.container4}>
+                        <button
+                            style={styles.button}
+                            onClick={nextPage} // 버튼 클릭 시 nextPage 호출
+                        >
+                            다음으로
+                        </button>
                     </div>
                 </div>
-                <div style={styles.container4}>
-                    <button
-                        style={styles.button}
-                        onClick={nextPage} // 버튼 클릭 시 nextPage 호출
-                    >
-                        다음으로
-                    </button>
-                </div>
             </div>
-        </div>
+        </>
     );
 }
 

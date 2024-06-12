@@ -2,34 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
-// API 요청을 분리하여 관리
-export const get_api = () => {
-    return axios.get("/BE/fastapi/geport/database/list", {
-        withCredentials: true,
-        headers: {"Content-Type": 'application/json'}
-    });
-};
-
 export function Geport_result1({ nextPage }) {
     const [userData, setUserData] = useState(null);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const response = await get_api();
-                if (response.data.length > 0) {
-                    setUserData(response.data[0]);  // 첫 번째 데이터만 저장
-                } else {
-                    console.error('No data received');
-                }
-            } catch (error) {
-                console.error("There was an error fetching user data:", error);
-            }
-        };
-
-        fetchUserData();
-    }, []);
 
     useEffect(() => {
         if (userData) {

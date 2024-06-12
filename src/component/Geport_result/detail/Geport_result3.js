@@ -5,27 +5,11 @@ import { get_api } from "./Geport_result1";
 import axios from "axios";
 
 export function Geport_result3({ nextPage }) {
-    const [userData, setUserData] = useState(null);
+    const [userData, setUserData] = useState(JSON.parse(JSON.parse(localStorage.getItem('result')).result.answer_1));
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const response = await get_api();
-                if (response && response.data && response.data.length > 0) {
-                    setUserData(response.data[0]);  // 첫 번째 데이터만 저장
-                } else {
-                    console.error('No data received');
-                }
-            } catch (error) {
-                console.error("There was an error fetching user data:", error);
-            }
-        };
-
-        fetchUserData();
-    }, []);
-
-    const name = getCookie('username');
+    console.log(userData);
+    const name = "유현우";
 
     return (
         <div style={styles.container}>
@@ -36,13 +20,7 @@ export function Geport_result3({ nextPage }) {
                 </div>
                 <div style={styles.container7}>
                     <div style={styles.inputContainer}>
-                        {userData && userData.result && userData.result.answer_1 && (
-                            <div>
-                                <span style={styles.text}>
-                                    {JSON.parse(userData.result.answer_1).answer}
-                                </span>
-                            </div>
-                        )}
+                        {userData.answer}
                     </div>
                     <div style={styles.pageCount}>
                         <svg width="10" height="146" viewBox="0 0 10 146" fill="none"
@@ -123,7 +101,10 @@ const styles = {
         paddingLeft: '60px',
         backgroundColor: '#1E1E1E',
         overflowY: 'auto',
-        marginRight:"3%"
+        marginRight:"3%",
+        color:"white",
+        lineHeight: "160%",
+        fontSize:"20px"
     },
     container4: {
         position: 'relative',
@@ -166,5 +147,6 @@ const styles = {
         fontSize: "18px",
         //letterSpacing: "1px",
         lineHeight: "160%",
+
     }
 };

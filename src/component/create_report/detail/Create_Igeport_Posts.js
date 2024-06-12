@@ -14,8 +14,9 @@ export function Create_Igeport_Posts(props) {
 
     useEffect(() => {
         console.log("useEffect in");
-        const memberId = Cookies.get('memberId'); // 쿠키에서 memberId 가져오기
-        axios.get('http://localhost:8080/spring/posts/list/my-list', {
+        const memberId =3; // 쿠키에서 memberId 가져오기
+        setCookie('memberId', 3, { path:'/'})
+        axios.get('/BE/spring/posts/list/my-list', {
             headers: {
                 'memberId': memberId // 요청 헤더에 memberId 추가
             },

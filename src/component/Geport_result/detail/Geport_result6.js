@@ -10,27 +10,11 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ChartDataLabels);
 
 export function Geport_result6({ nextPage }) {
-    const [userData, setUserData] = useState(null);
+    const [userData, setUserData] = useState(JSON.parse(JSON.parse(localStorage.getItem('result')).result.answer_4));
     const navigate = useNavigate();
-    const name = getCookie('username');
 
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const response = await get_api();
-                if (response && response.data && response.data.length > 0) {
-                    setUserData(response.data[0]);
-                    console.log("Data fetched:", response.data[0]);
-                } else {
-                    console.error('No data received');
-                }
-            } catch (error) {
-                console.error("There was an error fetching user data:", error);
-            }
-        };
-
-        fetchUserData();
-    }, []);
+    console.log(userData);
+    const name = "유현우";
 
     // Dynamic data generation based on the equation
     const generateChartData = (equation) => {
@@ -68,7 +52,7 @@ export function Geport_result6({ nextPage }) {
         datasets: [
             {
                 label: 'Model Output',
-                data: userData ? generateChartData(JSON.parse(userData.result.answer_4).equation) : [],
+                data: userData ? generateChartData(userData.equation) : [],
                 borderColor: 'rgba(255, 99, 132, 1)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
                 fill: false,
@@ -89,13 +73,9 @@ export function Geport_result6({ nextPage }) {
                             <Line data={lineChartData} options={lineChartOptions} />
                         </div>
                         <div style={styles.inputContainer}>
-                            {userData && userData.result && userData.result.answer_4 && (
-                                <div>
                                     <span style={styles.text}>
-                                        {JSON.parse(userData.result.answer_4).explanation}
+                                        {userData.explanation}
                                     </span>
-                                </div>
-                            )}
                         </div>
                     </div>
                 </div>
@@ -183,13 +163,15 @@ const styles = {
         display: 'flex',
       //  flexDirection: 'column',
         backgroundColor: '#1E1E1E',
+        alignItems:"center",
+        justifyContent:"center"
     },content:{
         position:'relative',
         width:"100%",
         height:'50vh',
         display:'flex',
         flexDirection:'column',
-        marginRight:"10%"
+        marginRight:"10%",
     }
     ,
     inputContainer: {
@@ -198,13 +180,16 @@ const styles = {
         paddingLeft: '60px',
         backgroundColor: '#1E1E1E',
         overflowY: 'auto',
-        marginRight:"20%"
+        marginRight:"20%",
+        color:"white",
+        lineHeight: "160%",
+        fontSize:"20px"
     },graphContainer: {
         width: '50%', // Adjust the width as needed
         height: '30vh', // Adjust the height as needed
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     pageCount: {
         position: 'relative',

@@ -6,8 +6,6 @@ import { Modal } from "../../function/modal";
 import { Login } from "../login/Login";
 import axios from "axios";
 
-axios.defaults.headers.common['Authorization'] = `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcxODk1ODk4OSwidHlwZSI6ImFjY2VzcyIsImVtYWlsIjoidGFreTAzMTVAZ2FjaG9uLmFjLmtyIn0.23Nbb5w8qfG6H4BIbul3K6A5WLnckX9aeX22zL4VYRhPiaOUoV9cP-Syhz38aggw_8SlV-_s-V4n-VoARTIx2g`;
-
 export function Landing(props) {
     const [isModalOpen, setModalOpen] = useState(false);
     const [posts, setPosts] = useState([]);
@@ -33,7 +31,7 @@ export function Landing(props) {
     // };
     const fetchData = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/spring/posts/list/popular', {
+            const response = await axios.get('/BE/spring/posts/list/popular', {
                 withCredentials: true
             });
             setPosts(response.data.content);

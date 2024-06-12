@@ -114,7 +114,7 @@ export function Create_post() {
                 tags: Array.isArray(tags) ? tags.map(tag => tag.replace('#', '')) : []
             };
 
-            axios.post('http://localhost:8080/spring/posts/post', postData, {
+            axios.post('/BE/spring/posts/post', postData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },

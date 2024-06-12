@@ -17,7 +17,10 @@ export function MyInfo(props) {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     useEffect(() => {
-        axios.get("http://localhost:8080/spring/user/myInfo", { withCredentials: true })
+
+        // 컴포넌트가 마운트될 때 사용자 정보를 불러옵니다.
+        axios.get("/BE/spring/user/myInfo", { withCredentials: true })
+
             .then(response => {
                 const userData = response.data;
                 setUserInfo({
@@ -37,7 +40,7 @@ export function MyInfo(props) {
             });
 
         // 게시글 정보를 불러옵니다.
-        axios.get("http://localhost:8080/spring/posts/list/my-list", { withCredentials: true })
+        axios.get("/BE/spring/posts/list/my-list", { withCredentials: true })
             .then(response => {
                 setMyposts(response.data.content);
             })

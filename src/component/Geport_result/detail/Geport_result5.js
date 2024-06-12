@@ -3,26 +3,12 @@ import {getCookie} from "../../../function/cookies";
 import { get_api } from "./Geport_result1";
 import {useNavigate} from "react-router-dom";
 export function Geport_result5({ nextPage }) {
-    const [userData, setUserData] = useState(null);
+    const [userData, setUserData] = useState(JSON.parse(JSON.parse(localStorage.getItem('result')).result.answer_3));
     const navigate = useNavigate();
-    const name = getCookie('username');
 
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const response = await get_api();
-                if (response && response.data && response.data.length > 0) {
-                    setUserData(response.data[0]);  // 첫 번째 데이터만 저장
-                } else {
-                    console.error('No data received');
-                }
-            } catch (error) {
-                console.error("There was an error fetching user data:", error);
-            }
-        };
+    console.log(userData);
+    const name = "유현우";
 
-        fetchUserData();
-    }, []);
     return (
         <div style={styles.container}>
             <div style={styles.container1}>
@@ -32,13 +18,9 @@ export function Geport_result5({ nextPage }) {
                 </div>
                 <div style={styles.container7}>
                     <div style={styles.inputContainer}>
-                        {userData && userData.result && userData.result.answer_3 && (
-                            <div>
-                                <span style={styles.text}>
-                                    {JSON.parse(userData.result.answer_3).answer}
-                                </span>
-                            </div>
-                        )}
+                        <span style={styles.text}>
+                                  {userData.answer}
+                        </span>
                     </div>
                     <div style={styles.pageCount}>
                         <svg width="10" height="146" viewBox="0 0 10 146" fill="none"
@@ -119,7 +101,10 @@ const styles = {
         paddingLeft: '60px',
         backgroundColor: '#1E1E1E',
         overflowY: 'auto',
-        marginRight:"3%"
+        marginRight:"3%",
+        color:"white",
+        lineHeight: "160%",
+        fontSize:"20px"
     },
     input: {
         width: '92%',

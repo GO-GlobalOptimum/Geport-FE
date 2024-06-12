@@ -11,7 +11,7 @@ export function Post(props) {
 
     const deletehandler = async () => {
         try {
-            await axios.post(`http://localhost:8080/spring/posts/${postId}/delete`, {
+            await axios.post(`/BE/spring/posts/${postId}/delete`, {
                 withCredentials: true
             });
             navigate("/mainpage");
@@ -19,6 +19,7 @@ export function Post(props) {
             console.error('Error deleting post:', error);
         }
     };
+
 
     const updatehandler = () => {
         navigate(`./update/${postId}`);
@@ -70,7 +71,7 @@ export function Post(props) {
                                     marginBottom: '10px'
                                 }}>
                                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                                        <img src={`${process.env.PUBLIC_URL}/image/user.png`} alt="Profile" style={{
+                                        <img src={`${process.env.PUBLIC_URL}/image/type=profile_green.png`} alt="Profile" style={{
                                             width: '50px',
                                             height: '50px',
                                             borderRadius: '50%',
@@ -104,6 +105,14 @@ export function Post(props) {
                                         }}>삭제</button>
                                     </div>
                                 </div>
+                                <div
+                                    style={{
+                                        fontSize: '14px',
+                                        letterSpacing: '0.8px',
+                                        lineHeight: '30px'
+                                    }}
+                                    dangerouslySetInnerHTML={{ __html: post.postContent }} // Render post content with images
+                                />
                                 <div
                                     style={{
                                         fontSize: '14px',
@@ -156,3 +165,4 @@ export function Post(props) {
         </div>
     );
 }
+

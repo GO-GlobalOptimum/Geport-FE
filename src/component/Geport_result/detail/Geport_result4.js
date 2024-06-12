@@ -2,28 +2,14 @@ import React, {useEffect, useState} from 'react';
 import {getCookie} from "../../../function/cookies";
 import {get_api} from "./Geport_result1";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 export function Geport_result4({ nextPage }) {
+    const [userData, setUserData] = useState(JSON.parse(JSON.parse(localStorage.getItem('result')).result.answer_2));
+    const navigate = useNavigate();
 
-    const [userData, setUserData] = useState(null);
-    const name = getCookie('username');
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const response = await get_api();
-                if (response && response.data && response.data.length > 0) {
-                    setUserData(response.data[0]);  // 첫 번째 데이터만 저장
-                } else {
-                    console.error('No data received');
-                }
-            } catch (error) {
-                console.error("There was an error fetching user data:", error);
-            }
-        };
-
-        fetchUserData();
-    }, []);
-
+    console.log(userData);
+    const name = "유현우";
 
     return (
         <div style={styles.container}>
@@ -34,13 +20,10 @@ export function Geport_result4({ nextPage }) {
                 </div>
                 <div style={styles.container7}>
                     <div style={styles.inputContainer}>
-                        {userData && userData.result && userData.result.answer_2 && (
-                            <div>
+
                                 <span style={styles.text}>
-                                    {JSON.parse(userData.result.answer_2).answer}
+                                    {userData.answer}
                                 </span>
-                            </div>
-                        )}
                     </div>
                     <div style={styles.pageCount}>
                         <svg width="10" height="146" viewBox="0 0 10 146" fill="none"
@@ -122,7 +105,9 @@ const styles = {
         paddingLeft: '60px',
         backgroundColor: '#1E1E1E',
         overflowY: 'auto',
-        marginRight:"3%"
+        marginRight:"3%",
+        fontSize:"20px",
+        lineHeight: "160%",
     },
     container4: {
         position: 'relative',
