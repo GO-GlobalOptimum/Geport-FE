@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {getCookie} from "../../../function/cookies";
+
 export function IGeport_result7({ nextPage }) {
     const name = getCookie('username');
     const [userData, setUserData] = useState(null);
+
 
 
     return (

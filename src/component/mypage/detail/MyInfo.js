@@ -16,9 +16,7 @@ export function MyInfo(props) {
     const [myposts, setMyposts] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
-
     useEffect(() => {
-        // 컴포넌트가 마운트될 때 사용자 정보를 불러옵니다.
         axios.get("http://localhost:8080/spring/user/myInfo", { withCredentials: true })
             .then(response => {
                 const userData = response.data;

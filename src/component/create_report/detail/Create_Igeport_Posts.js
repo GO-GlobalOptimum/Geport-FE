@@ -63,6 +63,22 @@ export function Create_Igeport_Posts(props) {
                         );
                     })}
                     <button 
+                            onClick={handleRegister}
+                            style={{ 
+                                marginLeft: '10px', 
+                                borderRadius: '20px', 
+                                padding: '5px 10px', 
+                                backgroundColor: selectedPosts.length === 4 ? '#10901FC3' : '#d3d3d3', 
+                                color: 'white',
+                                border: 'none',
+                                cursor: selectedPosts.length === 4 ? 'pointer' : 'not-allowed'
+                            }}
+                            disabled={selectedPosts.length !== 4}
+                            active={selectedPosts.length === 4 ? 'true' : 'false'} // 이 부분 수정
+                        >
+                            등록하기
+                        </button>
+                    {/* <button 
                         onClick={handleRegister}
                         style={{ 
                             marginLeft: '10px', 
@@ -77,7 +93,7 @@ export function Create_Igeport_Posts(props) {
                         active={selectedPosts.length === 4 ? 'true' : 'false'} // 이 부분 수정
                     >
                         등록하기
-                    </button>
+                    </button> */}
                 </div>
                 <div>
                     <hr style={{ borderTop: '1px gray', marginTop: '10px', width: '80%', paddingLeft: "5%" }} />
