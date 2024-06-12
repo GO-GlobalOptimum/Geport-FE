@@ -41,7 +41,7 @@ export function Igeport_question() {
                 console.log(data.questions)
                 console.log("check")
                 try {
-                    const response = await axios.post('http://localhost:8000/fastapi/igeport/generate/', JSON.stringify(data), {
+                    const response = await axios.post('/BE/fastapi/igeport/generate/', JSON.stringify(data), {
                         withCredentials: true,
                         //headers: { "Content-Type": 'application/json', Authorization: `Bearer ${token}` }
                     }); 

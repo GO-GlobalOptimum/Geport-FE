@@ -16,7 +16,7 @@ export function Fix_Profile(props) {
 
     useEffect(() => {
         // 컴포넌트가 마운트될 때 사용자 정보를 불러옵니다.
-        axios.get("http://localhost:8080/spring/user/myInfo", { withCredentials: true })
+        axios.get("/BE/spring/user/myInfo", { withCredentials: true })
             .then(response => {
                 const userData = response.data;
                 setNickname(userData.nickName);
@@ -46,7 +46,7 @@ export function Fix_Profile(props) {
 
     const postApi = (profileData) => {
         console.log("Sending profile data to backend:", profileData); // 로그 추가
-        axios.post("http://localhost:8080/spring/user/myInfo", profileData, {
+        axios.post("/BE/spring/user/myInfo", profileData, {
             withCredentials: true
         })
             .then(res => {
@@ -95,7 +95,7 @@ export function Fix_Profile(props) {
     }
 
     const handleDeleteAccount = () => {
-        axios.delete("http://localhost:8080/spring/user/myInfo", {
+        axios.delete("/BE/spring/user/myInfo", {
             withCredentials: true
         })
         .then(res => {
