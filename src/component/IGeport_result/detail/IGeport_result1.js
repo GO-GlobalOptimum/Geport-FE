@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Cookies from 'js-cookie'; // 필요한 경우, js-cookie를 사용합니다.
-// import { getCookie, removeCookie } from '../../function/cookies'; // 삭제
+import { getCookie, removeCookie } from '../../../function/cookies'
 
 export function IGeport_result1({ nextPage }) {
 
     const [userData, setUserData] = useState(null);
     const navigate = useNavigate();
 
-    const getCookie = (name) => {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
-    };
+    // const getCookie = (name) => {
+    //     const value = `; ${document.cookie}`;
+    //     const parts = value.split(`; ${name}=`);
+    //     if (parts.length === 2) return parts.pop().split(';').shift();
+    // };
 
     const data = {
         post_ids: getCookie('selected_posts'),
@@ -23,7 +22,8 @@ export function IGeport_result1({ nextPage }) {
             getCookie('igeport_answer4'),
             getCookie('igeport_answer5'),
             getCookie('igeport_answer6')
-        ]
+        ],
+        result: JSON.parse(localStorage.getItem('result'))
     };
 
     useEffect(() => {
@@ -33,8 +33,6 @@ export function IGeport_result1({ nextPage }) {
     }, [userData]);
 
     useEffect(() => {
-        console.log(data); // 쿠키 데이터 출력
-
         const timer = setTimeout(() => {
             nextPage();
         }, 2000);
@@ -47,10 +45,10 @@ export function IGeport_result1({ nextPage }) {
             <img src="/image/geport_green_logo.png" alt="Logo" style={styles.logo} />
             <h1 style={styles.title}>iGeport 결과 보고서</h1>
             <p style={styles.subtitle}>iGeport는 총 여섯 단계로 블로그에 드러난 당신의 심리를 분석합니다.</p>
-            <div style={styles.dataContainer}>
+            {/* <div style={styles.dataContainer}>
                 <h2>쿠키 데이터:</h2>
                 <pre style={styles.pre}>{JSON.stringify(data, null, 2)}</pre>
-            </div>
+            </div> */}
         </div>
     );
 }

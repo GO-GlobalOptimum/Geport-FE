@@ -51,13 +51,13 @@ export function MyMain(props){
                                     </div>
                                     <div>
                                         {/* <img src={post.thumbnailImage} alt="Post" style={{ maxHeight: '150px', maxWidth: '150px' }} /> */}
-                                        <img src={`${process.env.PUBLIC_URL}/image/Hotpage1.png`}alt="Post" style={{ maxHeight: '150px', maxWidth: '150px' }} />
+                                        <img src={`${post.thumbnailImage}`}alt="Post" style={{ maxHeight: '150px', maxWidth: '150px' }} />
                                     </div>
                                 </div>
                                 <div style={{display:'flex', alignItems: 'center'}}>
                                     <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
                                         <img src={"./image/user.png"} alt="User" style={{ width: '30px', height: '30px', borderRadius: '50%', marginRight: '10px' }} />
-                                        <p>{post.name}</p>
+                                        <p>{post.nickName}</p>
                                         <p style={{ marginLeft: '20px' }}>{post.createdDate}</p>
                                     </div>
                                     <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px',  marginLeft: 'auto'  }}>

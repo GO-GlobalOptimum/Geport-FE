@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {getCookie} from "../../../function/cookies";
 export function IGeport_result7({ nextPage }) {
-    const name = getCookie('username');
-    const [userData, setUserData] = useState(null);
+    const name = "김포트";
+    const [userData, setUserData] = useState(JSON.parse(localStorage.getItem('result')).result.blogs_finalReport);
 
-
+    console.log(userData);
     return (
         <div style={styles.container}>
             <div style={styles.container1}>
@@ -31,7 +31,7 @@ export function IGeport_result7({ nextPage }) {
                         style={styles.button}
                         onClick={nextPage}
                     >
-                        IGeport 다운받기
+                        메인으로
                     </button>
                 </div>
             </div>

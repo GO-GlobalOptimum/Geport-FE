@@ -2,9 +2,10 @@ import React, {useState, useEffect} from 'react';
 import {getCookie} from "../../../function/cookies";
 
 export function IGeport_result3({ nextPage }) {
-    const name = getCookie('username');
-    const [userData, setUserData] = useState(null);
+    const name = "김포트";
+    const [userData, setUserData] = useState(JSON.parse(localStorage.getItem('result')).result.blogs_summary);
 
+    console.log(Object.values(userData))
     return (
         <div style={styles.container}>
             <div style={styles.container1}>
@@ -15,7 +16,7 @@ export function IGeport_result3({ nextPage }) {
                 <div style={styles.container7}>
                     <div style={styles.content}>
                         {/* 데이터를 동적으로 표시 */}
-                        {userData && Object.values(userData).map((blog, index) => (
+                        {Object.values(userData).map((blog, index) => (
                             <div key={index} style={styles.summaryContainer}>
                                 <span style={styles.text}>{blog.summary}</span>
                             </div>

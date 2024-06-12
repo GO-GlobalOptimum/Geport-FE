@@ -18,7 +18,7 @@ export function Post(props) {
         } catch (error) {
             console.error('Error deleting post:', error);
         }
-    };  
+    };
 
     const updatehandler = () => {
         navigate(`./update/${postId}`);
@@ -30,7 +30,6 @@ export function Post(props) {
         const fetchPost = async () => {
             try {
                 const response = await axios.get(`http://localhost:8080/spring/posts/post/${postId}`, {
-                    
                     withCredentials: true
                 });
                 setPost(response.data);
@@ -71,7 +70,7 @@ export function Post(props) {
                                     marginBottom: '10px'
                                 }}>
                                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                                        <img src={`${process.env.PUBLIC_URL}/image/user.png`} alt="Profile" style={{
+                                        <img src={`${process.env.PUBLIC_URL}/image/type=profile_green.png`} alt="Profile" style={{
                                             width: '50px',
                                             height: '50px',
                                             borderRadius: '50%',
@@ -105,14 +104,14 @@ export function Post(props) {
                                         }}>삭제</button>
                                     </div>
                                 </div>
-                                <p style={{
-                                    fontSize: '14px',
-                                    letterSpacing: '0.8px',
-                                    lineHeight: '30px'
-                                }}>{post.postContent}</p>
-                                {post.imageUrl && (
-                                    <img src={post.imageUrl} alt="Post" style={{ width: '100%' }} />
-                                )}
+                                <div
+                                    style={{
+                                        fontSize: '14px',
+                                        letterSpacing: '0.8px',
+                                        lineHeight: '30px'
+                                    }}
+                                    dangerouslySetInnerHTML={{ __html: post.postContent }} // Render post content with images
+                                />
                             </div>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center' }}>

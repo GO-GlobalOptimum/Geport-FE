@@ -4,8 +4,7 @@ import {getCookie} from "../../../function/cookies";
 
 export function IGeport_result2({ nextPage }) {
 
-    const name = getCookie('username');
-    const userIntro = getCookie('userIntro');
+    const name = "김포트";
 
 
     return (
@@ -14,7 +13,7 @@ export function IGeport_result2({ nextPage }) {
                 <div style={styles.container2}></div>
                 <div style={styles.container3}>
                     <span style={styles.title}>
-                       {userIntro}, <br/>{name} 님의 iGeport
+                       <br/>{name} 님의 iGeport
                     </span>
                 </div>
                 <div style={styles.container3}>

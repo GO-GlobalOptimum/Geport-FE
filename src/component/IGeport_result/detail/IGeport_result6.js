@@ -7,7 +7,7 @@ import { getCookie } from "../../../function/cookies";
 export function IGeport_result6({ nextPage }) {
     const wordCloudRef = useRef(null);
     const name = getCookie('username');
-    const [userData, setUserData] = useState(null);
+    const [userData, setUserData] = useState(JSON.parse(localStorage.getItem('result')).result.blogs_happyKeyword.happy_keyword);
 
     useEffect(() => {
         if (userData) {

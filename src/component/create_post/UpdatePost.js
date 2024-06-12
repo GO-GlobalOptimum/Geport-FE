@@ -136,6 +136,8 @@ export function UpdatePost(props) {
                 tags: Array.isArray(tags) ? tags.map(tag => tag.replace('#', '')) : []
             };
     
+            console.log('Submitting post data:', postData);
+    
             axios.post(`http://localhost:8080/spring/posts/post-id=${postId}/update`, postData, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -148,6 +150,7 @@ export function UpdatePost(props) {
             })
             .catch(error => {
                 console.error('Error submitting post:', error);
+                console.log('Error response:', error.response); // Add this line to log the error response
                 setAlert('게시글 수정 중 오류가 발생했습니다.');
             });
         }

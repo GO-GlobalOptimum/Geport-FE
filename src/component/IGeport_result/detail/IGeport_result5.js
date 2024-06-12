@@ -6,11 +6,19 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend, ArcElement, ChartDataLabels);
 
 export function IGeport_result5({ nextPage }) {
+
+    const [userData, setUserData] = useState(JSON.parse(localStorage.getItem('result')).result.blogs_emotionBig5.emotion_big5);
+
+    console.log(userData)
     const pieChartData = {
         labels: ['개방성', '성실성', '외향성', '우호성', '섬세함'],
         datasets: [
             {
-                data: [20, 30, 15, 25, 10], // 예시 데이터
+                data: [userData.extroversion.big5_score,
+                    userData.friendliness.big5_score,
+                    userData.neuroticism.big5_score, 
+                    userData.openness.big5_score, 
+                    userData.sincerity.big5_score], // 예시 데이터
                 backgroundColor: [
                     '#1AE57C',
                     '#1BD48C',
@@ -53,12 +61,7 @@ export function IGeport_result5({ nextPage }) {
                         </div>
                         <div style={styles.textContainer}>
                             <span style={styles.text}>
-                                조태완 님은 개방적이고, 성실하고, 외향적이고, 우호적이며, 섬세합니다.<br/>
-                                이 중 가장 두드러지는 특성은 우호성입니다.<br/><br/>
-                                조태완 님은 새로운 아이디어에 대한 수용성이 높습니다.<br/>
-                                조태완 님의 성실성은 평균 정도로 나타나는데, 이는 계획적이고 체계적인 접근을 선호하지만 때로는 융통성을 발휘할 수 있음을 의미합니다.<br/>
-                                조태완 님은 외향적입니다. 다른 사람과 어울리는 것을 즐기고 활동적인 여행을 선호하는 것으로 보입니다.<br/>
-                                조태완 님의 친화성 점수는 높은 편으로, 작성자가 타인과 잘 어울리며 협력적인 성향을 가졌습니다.
+                                {userData.summary.big5_description}
                             </span>
                         </div>
                     </div>
@@ -153,7 +156,7 @@ const styles = {
     },
     container7: {
         position: 'relative',
-        width: '90%',
+        width: '100%',
         height: '50vh',
         display: 'flex',
         //  flexDirection: 'column',

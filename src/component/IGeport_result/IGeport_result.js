@@ -16,7 +16,7 @@ export function IGeport_result() {
         if (currentPage < 8) {
             setCurrentPage(prev => prev + 1);
         } else {
-            navigate('/userinfo');
+            navigate('/mainpage');
         }
     };
 

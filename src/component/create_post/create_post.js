@@ -7,12 +7,13 @@ import UploadButtons from './detail/UploadButtons';
 import FormatOptions from './detail/FormatOptions';
 import TagModal from './detail/TagModal';
 import CategoryModal from './detail/CategoryModal';
+import { uploadToS3 } from '../../function/s3Utils'; // S3 upload function
 
 export function Create_post() {
     const navigate = useNavigate();
     const contentRef = useRef(null);
     const [title, setTitle] = useState('');
-    const [categories, setCategories] = useState(['nomal']);
+    const [categories, setCategories] = useState(['normal']); // Default category set to 'normal'
     const [postContent, setPostContent] = useState('');
     const [thumbnailImage, setThumbnailImage] = useState([]);
     const [isContentEntered, setIsContentEntered] = useState(false);
@@ -41,24 +42,25 @@ export function Create_post() {
         updateTogglePosition();
     };
 
-    const handleImageChange = (e) => {
+    const handleImageChange = async (e) => {
         const selectedImages = Array.from(e.target.files);
-        const imagePromises = selectedImages.map(image => {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => {
-                    const imgSrc = reader.result;
-                    contentRef.current.innerHTML += `<img src="${imgSrc}" alt="이미지" style="max-width: 70%; height: auto; margin: 5px 0;" />`;
-                    resolve(imgSrc);
-                };
-                reader.onerror = reject;
-                reader.readAsDataURL(image);
-            });
+        const imagePromises = selectedImages.map(async (image) => {
+            try {
+                const imageUrl = await uploadToS3(image);
+                contentRef.current.innerHTML += `<img src="${imageUrl}" alt="이미지" style="max-width: 70%; height: auto; margin: 5px 0;" />`;
+                return imageUrl;
+            } catch (error) {
+                console.error('Error uploading image:', error);
+                throw error;
+            }
         });
 
-        Promise.all(imagePromises)
-            .then(imgSrcs => setThumbnailImage([...thumbnailImage, ...imgSrcs]))
-            .catch(error => console.error('Error loading images:', error));
+        try {
+            const uploadedImageUrls = await Promise.all(imagePromises);
+            setThumbnailImage([...thumbnailImage, ...uploadedImageUrls]);
+        } catch (error) {
+            console.error('Error loading images:', error);
+        }
 
         updateTogglePosition();
     };
@@ -99,18 +101,17 @@ export function Create_post() {
                 id: null,
                 title,
                 viewsCount: "0",
-                postContent,
+                postContent: contentRef.current.innerHTML, // Save the innerHTML to include images and videos
                 isPublic: true,
                 likeCount: 0,
                 thumbnailImage: thumbnailImage.length > 0 ? thumbnailImage[0] : '',
                 isComment: true,
                 isDelete: false,
-                member: { id: 1, name: "user" },
                 bookMark: false,
                 commentCount: 0,
                 bookMarkCount: 0,
                 categories,
-                tags: tags ? tags.split(' ').map(tag => tag.replace('#', '')) : []
+                tags: Array.isArray(tags) ? tags.map(tag => tag.replace('#', '')) : []
             };
 
             axios.post('http://localhost:8080/spring/posts/post', postData, {
@@ -125,6 +126,7 @@ export function Create_post() {
             })
             .catch(error => {
                 console.error('Error submitting post:', error);
+                console.log('Error response:', error.response);
                 setAlert('게시글 등록 중 오류가 발생했습니다.');
             });
         }
@@ -139,6 +141,7 @@ export function Create_post() {
         console.log("제목:", title);
         console.log("내용:", postContent);
         console.log("이미지들:", thumbnailImage);
+        console.log("카테고리:", categories);
     };
 
     const updateTogglePosition = () => {
