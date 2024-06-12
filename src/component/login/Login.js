@@ -11,10 +11,6 @@ export function Login(props){
     const navigate = useNavigate();
     const [isLogin, setIsLogin] = useState(false);
 
-    useEffect(() => {
-        console.log("Google Client ID:", process.env.REACT_APP_GOOGLE_OAUTH_ID);
-    }, [isLogin]);
-
     const toggleLogin = () => {
         setIsLogin(!isLogin);
     };
