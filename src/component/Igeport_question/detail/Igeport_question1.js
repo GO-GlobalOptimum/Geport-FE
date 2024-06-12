@@ -18,7 +18,7 @@ export function Igeport_question1({ nextPage }) {
                     </span>
                 </div>
                 <div style={styles.container4}>
-                    <button style={styles.button} onClick={nextPage}>
+                    <button style={styles.button} onClick={()=>{nextPage('')}}>
                         다음으로
                     </button>
                 </div>

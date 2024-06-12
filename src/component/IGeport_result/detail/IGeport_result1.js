@@ -1,35 +1,31 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
-
-
-export const get_api = () => {
-    return axios.get("/BE/fastapi/igeport/database/list", {
-        withCredentials: true
-    });
-};
+import { useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie'; // 필요한 경우, js-cookie를 사용합니다.
+// import { getCookie, removeCookie } from '../../function/cookies'; // 삭제
 
 export function IGeport_result1({ nextPage }) {
 
     const [userData, setUserData] = useState(null);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const response = await get_api();
-                if (response.data.length > 0) {
-                    setUserData(response.data[0]);  // 첫 번째 데이터만 저장
-                } else {
-                    console.error('No data received');
-                }
-            } catch (error) {
-                console.error("There was an error fetching user data:", error);
-            }
-        };
+    const getCookie = (name) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    };
 
-        fetchUserData();
-    }, []);
+    const data = {
+        post_ids: getCookie('selected_posts'),
+        questions: [
+            getCookie('igeport_answer2'),
+            getCookie('igeport_answer3'),
+            getCookie('igeport_answer4'),
+            getCookie('igeport_answer5'),
+            getCookie('igeport_answer6')
+        ]
+    };
+
 
     useEffect(() => {
         if (userData) {
@@ -39,6 +35,8 @@ export function IGeport_result1({ nextPage }) {
 
 
     useEffect(() => {
+        console.log(data); // 쿠키 데이터 출력
+
         const timer = setTimeout(() => {
             nextPage();
         }, 2000);
@@ -46,12 +44,15 @@ export function IGeport_result1({ nextPage }) {
         return () => clearTimeout(timer); // Cleanup the timer on component unmount
     }, [nextPage]);
 
-
     return (
         <div style={styles.container}>
             <img src="/image/geport_green_logo.png" alt="Logo" style={styles.logo} />
             <h1 style={styles.title}>iGeport 결과 보고서</h1>
             <p style={styles.subtitle}>iGeport는 총 여섯 단계로 블로그에 드러난 당신의 심리를 분석합니다.</p>
+            <div style={styles.dataContainer}>
+                <h2>쿠키 데이터:</h2>
+                <pre style={styles.pre}>{JSON.stringify(data, null, 2)}</pre>
+            </div>
         </div>
     );
 }
@@ -68,7 +69,7 @@ const styles = {
         color: '#FFFFFF',
     },
     logo: {
-        width: '100px', // Adjust the width according to your preference
+        width: '100px',
         marginBottom: '20px',
     },
     title: {
@@ -79,5 +80,17 @@ const styles = {
     subtitle: {
         fontSize: '24px',
         fontWeight: '300',
+    },
+    dataContainer: {
+        marginTop: '20px',
+        textAlign: 'left',
+        width: '80%',
+        backgroundColor: '#2E2E2E',
+        padding: '20px',
+        borderRadius: '10px',
+    },
+    pre: {
+        whiteSpace: 'pre-wrap',
+        wordWrap: 'break-word',
     },
 };

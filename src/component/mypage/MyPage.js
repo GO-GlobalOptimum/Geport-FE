@@ -10,7 +10,7 @@ export function MyPage(props){
         <Header/>
           <div style={{ display: 'flex' }}>
             <div style={{ flex: 3 }}>
-        <MyInfo />
+        <MyInfo/>
       </div>
       <div style={{ flex: 2 }}>
         <RecommendSide />

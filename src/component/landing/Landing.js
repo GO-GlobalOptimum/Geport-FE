@@ -6,22 +6,34 @@ import { Modal } from "../../function/modal";
 import { Login } from "../login/Login";
 import axios from "axios";
 
+axios.defaults.headers.common['Authorization'] = `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcxODk1ODk4OSwidHlwZSI6ImFjY2VzcyIsImVtYWlsIjoidGFreTAzMTVAZ2FjaG9uLmFjLmtyIn0.23Nbb5w8qfG6H4BIbul3K6A5WLnckX9aeX22zL4VYRhPiaOUoV9cP-Syhz38aggw_8SlV-_s-V4n-VoARTIx2g`;
+
 export function Landing(props) {
     const [isModalOpen, setModalOpen] = useState(false);
     const [posts, setPosts] = useState([]);
-    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcxODQzNjk5MiwidHlwZSI6ImFjY2VzcyIsImVtYWlsIjoicGljaDc3NTVAbmF2ZXIuY29tIn0.P-vrcBUpcMKTfLiL9ZrW0JqWRT9mOwWyLdA27wijvg5ASdqUcxqXsKt7mEzxmjT2-Uq46dy-9Xo7oVR_6xdU1w';
 
+    
     useEffect(() => {
         console.log(axios.defaults.headers.common['Authorization']);
         fetchData();
     }, []);
     
+    // const fetchData = async () => {
+    //     try {
+    //         const response = await axios.get('/BE/spring/posts/list/popular', {
+    //             headers: {
+    //                 Authorization: `Bearer ${token}`
+    //             },
+    //             withCredentials: true
+    //         });
+    //         setPosts(response.data.content);
+    //     } catch (error) {
+    //         console.error('Error fetching posts:', error);
+    //     }
+    // };
     const fetchData = async () => {
         try {
-            const response = await axios.get('/BE/spring/posts/list/popular', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                },
+            const response = await axios.get('http://localhost:8080/spring/posts/list/popular', {
                 withCredentials: true
             });
             setPosts(response.data.content);
@@ -29,7 +41,6 @@ export function Landing(props) {
             console.error('Error fetching posts:', error);
         }
     };
-
     const openModal = () => setModalOpen(true);
     const closeModal = () => setModalOpen(false);
 

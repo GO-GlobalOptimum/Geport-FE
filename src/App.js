@@ -23,6 +23,7 @@ import {IGeport_result} from "./component/IGeport_result/IGeport_result";
 import {Search} from "./component/Search/Search";
 import {IGeport} from "./component/Igeport/IGeport";
 import {SignUp} from "./component/login/SignUp";
+import {UpdatePost} from "./component/create_post/UpdatePost";
 
 function App() {
   return (
@@ -35,14 +36,13 @@ function App() {
             <Route path="/igeport/question" element={<Igeport_question/>}></Route>
             <Route path ="/igeport" element={<IGeport/>}></Route>
             <Route path="/create_post" element={<Create_post/>}></Route>
-            <Route path="/posts/:postId" element={<Posts/>}></Route>
+            <Route path="/posts/:postId" element={<Posts/>}></Route>  {/*연결완료*/}
             <Route path="/userinfo" element={<UserInfo/>}></Route>
             <Route path="/geport" element={<Geport/>}></Route>
             <Route path="/geport/question" element={<Geport_question/>}></Route>
             <Route path="/hidden-code" element={<Hidden_code/>}></Route>
             <Route path="/geport_landing" element={<Geport_landing/>}></Route>
             <Route path="/mainpage" element={<MainPage/>}></Route>
-            <Route path="/mymain" element={<MyMain/>}></Route>
             <Route path="/profile" element={<Profile/>}></Route>
             <Route path="/fix_profile" element={<Fix_Profile/>}></Route>
             <Route path="/create_report" element={<Create_report/>}></Route>
@@ -50,6 +50,7 @@ function App() {
             <Route path="/geport/result" element={<Geport_result/>}></Route>
             <Route path="/igeport/result" element={<IGeport_result/>}></Route>
             <Route path="/search" element={<Search/>}></Route>
+            <Route path="/posts/:postId/update/:postId" element={<UpdatePost/>}></Route>
         </Routes>
     </BrowserRouter>
   );

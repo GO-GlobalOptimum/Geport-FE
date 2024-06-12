@@ -12,7 +12,7 @@ export function HotPage({ posts }) {
                     {
                         posts.map((post) => (
                             <div key={post.id} style={{ width: "384px", height: "420px", padding: "1%" }}>
-                                <img src={post.thumbnailImage}
+                                <img src={"./image/Hotpage1.png"}
                                      style={{ width: "384px", height: "256px", padding: "1%" }} />
                                 <div style={{height: "100px", textAlign: "center"}}>
                                     <h3>{post.title}</h3>

@@ -1,8 +1,30 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import { getCookie, setCookie } from "../../../function/cookies";
 
 const radioButtonHeight = 65; // 라디오 버튼 하나의 높이 (픽셀 단위)
 
 export function Igeport_question2({ nextPage }) {
+
+    const [selectedOption, setSelectedOption] = useState('');
+
+    // Load saved selected option from the cookie when the component mounts
+    useEffect(() => {
+        const savedOption = getCookie('Igeport_selectedOption');
+        if (savedOption) {
+            setSelectedOption(savedOption);
+        }
+    }, []);
+
+    const handleRadioChange = (value) => {
+        setSelectedOption(value);
+        setCookie('Igeport_selectedOption', value, { path: '/' }); // 저장 위치와 경로
+    };
+
+    const handleNext = () => {
+        if (selectedOption) {
+            nextPage(selectedOption);
+        }
+    };
 
     const options = [
         '나는 상상력이 풍부하다.',
@@ -10,10 +32,6 @@ export function Igeport_question2({ nextPage }) {
         '나는 아이디어를 떠올리는 일을 즐긴다.'
     ];
 
-    const [selectedOption, setSelectedOption] = useState('');
-    const handleRadioChange = (value) => {
-        setSelectedOption(value); // 라디오 버튼 선택 시 선택된 값을 상태에 저장
-    };
     return (
         <div style={styles.container}>
             <div style={styles.container1}>
@@ -34,8 +52,8 @@ export function Igeport_question2({ nextPage }) {
                                 <label key={index}
                                        style={styles.labelStyle}>
                                     <input type="radio" name="myRadioGroup" value={option} checked={selectedOption === option}
-                                        onChange={() => handleRadioChange(option)}
-                                        style={styles.inputStyle}
+                                           onChange={() => handleRadioChange(option)}
+                                           style={styles.inputStyle}
                                     />
                                     {option}
                                 </label>
@@ -58,17 +76,14 @@ export function Igeport_question2({ nextPage }) {
                     <button style={{
                         ...styles.button,
                         backgroundColor: selectedOption ? '#1AE57C' : '#525252' // 선택된 옵션이 있으면 버튼을 검은색으로 변경
-                    }} onClick={() => {
-                        if (selectedOption) {
-                            nextPage();
-                        }
-                    }}> 다음으로
+                    }} onClick={handleNext}> 다음으로
                     </button>
                 </div>
             </div>
         </div>
     );
 }
+
 
 const styles = {
     container: {

@@ -4,7 +4,6 @@ import {IGeport_result1} from "./detail/IGeport_result1";
 import {IGeport} from "../Igeport/IGeport";
 import {IGeport_result2} from "./detail/IGeport_result2";
 import {IGeport_result3} from "./detail/IGeport_result3";
-import {Geport_result4} from "../Geport_result/detail/Geport_result4";
 import {IGeport_result4} from "./detail/IGeport_result4";
 import {IGeport_result5} from "./detail/IGeport_result5";
 import {IGeport_result6} from "./detail/IGeport_result6";

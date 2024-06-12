@@ -1,84 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
 export function Create_Geport_Posts(props) {
     const navigate = useNavigate();
+    const [myposts, setMyposts] = useState([]);
     const [selectedPosts, setSelectedPosts] = useState([]);
 
-    const myposts = [
-        {
-            id: 1,
-            title: "집에 가고싶다.",
-            content: "언제까지 이곳에 머물 것인가...? 이제는 집을 갈 때가 되었다....(두둥..ㅇ.ㅇ)",
-            imageUrl: "./image/Hotpage1.png",
-            user: {
-                name: "유현우",
-                image: "./image/Hotpage1.png"
-            },
-            date: "23-01-20",
-            likes: 10,
-            comments: 5
-        },
-        {
-            id: 2,
-            title: "고효율 작업을 위한 생산성 도구 추천1",
-            content: "여행은 새로운 경험과 추억을 선서하지만, 올바른 준비가 필수입니다. 이번 블로그 포스트에서는 여행자가 가져가야 할 10가지 필수 아이템을 상세히 소개합니다. 첫째, 편안한 여행을 위한 양질의 여행 가방. 두번째는 다양한...",
-            imageUrl: "./image/Hotpage1.png",
-            user: {
-                name: "김영희",
-                image: "./image/Hotpage1.png"
-            },
-            date: "24-05-11",
-            likes: 15,
-            comments: 8
-        },
-        {
-            id: 3,
-            title: "고효율 작업을 위한 생산성 도구 추천2",
-            content: "여행은 새로운 경험과 추억을 선서하지만, 올바른 준비가 필수입니다. 이번 블로그 포스트에서는 여행자가 가져가야 할 10가지 필수 아이템을 상세히 소개합니다. 첫째, 편안한 여행을 위한 양질의 여행 가방. 두번째는 다양한...",
-            imageUrl: "./image/Hotpage1.png",
-            user: {
-                name: "고영희",
-                image: "./image/Hotpage1.png"
-            },
-            date: "24-11-25",
-            likes: 15,
-            comments: 8
-        },
-        {
-            id: 4,
-            title: "고효율 작업을 위한 생산성 도구 추천3",
-            content: "여행은 새로운 경험과 추억을 선서하지만, 올바른 준비가 필수입니다. 이번 블로그 포스트에서는 여행자가 가져가야 할 10가지 필수 아이템을 상세히 소개합니다. 첫째, 편안한 여행을 위한 양질의 여행 가방. 두번째는 다양한...",
-            imageUrl: "./image/Hotpage1.png",
-            user: {
-                name: "고영희",
-                image: "./image/Hotpage1.png"
-            },
-            date: "24-11-25",
-            likes: 15,
-            comments: 8
-        },
-        {
-            id: 5,
-            title: "고효율 작업을 위한 생산성 도구 추천4",
-            content: "여행은 새로운 경험과 추억을 선서하지만, 올바른 준비가 필수입니다. 이번 블로그 포스트에서는 여행자가 가져가야 할 10가지 필수 아이템을 상세히 소개합니다. 첫째, 편안한 여행을 위한 양질의 여행 가방. 두번째는 다양한...",
-            imageUrl: "./image/Hotpage1.png",
-            user: {
-                name: "고영희",
-                image: "./image/Hotpage1.png"
-            },
-            date: "24-11-25",
-            likes: 15,
-            comments: 8
-        }
-    ];
+    useEffect(() => {
+        axios.get('/BE/spring/posts/list/my-list')
+            .then(response => setMyposts(response.data))
+            .catch(error => console.error('Error fetching posts:', error));
+    }, []);
 
     const handlePostSelection = (post) => {
         if (selectedPosts.includes(post.id)) {
             setSelectedPosts(selectedPosts.filter(p => p !== post.id));
-        } else if (selectedPosts.length < 5) {
+        } else if (selectedPosts.length < 10) {
             setSelectedPosts([...selectedPosts, post.id]);
         }
+    };
+
+    const handleRegister = () => {
+        // 선택된 포스트 ID를 쿠키에 저장
+        Cookies.set('selected_posts', selectedPosts.join(','), { expires: 1 }); // 쿠키는 1일 동안 유효합니다.
+        navigate('/geport/question'); // Geport_question.js로 이동
     };
 
     return (
@@ -86,7 +33,7 @@ export function Create_Geport_Posts(props) {
             <div>
                 <div style={{ textAlign: 'center' }}>
                     <h2>Geport를 만들 포스트를 알려주세요</h2>
-                    <p>포스트 5개를 선택해주세요</p>
+                    <p>포스트 5개 이상 10개 이하를 선택해주세요</p>
                 </div>
                 <div style={{ textAlign: 'center' }}>
                     {selectedPosts.map(postId => {
@@ -98,16 +45,17 @@ export function Create_Geport_Posts(props) {
                         );
                     })}
                     <button 
+                        onClick={handleRegister}
                         style={{ 
                             marginLeft: '10px', 
                             borderRadius: '20px', 
                             padding: '5px 10px', 
-                            backgroundColor: selectedPosts.length === 5 ? '#10901FC3' : '#d3d3d3', 
+                            backgroundColor: (selectedPosts.length >= 5 && selectedPosts.length <= 10) ? '#10901FC3' : '#d3d3d3', 
                             color: 'white',
                             border: 'none',
-                            cursor: selectedPosts.length === 5 ? 'pointer' : 'not-allowed'
+                            cursor: (selectedPosts.length >= 5 && selectedPosts.length <= 10) ? 'pointer' : 'not-allowed'
                         }}
-                        disabled={selectedPosts.length !== 5}
+                        disabled={selectedPosts.length < 5 || selectedPosts.length > 10}
                     >
                         등록하기
                     </button>
