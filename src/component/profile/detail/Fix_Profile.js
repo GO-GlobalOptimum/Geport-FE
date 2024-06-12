@@ -78,7 +78,7 @@ export function Fix_Profile(props) {
         } else {
             const profileData = {
                 id: 5,
-                name: nickname,
+                nickname: nickname,
                 bio: bio,
                 phone: phoneNumber,
                 mbti: mbti,

@@ -5,9 +5,11 @@ export function LoginPage(props) {
     const navigate = useNavigate();
 
     const googleLogin = (event) => {
+        
         event.preventDefault();
         console.log("Google Login");
         window.location.href = process.env.REACT_APP_GOOGLE_LOGIN_URL
+
     };
 
     return (
