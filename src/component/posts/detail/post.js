@@ -11,7 +11,7 @@ export function Post(props) {
 
     const deletehandler = async () => {
         try {
-            await axios.post(`http://localhost:8080/spring/posts/${postId}/delete`, {
+            await axios.post(`/BE/spring/posts/${postId}/delete`, {
                 withCredentials: true
             });
             navigate("/mainpage");
@@ -29,7 +29,7 @@ export function Post(props) {
 
         const fetchPost = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/spring/posts/post/${postId}`, {
+                const response = await axios.get(`/BE/spring/posts/post/${postId}`, {
                     withCredentials: true
                 });
                 setPost(response.data);

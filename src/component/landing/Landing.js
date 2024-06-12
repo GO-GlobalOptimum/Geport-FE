@@ -30,7 +30,7 @@ export function Landing(props) {
     // };
     const fetchData = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/spring/posts/list/popular', {
+            const response = await axios.get('/BE/spring/posts/list/popular', {
                 withCredentials: true
             });
             setPosts(response.data.content);

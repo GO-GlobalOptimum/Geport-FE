@@ -39,7 +39,7 @@ export function UpdatePost(props) {
 
         const fetchPost = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/spring/posts/post/${postId}`, {
+                const response = await axios.get(`/BE/spring/posts/post/${postId}`, {
                     withCredentials: true
                 });
                 setPost(response.data);
@@ -138,7 +138,7 @@ export function UpdatePost(props) {
     
             console.log('Submitting post data:', postData);
     
-            axios.post(`http://localhost:8080/spring/posts/post-id=${postId}/update`, postData, {
+            axios.post(`/BE/spring/posts/post-id=${postId}/update`, postData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
