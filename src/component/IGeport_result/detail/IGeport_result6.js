@@ -3,7 +3,6 @@ import WordCloud from 'wordcloud';
 import axios from 'axios';
 import { getCookie } from "../../../function/cookies";
 
-
 export function IGeport_result6({ nextPage }) {
     const wordCloudRef = useRef(null);
     const name = getCookie('username');
@@ -42,8 +41,6 @@ export function IGeport_result6({ nextPage }) {
     if (!userData) {
         return <div>Loading...</div>;
     }
-
-
 return (
         <div style={styles.container}>
             <div style={styles.container1}>

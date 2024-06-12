@@ -13,7 +13,7 @@ export function IGeport_result() {
     const navigate = useNavigate();
 
     const nextPage = () => {
-        if (currentPage < 8) {
+        if (currentPage < 7) {
             setCurrentPage(prev => prev + 1);
         } else {
             navigate('/mainpage');

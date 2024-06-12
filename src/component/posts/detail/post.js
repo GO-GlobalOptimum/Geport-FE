@@ -11,7 +11,7 @@ export function Post(props) {
 
     const deletehandler = async () => {
         try {
-            await axios.post(`http://localhost:8080/spring/posts/${postId}/delete`, {
+            await axios.post(`/BE/spring/posts/${postId}/delete`, {
                 withCredentials: true
             });
             navigate("/mainpage");
@@ -19,6 +19,7 @@ export function Post(props) {
             console.error('Error deleting post:', error);
         }
     };
+
 
     const updatehandler = () => {
         navigate(`./update/${postId}`);
@@ -112,6 +113,14 @@ export function Post(props) {
                                     }}
                                     dangerouslySetInnerHTML={{ __html: post.postContent }} // Render post content with images
                                 />
+                                <div
+                                    style={{
+                                        fontSize: '14px',
+                                        letterSpacing: '0.8px',
+                                        lineHeight: '30px'
+                                    }}
+                                    dangerouslySetInnerHTML={{ __html: post.postContent }} // Render post content with images
+                                />
                             </div>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -156,3 +165,4 @@ export function Post(props) {
         </div>
     );
 }
+

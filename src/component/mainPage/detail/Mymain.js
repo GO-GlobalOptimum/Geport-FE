@@ -1,4 +1,3 @@
-// MyMain.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -6,29 +5,33 @@ import Cookies from 'js-cookie';
 
 export function MyMain(props){
     const [myposts, setMyposts] = useState([]);
-    //const [loading, setLoading] = useState(true);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     
-    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcxODQzNjk5MiwidHlwZSI6ImFjY2VzcyIsImVtYWlsIjoicGljaDc3NTVAbmF2ZXIuY29tIn0.P-vrcBUpcMKTfLiL9ZrW0JqWRT9mOwWyLdA27wijvg5ASdqUcxqXsKt7mEzxmjT2-Uq46dy-9Xo7oVR_6xdU1w'
+    //const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcxODQzNjk5MiwidHlwZSI6ImFjY2VzcyIsImVtYWlsIjoicGljaDc3NTVAbmF2ZXIuY29tIn0.P-vrcBUpcMKTfLiL9ZrW0JqWRT9mOwWyLdA27wijvg5ASdqUcxqXsKt7mEzxmjT2-Uq46dy-9Xo7oVR_6xdU1w'
 
     useEffect(() => {
         const fetchPostsData = async () => {
-        try {
-            const response = await axios.get('http://localhost:8080/spring/posts/list', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                },
-                withCredentials: true
-            });
-            setMyposts(response.data.content);
-        } catch (error) {
-            console.error('Error fetching posts:', error);
-        }
-    };
-    fetchPostsData();
-}, []);
+            try {
+                const response = await axios.get('http://default-recsys-service-7a51c-24704520-06bf223bd6a1.kr.lb.naverncp.com/predict?user_id=1', {
+                    // headers: {
+                    //     Authorization: `Bearer ${token}`
+                    // },
+                    // withCredentials: true
+                });
+                setMyposts(response.data);
+            } catch (error) {
+                console.error('Error fetching posts:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchPostsData();
+    }, []);
 
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     return(
         <div>
@@ -37,11 +40,11 @@ export function MyMain(props){
                 <div style={{paddingLeft: "5%", width: '90%' }}>
                     <div>
                         {myposts.map(post => (
-                            <div key={post.id} style={{ marginBottom: '20px', cursor: 'pointer' }} onClick={() => navigate(`/posts/${post.id}`)}>
+                            <div key={post.post_id} style={{ marginBottom: '20px', cursor: 'pointer' }} onClick={() => navigate(`/posts/${post.post_id}`)}>
                                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                                     <div style={{ marginRight: '10px', flex: '1' }}>
                                         <h3>{post.title}</h3>
-                                        <p>{post.postContent.substring(0, 255)}</p>
+                                        <p>{post.post_content.substring(0, 255)}</p>
                                     </div>
                                     <div style={{ marginRight: '10px' }}>
                                         <button style={{ marginRight: '10px', marginBottom: '10px', borderRadius: '20px', padding: '5px 10px', backgroundColor: '#91F5C3C3', border: 'none' ,display: 'flex', alignItems: 'center' }}>
@@ -62,9 +65,9 @@ export function MyMain(props){
                                     </div>
                                     <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px',  marginLeft: 'auto'  }}>
                                         <img src="./image/heart.png" alt="Likes" style={{ width: '20px', height: '20px', marginRight: '5px' }} />
-                                        {post.likeCount}
+                                        {post.like_count}
                                         <img src="./image/comment.png" alt="Comments" style={{ width: '20px', height: '20px', marginLeft: '10px', marginRight: '5px' }} />
-                                        {post.replyCount}
+                                        {post.comment_count}
                                         <img src="./image/share.png" alt="Shares" style={{ width: '20px', height: '20px', marginLeft: '10px', marginRight: '5px' }} />
                                         <img src="./image/bookmark.png" alt="Bookmarks" style={{ width: '20px', height: '20px', marginLeft: '10px', marginRight: '5px' }} />
                                     </div>

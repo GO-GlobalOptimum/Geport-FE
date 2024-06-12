@@ -10,7 +10,7 @@ export function Search_detail() {
     useEffect(() => {
         const fetchPostsData = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/spring/posts/list', {
+                const response = await axios.get('/BE/spring/posts/list', {
                     withCredentials: true
                 });
                 const filteredPosts = response.data.content.filter(post =>

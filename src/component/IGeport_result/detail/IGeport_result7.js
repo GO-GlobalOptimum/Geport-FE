@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {getCookie} from "../../../function/cookies";
+
 export function IGeport_result7({ nextPage }) {
     const name = "김포트";
     const [userData, setUserData] = useState(JSON.parse(localStorage.getItem('result')).result.blogs_finalReport);

@@ -26,11 +26,13 @@ export function IGeport_result1({ nextPage }) {
         result: JSON.parse(localStorage.getItem('result'))
     };
 
+
     useEffect(() => {
         if (userData) {
             console.log("Using user data:", userData);
         }
     }, [userData]);
+
 
     useEffect(() => {
         const timer = setTimeout(() => {

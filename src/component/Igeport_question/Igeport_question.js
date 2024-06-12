@@ -9,11 +9,12 @@ import { Igeport_question5 } from "./detail/Igeport_question5";
 import { Igeport_question6 } from "./detail/Igeport_question6";
 import { getCookie, removeCookie } from '../../function/cookies';
 import { setCookie } from '../../function/cookies';
+import { IGeport_result } from '../IGeport_result/IGeport_result'
 
 export function Igeport_question() {
     const [currentPage, setCurrentPage] = useState(1);
     const navigate = useNavigate();
-    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcxODIwMTAxMCwidHlwZSI6ImFjY2VzcyIsImVtYWlsIjoieW91aHl1bndvb0BnYWNob24uYWMua3IifQ.Nh33rcotajpSJvGieSfDePwmg5-IihHFPXiih6gbh6GHKWXfI62cHbi56nAlgnVpA3ClyUdAZJvxtgYRohEjBw'
+    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsIm5hbWUiOiIxMDcyNzQwMTQzMTAwMzk3MDQzMDMiLCJleHAiOjE3NTQyMDIwNDAsInR5cGUiOiJhY2Nlc3MiLCJlbWFpbCI6InlvdWh5dW53b29AZ2FjaG9uLmFjLmtyIn0.tJMsiu4XVZQuOJtMG7XDGXkixgNPx5hyj44-tudjk-qwMu0AEsiep00-GbdCJrpBLZCVdgCGsPNBCyn2WncVqw'
 
 
     const nextPage = useCallback((data) => {
@@ -39,7 +40,7 @@ export function Igeport_question() {
                 }
                 console.log(data)
                 console.log("check")
-                axios.post('/BE/fastapi/igeport/generate/', JSON.stringify(data), {
+                axios.post('http://localhost:8000/fastapi/igeport/generate/', JSON.stringify(data), {
                     withCredentials: true,
                     headers: { "Content-Type": 'application/json', Authorization: `Bearer ${token}` }
                 }).then(response=>{
@@ -71,7 +72,7 @@ export function Igeport_question() {
             case 6:
                 return <Igeport_question6 nextPage={nextPage} />;
             default:
-                return <Igeport_question1 nextPage={nextPage} />;
+                return <IGeport_result/>;
         }
     };
 
