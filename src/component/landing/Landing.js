@@ -14,7 +14,7 @@ export function Landing(props) {
 
     
     useEffect(() => {
-
+        console.log(axios.defaults.headers.common['Authorization']);
         fetchData();
     }, []);
     

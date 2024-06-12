@@ -30,7 +30,6 @@ export function Igeport_question() {
         }
     }, [currentPage]);
 
-    // console.log(getCookie('selected_posts').split(',').map(Number));
 
     useEffect(() => {
         if (currentPage == 7) {
