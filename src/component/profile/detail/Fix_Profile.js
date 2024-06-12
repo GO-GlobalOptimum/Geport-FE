@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { uploadToS3 } from '../../../function/s3Utils'; // 위에서 작성한 S3 업로드 함수
@@ -11,8 +11,26 @@ export function Fix_Profile(props) {
     const [gender, setGender] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [imageUrl, setProfilePhoto] = useState(null);
-    const [photoPreview, setPhotoPreview] = useState('./image/user.png');
+    const [photoPreview, setPhotoPreview] = useState('./image/user.png'); // 기본 이미지 경로 설정
     const navigate = useNavigate();
+
+    useEffect(() => {
+        // 컴포넌트가 마운트될 때 사용자 정보를 불러옵니다.
+        axios.get("http://localhost:8080/spring/user/myInfo", { withCredentials: true })
+            .then(response => {
+                const userData = response.data;
+                setNickname(userData.nickName);
+                setBio(userData.bio);
+                setMbti(userData.mbti);
+                setAge(userData.age.toString());
+                setGender(userData.gender);
+                setPhoneNumber(userData.phoneNumber);
+                setPhotoPreview(userData.imageUrl || './image/user.png'); // DB의 image_url을 사용하여 photoPreview 설정
+            })
+            .catch(error => {
+                console.error("There was an error fetching user data:", error);
+            });
+    }, []);
 
     const handlePhotoChange = (e) => {
         const file = e.target.files[0];
@@ -28,12 +46,11 @@ export function Fix_Profile(props) {
 
     const postApi = (profileData) => {
         console.log("Sending profile data to backend:", profileData); // 로그 추가
-        axios.post("/BE/spring/userInfo/profile", profileData, {
-            
+        axios.post("http://localhost:8080/spring/user/myInfo", profileData, {
             withCredentials: true
         })
             .then(res => {
-                navigate("/mypage"); // 프로필 수정이 성공하면 메인 페이지로 이동
+                navigate("/mypage"); // 프로필 수정이 성공하면 마이 페이지로 이동
             })
             .catch(error => {
                 console.error("There was an error making the request:", error);
@@ -44,10 +61,9 @@ export function Fix_Profile(props) {
         if (imageUrl) {
             uploadToS3(imageUrl).then((s3Url) => {
                 const profileData = {
-                    id: 5,
-                    name: nickname,
+                    nickName: nickname,
                     bio: bio,
-                    phone: phoneNumber,
+                    phoneNumber: phoneNumber,
                     mbti: mbti,
                     age: parseInt(age, 10),
                     gender: gender,
@@ -62,7 +78,7 @@ export function Fix_Profile(props) {
         } else {
             const profileData = {
                 id: 5,
-                name: nickname,
+                nickname: nickname,
                 bio: bio,
                 phone: phoneNumber,
                 mbti: mbti,
@@ -79,7 +95,7 @@ export function Fix_Profile(props) {
     }
 
     const handleDeleteAccount = () => {
-        axios.delete("/BE/spring/user/myInfo", {
+        axios.delete("http://localhost:8080/spring/user/myInfo", {
             withCredentials: true
         })
         .then(res => {

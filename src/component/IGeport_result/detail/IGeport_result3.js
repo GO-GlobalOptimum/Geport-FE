@@ -1,27 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {getCookie} from "../../../function/cookies";
-import { get_api } from "./IGeport_result1";
 export function IGeport_result3({ nextPage }) {
     const name = getCookie('username');
     const [userData, setUserData] = useState(null);
-
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const response = await get_api();
-                if (response && response.data && response.data.length > 0) {
-                    // 데이터베이스에서 받아온 데이터의 첫 번째 인덱스 사용
-                    setUserData(response.data[0].result.blogs_summary);
-                } else {
-                    console.error('데이터를 받지 못했습니다');
-                }
-            } catch (error) {
-                console.error("사용자 데이터를 가져오는 중 오류가 발생했습니다:", error);
-            }
-        };
-
-        fetchUserData();
-    }, []);
 
     return (
         <div style={styles.container}>

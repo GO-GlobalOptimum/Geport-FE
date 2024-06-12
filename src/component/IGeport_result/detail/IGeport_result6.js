@@ -2,27 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import WordCloud from 'wordcloud';
 import axios from 'axios';
 import { getCookie } from "../../../function/cookies";
-import { get_api } from "./IGeport_result1";
 
 export function IGeport_result6({ nextPage }) {
     const wordCloudRef = useRef(null);
     const name = getCookie('username');
     const [userData, setUserData] = useState(null);
-
-    useEffect(() => {
-        axios.get('/BE/fastapi/igeport/database/list')
-            .then(response => {
-                if (response && response.data && response.data.length > 0) {
-                    // Set the entire object containing happy keywords and scores
-                    setUserData(response.data[0].result.blogs_happyKeyword.happy_keyword);
-                } else {
-                    console.error('No data received');
-                }
-            })
-            .catch(error => {
-                console.error("Error fetching user data:", error);
-            });
-    }, []);
 
     useEffect(() => {
         if (userData) {
@@ -57,8 +41,6 @@ export function IGeport_result6({ nextPage }) {
     if (!userData) {
         return <div>Loading...</div>;
     }
-
-
 return (
         <div style={styles.container}>
             <div style={styles.container1}>

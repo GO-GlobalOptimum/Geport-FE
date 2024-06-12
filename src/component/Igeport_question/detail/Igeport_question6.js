@@ -6,8 +6,8 @@ const radioButtonHeight = 80; // 라디오 버튼 하나의 높이 (픽셀 단�
 export function Igeport_question6({ nextPage }) {
 
     const options = [
-        '나는 목표를 달성하기 위해 노력하고, 포기하지 않는다.',
-        '나는 업무나 과제를 미루는 경향이 있다.'
+        '나는 종종 스트레스나 불안을 느낀다.',
+        '나는 감정 상태가 자주 바뀌는 편이다'
     ];
 
     const [selectedOption, setSelectedOption] = useState('');

@@ -1,19 +1,23 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import TitleInput from './detail/TitleInput';
 import ContentEditor from './detail/ContentEditor';
 import UploadButtons from './detail/UploadButtons';
 import FormatOptions from './detail/FormatOptions';
 import TagModal from './detail/TagModal';
 import CategoryModal from './detail/CategoryModal';
-import { uploadToS3 } from '../../function/s3Utils'; // S3 upload function
+import TagModal_update from './detail/TagModal_update';
 
-export function Create_post() {
+export function UpdatePost(props) {
     const navigate = useNavigate();
+    const { postId } = useParams();
     const contentRef = useRef(null);
+    const [post, setPost] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [title, setTitle] = useState('');
-    const [categories, setCategories] = useState(['normal']); // Default category set to 'normal'
+    const [categories, setCategories] = useState(['normal']);
     const [postContent, setPostContent] = useState('');
     const [thumbnailImage, setThumbnailImage] = useState([]);
     const [isContentEntered, setIsContentEntered] = useState(false);
@@ -25,9 +29,37 @@ export function Create_post() {
     const [showCategoryModal, setShowCategoryModal] = useState(false);
     const [showOptions, setShowOptions] = useState(false);
 
+    const handleNext = () => {
+        setShowCategoryModal(false);
+        setShowTagModal(true);
+    };
+
+    useEffect(() => {
+        Cookies.set('memberId', 1, { expires: 7 });
+
+        const fetchPost = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/spring/posts/post/${postId}`, {
+                    withCredentials: true
+                });
+                setPost(response.data);
+                setTitle(response.data.title);
+                setPostContent(response.data.postContent);
+                setThumbnailImage([response.data.imageUrl]);
+                setIsContentEntered(!!response.data.postContent.trim());
+            } catch (error) {
+                console.error('Error fetching post:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchPost();
+    }, [postId]);
+
     const logoClick = () => {
         navigate("/");
-    }
+    };
 
     const handleTitleChange = (e) => {
         setTitle(e.target.value);
@@ -42,25 +74,24 @@ export function Create_post() {
         updateTogglePosition();
     };
 
-    const handleImageChange = async (e) => {
+    const handleImageChange = (e) => {
         const selectedImages = Array.from(e.target.files);
-        const imagePromises = selectedImages.map(async (image) => {
-            try {
-                const imageUrl = await uploadToS3(image);
-                contentRef.current.innerHTML += `<img src="${imageUrl}" alt="이미지" style="max-width: 70%; height: auto; margin: 5px 0;" />`;
-                return imageUrl;
-            } catch (error) {
-                console.error('Error uploading image:', error);
-                throw error;
-            }
+        const imagePromises = selectedImages.map(image => {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const imgSrc = reader.result;
+                    contentRef.current.innerHTML += `<img src="${imgSrc}" alt="이미지" style="max-width: 70%; height: auto; margin: 5px 0;" />`;
+                    resolve(imgSrc);
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(image);
+            });
         });
 
-        try {
-            const uploadedImageUrls = await Promise.all(imagePromises);
-            setThumbnailImage([...thumbnailImage, ...uploadedImageUrls]);
-        } catch (error) {
-            console.error('Error loading images:', error);
-        }
+        Promise.all(imagePromises)
+            .then(imgSrcs => setThumbnailImage([...thumbnailImage, ...imgSrcs]))
+            .catch(error => console.error('Error loading images:', error));
 
         updateTogglePosition();
     };
@@ -98,23 +129,16 @@ export function Create_post() {
             setAlert('내용을 입력해 주세요.');
         } else {
             const postData = {
-                id: null,
                 title,
-                viewsCount: "0",
-                postContent: contentRef.current.innerHTML, // Save the innerHTML to include images and videos
-                isPublic: true,
-                likeCount: 0,
+                postContent,
                 thumbnailImage: thumbnailImage.length > 0 ? thumbnailImage[0] : '',
-                isComment: true,
-                isDelete: false,
-                bookMark: false,
-                commentCount: 0,
-                bookMarkCount: 0,
                 categories,
                 tags: Array.isArray(tags) ? tags.map(tag => tag.replace('#', '')) : []
             };
-
-            axios.post('http://localhost:8080/spring/posts/post', postData, {
+    
+            console.log('Submitting post data:', postData);
+    
+            axios.post(`http://localhost:8080/spring/posts/post-id=${postId}/update`, postData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -126,8 +150,8 @@ export function Create_post() {
             })
             .catch(error => {
                 console.error('Error submitting post:', error);
-                console.log('Error response:', error.response);
-                setAlert('게시글 등록 중 오류가 발생했습니다.');
+                console.log('Error response:', error.response); // Add this line to log the error response
+                setAlert('게시글 수정 중 오류가 발생했습니다.');
             });
         }
     };
@@ -185,11 +209,6 @@ export function Create_post() {
         }
     };
 
-    const handleNext = () => {
-        setShowCategoryModal(false);
-        setShowTagModal(true);
-    };
-
     useEffect(() => {
         const contentElement = contentRef.current;
         if (contentElement) {
@@ -231,6 +250,14 @@ export function Create_post() {
         }
     }, []);
 
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (!post) {
+        return <div>No post found</div>;
+    }
+
     return (
         <div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '20px' }}>
@@ -239,7 +266,7 @@ export function Create_post() {
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     <button onClick={() => setShowCategoryModal(true)} style={{ background: (isContentEntered ? "#00CC81" : "#ccc"), padding: '5px', borderRadius: '50px', border: isContentEntered ? "none" : '1px solid #ccc', display: 'flex', alignItems: 'center', marginRight: '20px' }}>
-                        등록하기
+                        수정 완료
                     </button>
                     <img src="./image/notification.png" alt="notification" style={{ width: '20px', height: '20px', marginRight: '20px' }} />
                     <img src="./image/user.png" alt="user" style={{ width: '20px', height: '20px', marginRight: '20px' }} />
@@ -263,7 +290,7 @@ export function Create_post() {
                 </div>
             </div>
 
-            {showTagModal && <TagModal handleTagModalClose={handleTagModalClose} handleSubmit={handleSubmit} />}
+            {showTagModal && <TagModal_update handleTagModalClose={handleTagModalClose} handleSubmit={handleSubmit} />}
             {showCategoryModal && <CategoryModal handleCategoryModalClose={handleCategoryModalClose} handleNext={handleNext} setCategory={setCategories} />}
         </div>
     );

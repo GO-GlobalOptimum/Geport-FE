@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import { Bar } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { get_api } from "./IGeport_result1";
 import {getCookie} from "../../../function/cookies";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartDataLabels);
@@ -11,22 +10,6 @@ export function IGeport_result4({ nextPage }) {
     const name = getCookie('username');
     const [userData, setUserData] = useState(null);
 
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const response = await get_api();
-                if (response && response.data && response.data.length > 0) {
-                    setUserData(response.data[0].result.blogs_emotionSos.emotion_sos);
-                } else {
-                    console.error('데이터를 받지 못했습니다');
-                }
-            } catch (error) {
-                console.error("사용자 데이터를 가져오는 중 오류가 발생했습니다:", error);
-            }
-        };
-
-        fetchUserData();
-    }, []);
 
     // 데이터가 유효한지 확인 후 변수에 할당
     const anger = userData ? userData.sentiments.anger : 0;

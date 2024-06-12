@@ -9,17 +9,26 @@ export function Create_Igeport_Posts(props) {
     const [myposts, setMyposts] = useState([]);
     const [selectedPosts, setSelectedPosts] = useState([]);
 
+    // 이 부분은 실제 로그인 후 설정해야 할 것 같습니다.
+    // Cookies.set('memberId', 1, { expires: 7 });
+
     useEffect(() => {
         console.log("useEffect in");
-        axios.get('/BE/spring/posts/list/popular')
-            .then(response => {
-                if (Array.isArray(response.data.content)) {
-                    setMyposts(response.data.content);
-                } else {
-                    console.error('Received data content is not an array:', response.data.content);
-                }
-            })
-            .catch(error => console.error('Error fetching posts:', error));
+        const memberId = Cookies.get('memberId'); // 쿠키에서 memberId 가져오기
+        axios.get('http://localhost:8080/spring/posts/list/my-list', {
+            headers: {
+                'memberId': memberId // 요청 헤더에 memberId 추가
+            },
+            withCredentials: true // 쿠키를 포함하여 요청을 보냄
+        })
+        .then(response => {
+            if (Array.isArray(response.data.content)) {
+                setMyposts(response.data.content);
+            } else {
+                console.error('Received data content is not an array:', response.data.content);
+            }
+        })
+        .catch(error => console.error('Error fetching posts:', error));
     }, []);
 
     const handlePostSelection = (post) => {
@@ -31,9 +40,7 @@ export function Create_Igeport_Posts(props) {
     };
 
     const handleRegister = () => {
-        // 선택된 포스트 ID를 쿠키에 저장
-        //Cookies.set('selected_posts', selectedPosts.join(','), { expires: 1 });
-        setCookie("selected_posts", selectedPosts, { path: '/' })
+        setCookie("selected_posts", selectedPosts.join(','), { path: '/' });
         navigate('/igeport/question'); // Igeport_question.js로 이동
     };
 
@@ -83,6 +90,7 @@ export function Create_Igeport_Posts(props) {
                             cursor: selectedPosts.length === 4 ? 'pointer' : 'not-allowed'
                         }}
                         disabled={selectedPosts.length !== 4}
+                        active={selectedPosts.length === 4 ? 'true' : 'false'} // 이 부분 수정
                     >
                         등록하기
                     </button> */}
