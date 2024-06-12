@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {getCookie} from "../../../function/cookies";
 
 export function IGeport_result7({ nextPage }) {
-    const name = "김포트";
+    const name = "유현우";
     const [userData, setUserData] = useState(JSON.parse(localStorage.getItem('result')).result.blogs_finalReport);
 
     console.log(userData);
@@ -115,7 +115,7 @@ const styles = {
     container7: {
         marginTop:"3%",
         position: 'relative',
-        width: '90%',
+        width: '100%',
         height: '28vh',
         display: 'flex',
         backgroundColor: '#1E1E1E',

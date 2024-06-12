@@ -12,7 +12,7 @@ export function Geport_question1({ nextPage }) {
                 </div>
                 <div style={styles.container3}>
                     <span style={styles.subtitle}>
-                        다음 질문의 답변과 첨부해주신 블로그의 내용을 바탕으로 iGeport를 작성합니다. <br/>
+                        다음 질문의 답변과 첨부해주신 블로그의 내용을 바탕으로 Geport를 작성합니다. <br/>
                         답변이 블로그에 작성된 내용과 일치할 필요는 없습니다. 자유롭게 작성해주세요.
                     </span>
                 </div>

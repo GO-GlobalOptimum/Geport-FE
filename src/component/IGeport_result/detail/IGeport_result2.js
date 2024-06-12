@@ -4,7 +4,7 @@ import {getCookie} from "../../../function/cookies";
 
 export function IGeport_result2({ nextPage }) {
 
-    const name = "김포트";
+    const name = "유현우";
 
 
     return (

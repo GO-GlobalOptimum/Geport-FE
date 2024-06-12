@@ -9,7 +9,8 @@ export function IGeport_result5({ nextPage }) {
 
     const [userData, setUserData] = useState(JSON.parse(localStorage.getItem('result')).result.blogs_emotionBig5.emotion_big5);
 
-    console.log(userData)
+    const name = "유현우";
+
     const pieChartData = {
         labels: ['개방성', '성실성', '외향성', '우호성', '섬세함'],
         datasets: [
@@ -52,7 +53,7 @@ export function IGeport_result5({ nextPage }) {
             <div style={styles.container1}>
                 <div style={styles.container2}></div>
                 <div style={styles.container3}>
-                    <span style={styles.title}>블로그를 작성할 당시 조태완 님은 이런 모습이었어요</span>
+                    <span style={styles.title}>블로그를 작성할 당시 {name} 님은 이런 모습이었어요</span>
                 </div>
                 <div style={styles.container7}>
                     <div style={styles.content}>
@@ -224,6 +225,6 @@ const styles = {
     text:{
         color: "white",
         fontSize: "18px",
-        lineHeight: "160%",
+        lineHeight: "200%",
     }
 };

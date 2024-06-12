@@ -7,9 +7,8 @@ import {getCookie} from "../../../function/cookies";
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartDataLabels);
 
 export function IGeport_result4({ nextPage }) {
-    const name = "김포트";
+    const name = "유현우";
     const [userData, setUserData] = useState(JSON.parse(localStorage.getItem('result')).result.blogs_emotionSos.emotion_sos);
-
     console.log(userData)
     // 데이터가 유효한지 확인 후 변수에 할당
     const anger = userData ? userData.sentiments.anger : 0;

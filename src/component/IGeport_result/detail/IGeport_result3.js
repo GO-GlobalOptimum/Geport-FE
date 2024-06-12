@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {getCookie} from "../../../function/cookies";
+
 export function IGeport_result3({ nextPage }) {
-    const name = "김포트";
+    const name = "유현우";
     const [userData, setUserData] = useState(JSON.parse(localStorage.getItem('result')).result.blogs_summary);
 
     console.log(Object.values(userData))
@@ -14,9 +15,9 @@ export function IGeport_result3({ nextPage }) {
                 </div>
                 <div style={styles.container7}>
                     <div style={styles.content}>
-                        {/* 데이터를 동적으로 표시 */}
                         {Object.values(userData).map((blog, index) => (
                             <div key={index} style={styles.summaryContainer}>
+                                <span style={styles.blogNumber}>{index + 1}번째 블로그 글 요약</span>
                                 <span style={styles.text}>{blog.summary}</span>
                             </div>
                         ))}
@@ -117,9 +118,10 @@ const styles = {
         height: '50vh',
         display: 'flex',
         flexWrap: 'wrap',
+        justifyContent: 'space-around',
         marginLeft: "15%",
         marginRight: "8%",
-        marginBottom: "2%"
+        marginBottom: "2%",
     },
     inputContainer: {
         width: '100%',
@@ -134,10 +136,12 @@ const styles = {
         height: '45%',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         margin: '2.5%',
-        overflowY: 'auto'
+        overflowY: 'auto',
+        padding: '10px',
+        boxSizing: 'border-box'
     },
     pageCount: {
         position: 'relative',
@@ -163,9 +167,15 @@ const styles = {
         fontSize: '24px',
         fontWeight: '600'
     },
-    text:{
+    text: {
         color: "white",
         fontSize: "18px",
         lineHeight: "160%",
+    },
+    blogNumber: {
+        color: "#1AE57C",
+        fontSize: "20px",
+        fontWeight: "bold",
+        marginBottom: "10px"
     }
 };
