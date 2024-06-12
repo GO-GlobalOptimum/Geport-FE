@@ -26,11 +26,13 @@ export function IGeport_result1({ nextPage }) {
         ]
     };
 
+
     useEffect(() => {
         if (userData) {
             console.log("Using user data:", userData);
         }
     }, [userData]);
+
 
     useEffect(() => {
         console.log(data); // 쿠키 데이터 출력
