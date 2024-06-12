@@ -72,7 +72,9 @@ export function Igeport_question() {
             case 6:
                 return <Igeport_question6 nextPage={nextPage} />;
             default:
-                return <IGeport_result/>;
+                return (<div style={{backgroundColor: "#1E1E1E",display: "flex",alignContent:"center",
+                    justifyContent:"center", fontWeight: "bold"}}>
+                    Loading.. </div>);
         }
     };
 

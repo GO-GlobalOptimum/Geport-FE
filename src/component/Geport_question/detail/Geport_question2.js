@@ -6,7 +6,7 @@ export function Geport_question2({ nextPage }) {
 
     // Load saved answer from the cookie when the component mounts
     useEffect(() => {
-        const savedAnswer = getCookie('geport_answer1');
+        const savedAnswer = getCookie('geport_answer2');
         if (savedAnswer) {
             setAnswer(savedAnswer);
         }
@@ -17,8 +17,7 @@ export function Geport_question2({ nextPage }) {
     };
 
     const handleNext = () => {
-        setCookie('geport_answer1', answer, { path: '/' });
-        nextPage();
+        nextPage(answer);
     };
 
     return (

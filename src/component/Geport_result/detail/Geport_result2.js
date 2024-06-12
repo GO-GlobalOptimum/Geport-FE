@@ -3,8 +3,7 @@ import {useNavigate, useNavigation} from "react-router-dom";
 import {getCookie} from "../../../function/cookies";
 
 export function Geport_result2({ nextPage }) {
-    const name = getCookie('username');
-    const userIntro = getCookie('userIntro');
+    const name = "김포트";
 
     return (
         <div style={styles.container}>
@@ -12,7 +11,7 @@ export function Geport_result2({ nextPage }) {
                 <div style={styles.container2}></div>
                 <div style={styles.container3}>
                     <span style={styles.title}>
-                        {userIntro}, <br/> {name} 님의 Geport
+                        {name} 님의 Geport
 
                     </span>
                 </div>
